@@ -10,12 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class LoginController {
     private static Stage stage;
@@ -40,53 +40,25 @@ public class LoginController {
 //            passError.setText("Password should atleast be 8 charactors! ");
 //            passBox.clear();
 //        }
-        try{
-            File file = new File("C:\\Users\\10\\IdeaProjects\\ClientFx\\usernames");
-            Scanner scan = new Scanner(file);
+        try(BufferedReader file = new BufferedReader(new FileReader("C:/Users/10/IdeaProjects/ClientFx/usernames"))){
+            String line;
             boolean findUser = false;
-
-            while (scan.hasNextLine()){
-
-                boolean nextLine = false;
-                String line = scan.nextLine();
-                Scanner lineScan = new Scanner(line);
-                lineScan.useDelimiter(",");
-
-                while(lineScan.hasNext()){
-
-                    if(nextLine) continue;
-                    if(lineScan.next() == name){
-                        System.out.println(name);
-                        if(lineScan.next() == password){
-                            System.out.println(password);
-//                            System.out.println("Logged in successfully");
-//                            passError.setTextFill(Color.GREEN);
-//                            passError.setText("Logged in successfully");
-//                            findUser = true;
-//                            break;
-                        }
-                        else{
-                            nextLine = true;
-                            continue;
-                        }
-                    }
-                    else{
-                        nextLine = true;
-                        continue;
-                    }
+            while ((line = file.readLine()) != null) {
+                String[] parts = line.split(",");
+//                System.out.println(Arrays.toString(parts));
+                if(parts[0].equals(name)  && parts[1].equals(password)){
+                    System.out.println("Found it!!!");
+                    findUser = true;
+                    nameLabel.setText("Name");
+                    passwordLabel.setText("Password");
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
+                    root = loader.load();
+                    switchToScene(e, "restaurantView.fxml", root);
                 }
             }
             if(!findUser){
                 passError.setTextFill(Color.RED);
-                passError.setText("There wasn't any match ");
-                passBox.clear();
-            }
-            else{
-                nameLabel.setText("Name");
-                passwordLabel.setText("Password");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
-                root = loader.load();
-                switchToScene(e, "restaurantView.fxml", root);
+                passError.setText("Couldnt find youe account! ");
             }
         }catch(IOException error){
             System.out.println("error");
