@@ -46,7 +46,13 @@ public class SignUpController {
             error.printStackTrace();
         }
     }
-    public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
+    @FXML
+    protected void login(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("loginView.fxml"));
+        root = loader.load();
+        switchToScene(e, "loginView.fxml", root);
+    }
+    private static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
 //        Parent root = FXMLLoader.load(getClass().getResource(Scene));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
