@@ -4,11 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantsController">
    <content>
       <VBox prefHeight="1000.0" prefWidth="599.0">
          <children>
@@ -16,11 +18,11 @@
                <children>
                   <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="46.0" text="info">
                      <HBox.margin>
-                        <Insets left="15.0" right="5.0" />
+                        <Insets left="15.0" right="5.0" top="5.0" />
                      </HBox.margin></Button>
                   <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="46.0" text="items">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
                </children>
@@ -30,36 +32,30 @@
                   <Font name="Arial Bold" size="25.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="114.0" prefWidth="564.0" text="r1">
+            <ImageView fx:id="r1" fitHeight="150.0" fitWidth="564.0" onMouseClicked="#restaurant1" pickOnBounds="true">
                <VBox.margin>
                   <Insets left="15.0" right="20.0" top="10.0" />
                </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="118.0" prefWidth="564.0" text="r2">
+               <image>
+                  <Image url="@images/pizza2.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="r2" fitHeight="150.0" fitWidth="564.0" onMouseClicked="#restaurant2" pickOnBounds="true">
+               <image>
+                  <Image url="@images/pizza2.jpg" />
+               </image>
                <VBox.margin>
-                  <Insets left="15.0" right="20.0" top="15.0" />
+                  <Insets bottom="20.0" left="15.0" top="18.0" />
                </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="83.0" prefWidth="564.0" text="r3">
+            </ImageView>
+            <ImageView fx:id="r3" fitHeight="150.0" fitWidth="564.0" onMouseClicked="#restaurant3" pickOnBounds="true">
+               <image>
+                  <Image url="@images/pizza2.jpg" />
+               </image>
                <VBox.margin>
-                  <Insets left="15.0" right="20.0" top="15.0" />
+                  <Insets bottom="20.0" left="15.0" top="18.0" />
                </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="81.0" prefWidth="564.0" text="r4">
-               <VBox.margin>
-                  <Insets left="15.0" right="20.0" top="15.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="81.0" prefWidth="564.0" text="r5">
-               <VBox.margin>
-                  <Insets left="15.0" right="20.0" top="15.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="89.0" prefWidth="564.0" text="r6">
-               <VBox.margin>
-                  <Insets left="15.0" right="20.0" top="15.0" />
-               </VBox.margin>
-            </Button>
+            </ImageView>
          </children>
       </VBox>
    </content>
