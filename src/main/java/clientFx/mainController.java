@@ -40,14 +40,14 @@ public class mainController {
             try{
                 FileWriter file = new FileWriter("usernames", true);
                 file.write(name+",");
-                file.write(password+",\n");
+                file.write(password+",");
                 file.close();
                 nameLabel.setText("Name");
                 passwordLabel.setText("Password");
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("signUpView.fxml"));
                 root = loader.load();
-                switchToScene(e, "restaurantView.fxml", root);
+                switchToScene(e, "signUpView.fxml", root);
 
             }catch(IOException error){
                 System.out.println("error");
