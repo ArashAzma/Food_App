@@ -16,8 +16,5 @@ public class Server {
         BufferedReader bf = new BufferedReader(in);
 
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> komak
+
