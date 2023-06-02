@@ -1,6 +1,6 @@
 package clientFx;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Restaurant {
     private String name;
@@ -22,6 +22,7 @@ public class Restaurant {
         }
     }
     public void add_menu(Food food){
-        menu.add(Food);
+        menu.add(food);
     }
+    public String getName(){return name;}
 }
