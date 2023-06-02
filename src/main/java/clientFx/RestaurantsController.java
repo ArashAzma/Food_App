@@ -34,6 +34,14 @@ public class RestaurantsController {
         rpc.displayName(aceBurger.getName());
         Image burger = new Image(new FileInputStream("C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\clientFx\\images\\aceBurger burger.jpg"));
         rpc.displayImage(burger, 0);
+        rpc.displayLabel("boob", 0);
+
+        rpc.displayImage(burger, 1);
+        rpc.displayLabel("BUH BUH", 1);
+
+        rpc.displayImage(burger, 2);
+        rpc.displayLabel("ENDMYSUFFERING", 2);
+
         switchToScene(e, "restaurantPageView.fxml", root);
     }
     @FXML
@@ -45,6 +53,14 @@ public class RestaurantsController {
         rpc.displayName(sachi.getName());
         Image burger = new Image(new FileInputStream("C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\clientFx\\images\\bahar burger.jpg"));
         rpc.displayImage(burger, 0);
+        rpc.displayLabel("AAAAA", 0);
+
+        rpc.displayImage(burger, 1);
+        rpc.displayLabel("AAAAA", 1);
+
+        rpc.displayImage(burger, 2);
+        rpc.displayLabel("AAAAA", 2);
+
         switchToScene(e, "restaurantPageView.fxml", root);
     }
     @FXML

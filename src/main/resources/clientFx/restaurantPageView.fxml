@@ -2,13 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantPageController">
    <children>
@@ -33,22 +31,35 @@
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" top="10.0" />
                            </VBox.margin>
-                           <image>
-                              <Image url="@images/pizza2.jpg" />
-                           </image>
                         </ImageView>
-                        <Label prefHeight="48.0" prefWidth="140.0" text="Label" />
+                        <Label fx:id="imageLabel0" alignment="CENTER" prefHeight="48.0" prefWidth="140.0" text="Label" />
                      </children>
                   </VBox>
                   <VBox prefHeight="130.0" prefWidth="140.0">
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>
+                     <children>
+                        <ImageView fx:id="image1" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" top="10.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label fx:id="imageLabel1" alignment="CENTER" prefHeight="48.0" prefWidth="140.0" text="Label" />
+                     </children>
                   </VBox>
                   <VBox prefHeight="130.0" prefWidth="140.0">
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>
+                     <children>
+                        <ImageView fx:id="image2" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" top="10.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label fx:id="imageLabel2" alignment="CENTER" prefHeight="48.0" prefWidth="140.0" text="Label" />
+                     </children>
                   </VBox>
                </children>
             </HBox>
