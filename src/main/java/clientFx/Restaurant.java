@@ -21,4 +21,5 @@ public abstract class Restaurant {
             this.tableCount = count;
         }
     }
+    public String getName(){return name;}
 }

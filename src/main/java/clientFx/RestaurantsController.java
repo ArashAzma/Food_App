@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class RestaurantsController {
@@ -24,14 +26,25 @@ public class RestaurantsController {
     private ImageView r3;
     @FXML
     protected void restaurant1(MouseEvent e) throws IOException {
+        Restaurant aceBurger = new AceBurger("AceBurger", "khone ma", "hamishe", true, 10);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantPageView.fxml"));
         root = loader.load();
+        RestaurantPageController rpc = loader.getController();
+
+        rpc.displayName(aceBurger.getName());
+        Image burger = new Image(new FileInputStream("C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\clientFx\\images\\aceBurger burger.jpg"));
+        rpc.displayImage(burger, 0);
         switchToScene(e, "restaurantPageView.fxml", root);
     }
     @FXML
     protected void restaurant2(MouseEvent e) throws IOException {
+        Restaurant sachi = new Sachi("Sachi", "khone bahar", "shaba", true, 6);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantPageView.fxml"));
         root = loader.load();
+        RestaurantPageController rpc = loader.getController();
+        rpc.displayName(sachi.getName());
+        Image burger = new Image(new FileInputStream("C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\clientFx\\images\\bahar burger.jpg"));
+        rpc.displayImage(burger, 0);
         switchToScene(e, "restaurantPageView.fxml", root);
     }
     @FXML
