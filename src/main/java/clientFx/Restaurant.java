@@ -1,11 +1,11 @@
 package clientFx;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public abstract class Restaurant {
+public class Restaurant {
     private String name;
     private String address;
-    private ArrayList<String> menu;
+    private ArrayList<Food> menu = new ArrayList<Food>();
     private String time;
     private boolean is_takeAway;
     private int tableCount = 0;
@@ -20,6 +20,9 @@ public abstract class Restaurant {
         } else {
             this.tableCount = count;
         }
+    }
+    public void add_menu(Food food){
+        menu.add(food);
     }
     public String getName(){return name;}
 }
