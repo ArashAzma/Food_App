@@ -36,7 +36,7 @@ public class LoginController {
     protected void login(ActionEvent e) throws IOException {
         String name = nameBox.getText();
         String password = passBox.getText();
-        try(BufferedReader file = new BufferedReader(new FileReader("C:/Users/10/IdeaProjects/ClientFx/usernames"))){
+        try(BufferedReader file = new BufferedReader(new FileReader("usernames"))){
             String line;
             boolean findUser = false;
             while ((line = file.readLine()) != null) {
@@ -44,11 +44,12 @@ public class LoginController {
 //                System.out.println(Arrays.toString(parts));
                 if(parts[0].equals(name)  && parts[1].equals(password)){
                     Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
-                    System.out.println(admin);
+//                    System.out.println(admin);
                     System.out.println("Found it!!!");
                     findUser = true;
                     nameLabel.setText("Name");
                     passwordLabel.setText("Password");
+
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
                     root = loader.load();
                     switchToScene(e, "restaurantView.fxml", root);

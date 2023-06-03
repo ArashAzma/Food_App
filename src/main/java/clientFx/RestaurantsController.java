@@ -1,5 +1,6 @@
 package clientFx;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class RestaurantsController {
+    private Admin admin = Admin.getInstace(null, null, null, null, null);
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -67,6 +69,22 @@ public class RestaurantsController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantPageView.fxml"));
         root = loader.load();
         switchToScene(e, "restaurantPageView.fxml", root);
+    }
+    @FXML
+    private void infoButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
+        root = loader.load();
+        InfoController IC = loader.getController();
+        IC.updateNameLabel(admin.getName());
+
+        switchToScene(e, "InfoView.fxml", root);
+    }
+    public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
+//        Parent root = FXMLLoader.load(getClass().getResource(Scene));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     private static void switchToScene(MouseEvent event, String Scene, Parent root)  throws IOException {
 //        Parent root = FXMLLoader.load(getClass().getResource(Scene));
