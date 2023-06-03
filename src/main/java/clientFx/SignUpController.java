@@ -10,9 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 
 public class SignUpController {
     private static Stage stage;
@@ -31,12 +29,21 @@ public class SignUpController {
         String address = addressBox.getText();
         try{
             FileWriter file = new FileWriter("usernames", true);
+            BufferedReader in = new BufferedReader(new FileReader("C:/Users/10/IdeaProjects/ClientFx/usernames"));
             file.write(phone+",");
             file.write(email+",");
             file.write(address+",\n");
             file.close();
-//            nameLabel.setText("Name");
-//            passwordLabel.setText("Password");
+            String line;
+            String last = null;
+            while ((line = in.readLine()) != null) {
+                if (line != null) {
+                    last = line;
+                }
+            }
+            String[] parts = last.split(",");
+            Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
+//            System.out.println(admin);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
             root = loader.load();
@@ -71,5 +78,4 @@ public class SignUpController {
         stage.setScene(scene);
         stage.show();
     }
-
 }

@@ -15,6 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class mainController {
+    private String Name;
+    private String Pass;
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -38,6 +40,8 @@ public class mainController {
         }
         else{
             try{
+                Name = name;
+                Pass = password;
                 FileWriter file = new FileWriter("usernames", true);
                 file.write(name+",");
                 file.write(password+",");
@@ -67,5 +71,13 @@ public class mainController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getPass() {
+        return Pass;
     }
 }
