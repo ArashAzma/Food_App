@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class SignUpController {
     private static Stage stage;
@@ -48,6 +49,17 @@ public class SignUpController {
     }
     @FXML
     protected void login(ActionEvent e) throws IOException {
+        RandomAccessFile f = new RandomAccessFile("usernames", "rw");
+        long length = f.length() - 1;
+        byte b;
+        do {
+            length -= 1;
+            f.seek(length);
+            b = f.readByte();
+        } while(b != 10);
+        f.setLength(length+1);
+        f.close();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("loginView.fxml"));
         root = loader.load();
         switchToScene(e, "loginView.fxml", root);

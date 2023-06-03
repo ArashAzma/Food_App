@@ -37,12 +37,12 @@
                   <Insets left="15.0" right="20.0" top="10.0" />
                </VBox.margin>
                <image>
-                  <Image url="@images/pizza2.jpg" />
+                  <Image url="@../images/pizza2.jpg" />
                </image>
             </ImageView>
             <ImageView fx:id="r2" fitHeight="150.0" fitWidth="564.0" onMouseClicked="#restaurant2" pickOnBounds="true">
                <image>
-                  <Image url="@images/pizza2.jpg" />
+                  <Image url="@../images/pizza2.jpg" />
                </image>
                <VBox.margin>
                   <Insets bottom="20.0" left="15.0" top="18.0" />
@@ -50,7 +50,7 @@
             </ImageView>
             <ImageView fx:id="r3" fitHeight="150.0" fitWidth="564.0" onMouseClicked="#restaurant3" pickOnBounds="true">
                <image>
-                  <Image url="@images/pizza2.jpg" />
+                  <Image url="@../images/pizza2.jpg" />
                </image>
                <VBox.margin>
                   <Insets bottom="20.0" left="15.0" top="18.0" />

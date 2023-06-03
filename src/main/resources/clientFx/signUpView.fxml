@@ -5,12 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.SignUpController">
    <children>
-      <VBox layoutX="174.0" layoutY="26.0" prefHeight="323.0" prefWidth="253.0">
+      <VBox layoutX="174.0" layoutY="26.0" prefHeight="364.0" prefWidth="253.0">
          <children>
             <Label prefHeight="36.0" prefWidth="223.0" text="Finish setting up your account ">
                <padding>
@@ -46,6 +47,15 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="38.0" prefWidth="139.0" text="Dont have an account?" />
+                  <Button mnemonicParsing="false" onAction="#login" prefHeight="38.0" prefWidth="88.0" text="login" />
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
