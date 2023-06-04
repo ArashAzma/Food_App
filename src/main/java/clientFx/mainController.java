@@ -14,7 +14,7 @@ import java.io.FileWriter;
 
 import java.io.IOException;
 
-public class mainController {
+public class mainController extends Main{
     private String Name;
     private String Pass;
     private static Stage stage;
@@ -52,7 +52,6 @@ public class mainController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("signUpView.fxml"));
                 root = loader.load();
                 switchToScene(e, "signUpView.fxml", root);
-
             }catch(IOException error){
                 System.out.println("error");
                 error.printStackTrace();
@@ -65,18 +64,9 @@ public class mainController {
         root = loader.load();
         switchToScene(e, "loginView.fxml", root);
     }
-    public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource(Scene));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     public String getName() {
         return Name;
     }
-
     public String getPass() {
         return Pass;
     }

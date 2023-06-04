@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 
-public class InfoController {
+public class InfoController extends Main{
     private Admin admin = Admin.getInstace(null, null, null, null, null);
     private static Stage stage;
     private static Scene scene;
@@ -114,11 +114,5 @@ public class InfoController {
             }
         }
     }
-    public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource(Scene));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+
 }

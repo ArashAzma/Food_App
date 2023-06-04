@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class RestaurantsController {
+public class RestaurantsController extends Main{
     private Admin admin = Admin.getInstace(null, null, null, null, null);
     private static Stage stage;
     private static Scene scene;
@@ -62,7 +62,7 @@ public class RestaurantsController {
         rpc.displayImage(burger, 2);
         rpc.displayLabel("AAAAA", 2);
 
-        switchToScene(e, "restaurantPageView.fxml", root);
+       switchToScene(e, "restaurantPageView.fxml", root);
     }
     @FXML
     protected void restaurant3(MouseEvent e) throws IOException {
@@ -75,13 +75,6 @@ public class RestaurantsController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
         root = loader.load();
         switchToScene(e, "InfoView.fxml", root);
-    }
-    public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource(Scene));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
     private static void switchToScene(MouseEvent event, String Scene, Parent root)  throws IOException {
 //        Parent root = FXMLLoader.load(getClass().getResource(Scene));

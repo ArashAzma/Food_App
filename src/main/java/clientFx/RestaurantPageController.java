@@ -1,6 +1,9 @@
 package clientFx;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -8,7 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class RestaurantPageController {
+import java.io.IOException;
+
+public class RestaurantPageController extends Main{
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -54,5 +59,11 @@ public class RestaurantPageController {
                 image2.setImage(image);
                 break;
         }
+    }
+    @FXML
+    private void infoButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
+        root = loader.load();
+        switchToScene(e, "InfoView.fxml", root);
     }
 }

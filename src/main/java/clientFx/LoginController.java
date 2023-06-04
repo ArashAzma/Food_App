@@ -17,7 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class LoginController {
+public class LoginController extends Main{
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -41,10 +41,8 @@ public class LoginController {
             boolean findUser = false;
             while ((line = file.readLine()) != null) {
                 String[] parts = line.split(",");
-//                System.out.println(Arrays.toString(parts));
                 if(parts[0].equals(name)  && parts[1].equals(password)){
                     Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
-//                    System.out.println(admin);
                     System.out.println("Found it!!!");
                     findUser = true;
                     nameLabel.setText("Name");
@@ -52,7 +50,7 @@ public class LoginController {
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
                     root = loader.load();
-                    switchToScene(e, "restaurantView.fxml", root);
+                    Main.switchToScene(e, "restaurantView.fxml", root);
                 }
             }
             if(!findUser){
@@ -70,12 +68,5 @@ public class LoginController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainView.fxml"));
         root = loader.load();
         switchToScene(e, "mainView.fxml", root);
-    }
-    public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource(Scene));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }

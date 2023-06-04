@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-public class SignUpController {
+public class SignUpController extends Main{
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -43,7 +43,6 @@ public class SignUpController {
             }
             String[] parts = last.split(",");
             Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
-//            System.out.println(admin);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
             root = loader.load();
@@ -70,12 +69,5 @@ public class SignUpController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("loginView.fxml"));
         root = loader.load();
         switchToScene(e, "loginView.fxml", root);
-    }
-    private static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource(Scene));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }
