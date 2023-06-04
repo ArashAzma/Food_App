@@ -74,9 +74,6 @@ public class RestaurantsController {
     private void infoButton(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
         root = loader.load();
-        InfoController IC = loader.getController();
-        IC.updateNameLabel(admin.getName());
-
         switchToScene(e, "InfoView.fxml", root);
     }
     public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
