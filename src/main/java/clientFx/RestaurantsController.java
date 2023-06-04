@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,20 +33,23 @@ public class RestaurantsController extends Main{
     @FXML
     public void initialize(){
         ArrayList<Restaurant> list = restaurants;
-//        imageViews = new ArrayList<>();
         for(Restaurant res: restaurants){
             Image image = new Image(res.getImgPath());
+            Button button = new Button(res.getName());
+            Label address = new Label(res.getAddress());
             ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(200); // Set the desired width
-            imageView.setFitHeight(200); // Set the desired height
-            VBox vbox = new VBox(imageView);
+            button.setMinWidth(180);
+            address.setMinWidth(180);
+            imageView.setFitWidth(180);
+            imageView.setFitHeight(180);
+
+            button.setOnAction((ActionEvent event) -> {
+                // Perform action for this button
+                System.out.println("Button clicked: " + res.getName());
+                // Add your custom logic here
+            });
+            VBox vbox = new VBox(imageView, button, address);
             flowPane.getChildren().add(0, vbox);
-//            imageViews.add(imageView);
         }
-
     }
-
-//    public void handleImageClick(ImageView imageView) {
-//        System.out.println("Image clicked: ");
-//    }
 }

@@ -29,10 +29,7 @@ public class Restaurant implements Serializable {
         menu.add(food);
     }
     public String getName(){return name;}
-    public String toString(){
-        return name+"\t"+address;
-    }
-
+    public String getAddress(){return address;}
     public String getImgPath() {
         return imgPath;
     }

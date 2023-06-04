@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
@@ -8,9 +9,11 @@
 <ScrollPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantsController">
     <content>
         <FlowPane fx:id="flowPane" prefHeight="400.0" prefWidth="600.0" vgap="10">
-            <!-- Placeholder VBox for each image -->
-            <VBox fx:id="image1Box">
-                <ImageView fx:id="image1" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            <VBox fx:id="image1Box" maxHeight="200.0" maxWidth="200.0">
+                <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            <FlowPane.margin>
+               <Insets />
+            </FlowPane.margin>
             </VBox>
             <VBox fx:id="image2Box">
                 <ImageView fx:id="image2" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
@@ -35,7 +38,6 @@
                <ImageView fx:id="image111" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
             </children>
          </VBox>
-            <!-- Add more VBox elements for additional images -->
         </FlowPane>
     </content>
 </ScrollPane>

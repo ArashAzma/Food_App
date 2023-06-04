@@ -17,12 +17,12 @@ public class Server {
 
         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         ArrayList<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant("AceBurger", "", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg"));
-        restaurants.add(new Restaurant("Sachi", "", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
-        restaurants.add(new Restaurant("Sachi", "", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
-        restaurants.add(new Restaurant("Sachi", "", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
-        restaurants.add(new Restaurant("Sachi", "", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
-        restaurants.add(new Restaurant("Sachi", "", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
+        restaurants.add(new Restaurant("AceBurger", "Farhad 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg"));
+        restaurants.add(new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
+        restaurants.add(new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
+        restaurants.add(new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
+        restaurants.add(new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
+        restaurants.add(new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg"));
         outputStream.writeObject(restaurants);
 
         System.out.println("Object sent to client.");
