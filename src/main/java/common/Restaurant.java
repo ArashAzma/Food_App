@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Restaurant implements Serializable {
+    private String imgPath;
     private String name;
     private String address;
     private ArrayList<Food> menu = new ArrayList<Food>();
@@ -12,7 +13,7 @@ public class Restaurant implements Serializable {
     private int tableCount = 0;
     private int courierCount = 0;
     public Restaurant(String name){this.name = name;}
-    public Restaurant(String name, String address, String time, boolean is_takeAway, int count){
+    public Restaurant(String name, String address, String time, boolean is_takeAway, int count, String imgPath){
         this.name = name;
         this.address = address;
         this.time = time;
@@ -22,6 +23,7 @@ public class Restaurant implements Serializable {
         } else {
             this.tableCount = count;
         }
+        this.imgPath = imgPath;
     }
     public void add_menu(Food food){
         menu.add(food);
@@ -29,5 +31,9 @@ public class Restaurant implements Serializable {
     public String getName(){return name;}
     public String toString(){
         return name+"\t"+address;
+    }
+
+    public String getImgPath() {
+        return imgPath;
     }
 }

@@ -13,6 +13,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,16 +26,25 @@ public class RestaurantsController extends Main{
     private static Scene scene;
     private Parent root;
     @FXML
-    private ListView<Restaurant> listView;
+    private FlowPane flowPane = new FlowPane();
+//    private ArrayList<ImageView> imageViews;
     @FXML
     public void initialize(){
         ArrayList<Restaurant> list = restaurants;
-        for(Restaurant i: list){
-            System.out.println(i);
+//        imageViews = new ArrayList<>();
+        for(Restaurant res: restaurants){
+            Image image = new Image(res.getImgPath());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(200); // Set the desired width
+            imageView.setFitHeight(200); // Set the desired height
+            VBox vbox = new VBox(imageView);
+            flowPane.getChildren().add(0, vbox);
+//            imageViews.add(imageView);
         }
-        ObservableList<Restaurant> observableList = FXCollections.observableArrayList(list);
-        listView.setItems(observableList);
-
 
     }
+
+//    public void handleImageClick(ImageView imageView) {
+//        System.out.println("Image clicked: ");
+//    }
 }

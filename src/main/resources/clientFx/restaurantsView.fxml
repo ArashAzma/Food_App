@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantsController">
-   <children>
-      <ListView fx:id="listView" layoutX="129.0" layoutY="40.0" prefHeight="327.0" prefWidth="334.0" />
-   </children>
-</AnchorPane>
+<ScrollPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantsController">
+    <content>
+        <FlowPane fx:id="flowPane" prefHeight="400.0" prefWidth="600.0" vgap="10">
+            <!-- Placeholder VBox for each image -->
+            <VBox fx:id="image1Box">
+                <ImageView fx:id="image1" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            </VBox>
+            <VBox fx:id="image2Box">
+                <ImageView fx:id="image2" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            </VBox>
+         <VBox fx:id="image1Box1">
+            <children>
+               <ImageView fx:id="image11" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </VBox>
+         <VBox fx:id="image1Box2">
+            <children>
+               <ImageView fx:id="image12" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </VBox>
+         <VBox fx:id="image2Box1">
+            <children>
+               <ImageView fx:id="image21" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </VBox>
+         <VBox fx:id="image1Box11">
+            <children>
+               <ImageView fx:id="image111" fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </VBox>
+            <!-- Add more VBox elements for additional images -->
+        </FlowPane>
+    </content>
+</ScrollPane>
