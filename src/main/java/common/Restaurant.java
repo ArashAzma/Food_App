@@ -1,8 +1,9 @@
-package clientFx;
+package common;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
     private String name;
     private String address;
     private ArrayList<Food> menu = new ArrayList<Food>();
@@ -10,6 +11,7 @@ public class Restaurant {
     private boolean is_takeAway;
     private int tableCount = 0;
     private int courierCount = 0;
+    public Restaurant(String name){this.name = name;}
     public Restaurant(String name, String address, String time, boolean is_takeAway, int count){
         this.name = name;
         this.address = address;
@@ -25,4 +27,7 @@ public class Restaurant {
         menu.add(food);
     }
     public String getName(){return name;}
+    public String toString(){
+        return name+"\t"+address;
+    }
 }

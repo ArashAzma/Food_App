@@ -48,9 +48,9 @@ public class LoginController extends Main{
                     nameLabel.setText("Name");
                     passwordLabel.setText("Password");
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
                     root = loader.load();
-                    Main.switchToScene(e, "restaurantView.fxml", root);
+                    Main.switchToScene(e, "restaurantsView.fxml", root);
                 }
             }
             if(!findUser){

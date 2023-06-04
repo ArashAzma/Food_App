@@ -29,7 +29,7 @@ public class SignUpController extends Main{
         String address = addressBox.getText();
         try{
             FileWriter file = new FileWriter("usernames", true);
-            BufferedReader in = new BufferedReader(new FileReader("C:/Users/10/IdeaProjects/ClientFx/usernames"));
+            BufferedReader in = new BufferedReader(new FileReader("usernames"));
             file.write(phone+",");
             file.write(email+",");
             file.write(address+",\n");
@@ -44,9 +44,9 @@ public class SignUpController extends Main{
             String[] parts = last.split(",");
             Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
             root = loader.load();
-            switchToScene(e, "restaurantView.fxml", root);
+            switchToScene(e, "restaurantsView.fxml", root);
 
         }catch(IOException error){
             System.out.println("error");
