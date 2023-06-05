@@ -20,6 +20,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class RestaurantsController extends Main{
@@ -29,10 +32,25 @@ public class RestaurantsController extends Main{
     private Parent root;
     @FXML
     private FlowPane flowPane = new FlowPane();
-//    private ArrayList<ImageView> imageViews;
+    private ArrayList<Restaurant> restaurants;
+
     @FXML
     public void initialize(){
-        ArrayList<Restaurant> list = restaurants;
+        try {
+            // Connect to the server and receive the restaurants list
+            InetAddress addr = InetAddress.getByName(null);
+            System.out.println("addr = " + addr);
+            Socket socket = new Socket(addr, PORT);
+            System.out.println("Connected to server.");
+
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
+            inputStream.close();
+            socket.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        int i=0;
         for(Restaurant res: restaurants){
             Image image = new Image(res.getImgPath());
             Button button = new Button(res.getName());
@@ -42,14 +60,23 @@ public class RestaurantsController extends Main{
             address.setMinWidth(180);
             imageView.setFitWidth(180);
             imageView.setFitHeight(180);
+            final int index = i;
 
-            button.setOnAction((ActionEvent event) -> {
-                // Perform action for this button
-                System.out.println("Button clicked: " + res.getName());
-                // Add your custom logic here
+            button.setOnAction((ActionEvent e) -> {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantPageView.fxml"));
+                try {
+                    root = loader.load();
+                    RestaurantPageController rpc = loader.getController();
+                    rpc.setIndex(index);
+//                    System.out.println("Button clicked: " + res.getName());
+                    switchToScene(e, "restaurantPageView.fxml", root);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             });
             VBox vbox = new VBox(imageView, button, address);
-            flowPane.getChildren().add(0, vbox);
+            flowPane.getChildren().add(i, vbox);
+            i++;
         }
     }
 }

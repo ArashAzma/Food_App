@@ -15,7 +15,7 @@ import common.Restaurant;
 
 public class Main extends Application {
     public static final int PORT = 8080;
-    protected  static ArrayList<Restaurant> restaurants;
+//    protected  static ArrayList<Restaurant> restaurants;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainView.fxml"));
@@ -32,7 +32,7 @@ public class Main extends Application {
         System.out.println("Connected to server.");
 
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        restaurants = (ArrayList<Restaurant>) inputStream.readObject();
+        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) inputStream.readObject();
 
         System.out.println("Received Restaurant objects from server:");
         for (Restaurant restaurant : restaurants) {

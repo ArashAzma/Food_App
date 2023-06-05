@@ -30,6 +30,7 @@ public class Restaurant implements Serializable {
     }
     public String getName(){return name;}
     public String getAddress(){return address;}
+    public ArrayList getMenu(){return menu;}
     public String getImgPath() {
         return imgPath;
     }
