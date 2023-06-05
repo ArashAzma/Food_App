@@ -20,12 +20,12 @@ public class Server {
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             ArrayList<Restaurant> restaurants = new ArrayList<>();
             Restaurant aceBurger = new Restaurant("AceBurger", "Farhad 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg");
-            aceBurger.add_menu(new Food ("burger", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg", true));
-            aceBurger.add_menu(new Food ("pizza", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg",  true));
+            aceBurger.add_menu(new Food ("burger", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg", true, 90));
+            aceBurger.add_menu(new Food ("pizza", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg",  true, 110));
 
             Restaurant sachi = new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg");
-            sachi.add_menu(new Food("sausage", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false));
-            sachi.add_menu(new Food("kalbus", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false));
+            sachi.add_menu(new Food("sausage", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false, 127));
+            sachi.add_menu(new Food("kalbus", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false, 255));
 
             restaurants.add(aceBurger);
             restaurants.add(sachi);

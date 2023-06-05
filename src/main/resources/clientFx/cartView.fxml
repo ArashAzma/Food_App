@@ -2,23 +2,57 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.CartController">
-   <Button alignment="TOP_LEFT" onAction="#infoButton" text="info">
+   <HBox prefHeight="48.0" prefWidth="600.0">
+      <children>
+         <Button alignment="TOP_LEFT" onAction="#backButton" prefHeight="25.0" prefWidth="28.0" text="&lt;">
+            <HBox.margin>
+               <Insets bottom="10.0" left="20.0" right="10.0" top="5.0" />
+            </HBox.margin>
+         </Button>
+         <Button alignment="TOP_LEFT" onAction="#infoButton" prefHeight="25.0" prefWidth="42.0" text="info">
+            <HBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+            </HBox.margin>
+         </Button>
+         <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+            <children>
+               <Label prefHeight="17.0" prefWidth="93.0" text="Mojodi: " />
+               <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="افزایش موجودی" textAlignment="CENTER" />
+            </children>
+            <HBox.margin>
+               <Insets left="378.0" top="5.0" />
+            </HBox.margin>
+         </VBox>
+      </children>
       <VBox.margin>
-         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         <Insets />
       </VBox.margin>
-   </Button>
-   <Button alignment="TOP_LEFT" onAction="#backButton" text="&lt;" />
+   </HBox>
    <HBox prefHeight="302.0" prefWidth="600.0">
       <Button alignment="CENTER" contentDisplay="CENTER" onAction="#removeButtonClicked" text="Remove">
          <HBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </HBox.margin>
       </Button>
-      <ListView fx:id="listView" prefHeight="350.0" prefWidth="400.0" />
+      <ListView fx:id="listView" prefHeight="302.0" prefWidth="410.0" />
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="600.0">
+      <children>
+         <Label fx:id="priceLabel" prefHeight="41.0" prefWidth="399.0" text="Sum : ">
+            <HBox.margin>
+               <Insets left="100.0" />
+            </HBox.margin>
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Label>
+      </children>
    </HBox>
 </VBox>

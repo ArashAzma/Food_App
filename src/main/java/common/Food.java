@@ -5,12 +5,14 @@ import java.io.Serializable;
 public class Food implements Serializable {
     private String name;
     private String imgPath;
+    private double price;
     private boolean isAvailable;
 
-    public Food(String name, String imgpath, boolean isAvailable){
+    public Food(String name, String imgpath, boolean isAvailable, double price){
         this.name = name;
         this.imgPath = imgpath;
         this.isAvailable = isAvailable;
+        this.price = price;
     }
     public String isAvailable() {
         if(isAvailable) return "yes";
@@ -33,5 +35,8 @@ public class Food implements Serializable {
     }
     public String toString(){
         return name;
+    }
+    public double getPrice() {
+        return price;
     }
 }

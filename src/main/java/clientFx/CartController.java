@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
@@ -24,11 +25,18 @@ public class CartController extends Main{
     @FXML
     private ListView<Food> listView = new ListView<>();
     @FXML
+    private Label priceLabel;
+    @FXML
     public void initialize(){
         ObservableList<Food> observableItems = FXCollections.observableArrayList(items);
         System.out.println(Arrays.toString(items.toArray()));
         listView.setItems(observableItems);
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        double sum= 0;
+        for(Food i:items){
+            sum += i.getPrice();
+        }
+        priceLabel.setText("Sum: "+sum);
     }
     public void addItems(ArrayList foods){
         items = foods;
