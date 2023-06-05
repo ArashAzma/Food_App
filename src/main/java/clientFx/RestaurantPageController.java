@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -72,11 +73,16 @@ public class RestaurantPageController extends Main{
             imageView.setFitWidth(180);
             imageView.setFitHeight(180);
 
-            CheckBox add = new CheckBox();
+            ChoiceBox<Integer> add = new ChoiceBox<>();
+            for (int i = 0; i <= 4; i++) {
+                add.getItems().add(i);
+            }
             add.setOnAction((ActionEvent e) -> {
-//                cartController.addItem(food);
-                selectedItems.add(food);
-                System.out.println("added "+food);
+               int quantity = add.getValue();
+                for (int i = 0; i < quantity; i++) {
+                    selectedItems.add(food);
+                }
+                System.out.println("Added " + quantity + " " + food.getName() + " to cart");
             });
 
             HBox hbox = new HBox(add, name);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -20,7 +21,10 @@
    </ScrollPane>
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
-         <Button onAction="#addToCartButton" text="add to cart" />
+         <Button alignment="CENTER" contentDisplay="CENTER" onAction="#addToCartButton" text="add to cart">
+            <HBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin></Button>
       </children>
    </HBox>
 </VBox>

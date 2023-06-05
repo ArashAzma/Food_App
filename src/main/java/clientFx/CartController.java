@@ -36,8 +36,12 @@ public class CartController extends Main{
     }
     @FXML
     private void removeButtonClicked(ActionEvent event) {
-        ObservableList<Food> selectedItems = listView.getSelectionModel().getSelectedItems();
-        items.removeAll(selectedItems);
+        ObservableList<Integer> indices =  listView.getSelectionModel().getSelectedIndices().sorted();
+        for (int k = indices.size() - 1; k >= 0; k--) {
+            int index = indices.get(k);
+            listView.getItems().remove(index);
+            items.remove(index);
+        }
         initialize();
     }
     @FXML
