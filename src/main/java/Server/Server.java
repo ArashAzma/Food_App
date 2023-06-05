@@ -24,8 +24,8 @@ public class Server {
             aceBurger.add_menu(new Food ("pizza", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg",  true));
 
             Restaurant sachi = new Restaurant("Sachi", "Resalat 24", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\bahar burger.jpg");
-            sachi.add_menu(new Food("sausage", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  true));
-            sachi.add_menu(new Food("kalbus", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  true));
+            sachi.add_menu(new Food("sausage", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false));
+            sachi.add_menu(new Food("kalbus", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false));
 
             restaurants.add(aceBurger);
             restaurants.add(sachi);

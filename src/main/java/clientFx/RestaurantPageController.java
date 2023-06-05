@@ -31,8 +31,8 @@ public class RestaurantPageController extends Main{
     private FlowPane flowPane = new FlowPane();
     private ArrayList<Restaurant> restaurants;
 
-    @FXML
-    public void initialize(){
+//    @FXML
+    public void init(){
         try {
             // Connect to the server and receive the restaurants list
             InetAddress addr = InetAddress.getByName(null);
@@ -50,7 +50,7 @@ public class RestaurantPageController extends Main{
         Restaurant rest = restaurants.get(index);
         ArrayList<Food> menu = rest.getMenu();
         for(Food food: menu){
-            System.out.println(food);
+//            System.out.println(food);
             Image image = new Image(food.getImgPath());
             Label name = new Label(food.getName());
             Label isAvailable = new Label(food.isAvailable());
@@ -73,5 +73,6 @@ public class RestaurantPageController extends Main{
     }
     public void setIndex(int index) {
         this.index = index;
+        init();
     }
 }

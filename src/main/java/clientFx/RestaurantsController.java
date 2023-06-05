@@ -68,6 +68,7 @@ public class RestaurantsController extends Main{
                     root = loader.load();
                     RestaurantPageController rpc = loader.getController();
                     rpc.setIndex(index);
+                    System.out.println(index);
 //                    System.out.println("Button clicked: " + res.getName());
                     switchToScene(e, "restaurantPageView.fxml", root);
                 } catch (IOException ex) {
