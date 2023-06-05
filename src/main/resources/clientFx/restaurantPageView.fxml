@@ -18,4 +18,9 @@
          <FlowPane fx:id="flowPane" prefHeight="400.0" prefWidth="600.0" />
       </content>
    </ScrollPane>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+         <Button onAction="#addToCartButton" text="add to cart" />
+      </children>
+   </HBox>
 </VBox>

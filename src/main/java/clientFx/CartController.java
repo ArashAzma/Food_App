@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,18 +28,16 @@ public class CartController extends Main{
         ObservableList<Food> observableItems = FXCollections.observableArrayList(items);
         System.out.println(Arrays.toString(items.toArray()));
         listView.setItems(observableItems);
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
-    public void addItem(Food food){
-        items.add(food);
-//        listView.getItems().add(food);
+    public void addItems(ArrayList foods){
+        items = foods;
         initialize();
     }
     @FXML
     private void removeButtonClicked(ActionEvent event) {
-        Food selectedItem = listView.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            items.remove(selectedItem);
-        }
+        ObservableList<Food> selectedItems = listView.getSelectionModel().getSelectedItems();
+        items.removeAll(selectedItems);
         initialize();
     }
     @FXML

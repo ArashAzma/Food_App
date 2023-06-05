@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import common.Restaurant;
 
 public class Main extends Application {
     public static final int PORT = 8080;

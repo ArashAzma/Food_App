@@ -41,6 +41,7 @@ public class RestaurantPageController extends Main{
     @FXML
     private FlowPane flowPane = new FlowPane();
     private ArrayList<Restaurant> restaurants;
+    private ArrayList<Food> selectedItems = new ArrayList<>();
 
 //    @FXML
     public void init() throws IOException {
@@ -56,9 +57,6 @@ public class RestaurantPageController extends Main{
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
         cartController.initialize();
         Restaurant rest = restaurants.get(index);
         ArrayList<Food> menu = rest.getMenu();
@@ -76,7 +74,8 @@ public class RestaurantPageController extends Main{
 
             CheckBox add = new CheckBox();
             add.setOnAction((ActionEvent e) -> {
-                cartController.addItem(food);
+//                cartController.addItem(food);
+                selectedItems.add(food);
                 System.out.println("added "+food);
             });
 
@@ -96,6 +95,12 @@ public class RestaurantPageController extends Main{
     private void cartButton(ActionEvent e) throws IOException {
         cartController.initialize();
         switchToScene(e, "cartView.fxml", root);
+    }
+    @FXML
+    private void addToCartButton(ActionEvent e) throws IOException {
+        cartController.addItems(selectedItems);
+        cartController.initialize();
+//        switchToScene(e, "cartView.fxml", root);
     }
     public void setIndex(int index) throws IOException {
         this.index = index;
