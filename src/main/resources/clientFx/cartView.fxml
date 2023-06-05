@@ -12,6 +12,7 @@
          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
       </VBox.margin>
    </Button>
+   <Button alignment="TOP_LEFT" onAction="#backButton" text="&lt;" />
    <HBox prefHeight="302.0" prefWidth="600.0">
       <Button alignment="CENTER" contentDisplay="CENTER" onAction="#removeButtonClicked" text="Remove">
          <HBox.margin>

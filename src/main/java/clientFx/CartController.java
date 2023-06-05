@@ -50,4 +50,12 @@ public class CartController extends Main{
         root = loader.load();
         switchToScene(e, "InfoView.fxml", root);
     }
+    @FXML
+    private void backButton(ActionEvent e) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RestaurantPageView.fxml"));
+        root = loader.load();
+        RestaurantPageController rpc = loader.getController();
+        rpc.init();
+        switchToScene(e, "RestaurantPageView.fxml", root);
+    }
 }
