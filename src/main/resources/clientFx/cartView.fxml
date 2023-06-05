@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.CartController">
+   <Button alignment="TOP_LEFT" onAction="#infoButton" text="info">
+      <VBox.margin>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      </VBox.margin>
+   </Button>
+   <HBox prefHeight="302.0" prefWidth="600.0">
+      <Button alignment="CENTER" contentDisplay="CENTER" onAction="#removeButtonClicked" text="Remove">
+         <HBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </HBox.margin>
+      </Button>
+      <ListView fx:id="listView" prefHeight="350.0" prefWidth="400.0" />
+   </HBox>
+</VBox>

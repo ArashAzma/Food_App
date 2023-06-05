@@ -9,10 +9,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,18 +27,25 @@ import java.util.ArrayList;
 public class RestaurantPageController extends Main{
     private static Stage stage;
     private static Scene scene;
-    private Parent root;
     private int index;
+    private FXMLLoader loader = new FXMLLoader(getClass().getResource("cartView.fxml"));
+    private Parent root;
+    {
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private CartController cartController = loader.getController();
     @FXML
     private FlowPane flowPane = new FlowPane();
     private ArrayList<Restaurant> restaurants;
 
 //    @FXML
-    public void init(){
+    public void init() throws IOException {
         try {
-            // Connect to the server and receive the restaurants list
             InetAddress addr = InetAddress.getByName(null);
-//            System.out.println("addr = " + addr);
             Socket socket = new Socket(addr, PORT);
             System.out.println("Connected to server.");
 
@@ -47,6 +56,10 @@ public class RestaurantPageController extends Main{
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
+
+        cartController.initialize();
         Restaurant rest = restaurants.get(index);
         ArrayList<Food> menu = rest.getMenu();
         for(Food food: menu){
@@ -60,7 +73,15 @@ public class RestaurantPageController extends Main{
             isAvailable.setMinWidth(180);
             imageView.setFitWidth(180);
             imageView.setFitHeight(180);
-            VBox vbox = new VBox(imageView, name, isAvailable);
+
+            CheckBox add = new CheckBox();
+            add.setOnAction((ActionEvent e) -> {
+                cartController.addItem(food);
+                System.out.println("added "+food);
+            });
+
+            HBox hbox = new HBox(add, name);
+            VBox vbox = new VBox(imageView, hbox, isAvailable);
             flowPane.getChildren().add(0, vbox);
         }
     }
@@ -71,7 +92,12 @@ public class RestaurantPageController extends Main{
         root = loader.load();
         switchToScene(e, "InfoView.fxml", root);
     }
-    public void setIndex(int index) {
+    @FXML
+    private void cartButton(ActionEvent e) throws IOException {
+        cartController.initialize();
+        switchToScene(e, "cartView.fxml", root);
+    }
+    public void setIndex(int index) throws IOException {
         this.index = index;
         init();
     }
