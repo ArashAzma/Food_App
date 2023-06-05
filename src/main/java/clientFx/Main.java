@@ -25,21 +25,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        InetAddress addr = InetAddress.getByName(null);
-        System.out.println("addr = " + addr);
-        Socket socket = new Socket(addr, PORT);
-        System.out.println("Connected to server.");
-
-        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) inputStream.readObject();
-
-        System.out.println("Received Restaurant objects from server:");
-        for (Restaurant restaurant : restaurants) {
-            System.out.println(restaurant.getName());
-        }
-
-        socket.close();
+    public static void main(String[] args) throws IOException{
         launch();
     }
     public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {

@@ -80,4 +80,10 @@ public class RestaurantsController extends Main{
             i++;
         }
     }
+    @FXML
+    private void infoButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
+        root = loader.load();
+        switchToScene(e, "InfoView.fxml", root);
+    }
 }
