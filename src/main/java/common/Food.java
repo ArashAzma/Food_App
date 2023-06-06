@@ -8,7 +8,7 @@ public class Food implements Serializable {
     private double price;
     private boolean isAvailable;
 
-    public Food(String name, String imgpath, boolean isAvailable, double price){
+    public Food(String name, double price, boolean isAvailable, String imgpath){
         this.name = name;
         this.imgPath = imgpath;
         this.isAvailable = isAvailable;
@@ -33,10 +33,11 @@ public class Food implements Serializable {
     public String getImgPath() {
         return imgPath;
     }
-    public String toString(){
-        return name;
-    }
     public double getPrice() {
         return price;
     }
+    public String toString(){
+        return name+" "+price+" "+imgPath;
+    }
+
 }

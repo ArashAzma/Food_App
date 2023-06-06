@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -37,12 +38,18 @@ public class RestaurantsController extends Main{
     @FXML
     public void initialize(){
         try {
-            // Connect to the server and receive the restaurants list
+//             Connect to the server and receive the restaurants list
             InetAddress addr = InetAddress.getByName(null);
             System.out.println("addr = " + addr);
             Socket socket = new Socket(addr, PORT);
             System.out.println("Connected to server.");
 
+            // Send a request to the server to get the restaurants list
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.writeObject("getRestaurants");
+            outputStream.flush();
+
+            // Receive the restaurants list from the server
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
             inputStream.close();

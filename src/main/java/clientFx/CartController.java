@@ -22,7 +22,7 @@ public class CartController extends Main{
     private static Scene scene;
     private Parent root;
     private int index;
-    private static ArrayList<Food> items = new ArrayList<>();
+    private  ArrayList<Food> items = new ArrayList<>();
     @FXML
     private ListView<Food> listView = new ListView<>();
     @FXML

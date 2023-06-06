@@ -8,6 +8,7 @@ public class Restaurant implements Serializable {
     private String name;
     private String address;
     private ArrayList<Food> menu = new ArrayList<Food>();
+    private int foodCount;
     private String time;
     private boolean is_takeAway;
     private int tableCount = 0;
@@ -33,5 +34,15 @@ public class Restaurant implements Serializable {
     public ArrayList getMenu(){return menu;}
     public String getImgPath() {
         return imgPath;
+    }
+    public int getFoodCount() {
+        return foodCount;
+    }
+    public String toString(){
+        String str = name+" "+address+" "+time;
+        for(Food i:menu){
+            str+="\n\t"+i;
+        }
+        return str;
     }
 }
