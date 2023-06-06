@@ -25,7 +25,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class RestaurantPageController extends Main{
+public class RestaurantPageController extends LoginController{
     private static Stage stage;
     private static Scene scene;
     private int index;
@@ -41,29 +41,33 @@ public class RestaurantPageController extends Main{
     private CartController cartController = loader.getController();
     @FXML
     private FlowPane flowPane = new FlowPane();
-    private ArrayList<Restaurant> restaurants;
+//    private ArrayList<Restaurant> restaurants;
     private static ArrayList<Food> selectedItems = new ArrayList<>();
 
 //    @FXML
     public void init() throws IOException {
-        try {
-            InetAddress addr = InetAddress.getByName(null);
-            Socket socket = new Socket(addr, PORT);
-            System.out.println("Connected to server.");
-
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
-            inputStream.close();
-            socket.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            InetAddress addr = InetAddress.getByName(null);
+//            Socket socket = new Socket(addr, PORT);
+//            System.out.println("Connected to server.");
+//
+//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+//            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
+//            inputStream.close();
+//            socket.close();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         cartController.initialize();
         Restaurant rest = restaurants.get(index);
         ArrayList<Food> menu = rest.getMenu();
         for(Food food: menu){
 //            System.out.println(food);
-            Image image = new Image(food.getImgPath());
+            System.out.println(food.getImgPath());
+            String imagePath = "file://" + System.getProperty("user.dir") + food.getImgPath();
+            Image image = new Image(imagePath);
+
+//            Image image = new Image(food.getImgPath());
             Label name = new Label(food.getName());
             Label isAvailable = new Label(food.isAvailable());
 

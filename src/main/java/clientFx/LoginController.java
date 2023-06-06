@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LoginController extends Main{
+    protected static ArrayList<Restaurant> restaurants;
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -54,6 +55,18 @@ public class LoginController extends Main{
                 String[] parts = line.split(",");
                 Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
                 System.out.println("received Admin");
+                try{
+                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                    restaurants = (ArrayList<Restaurant>) inputStream.readObject();
+                    System.out.println("received Restaurants...");
+                    System.out.println(Arrays.toString(restaurants.toArray()));
+                    inputStream.close();
+                }catch (ClassNotFoundException error){
+                    error.printStackTrace();
+                }finally {
+                    socket.close();
+                }
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
                 root = loader.load();
                 switchToScene(e, "restaurantsView.fxml", root);

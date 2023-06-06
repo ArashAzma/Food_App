@@ -13,11 +13,10 @@ public class Server {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
        loadRestaurants();
-//        for(Restaurant i:restaurants){
-//            System.out.println(i);
-//        }
+        for(Restaurant i:restaurants){
+            System.out.println(i);
+        }
 
-        loadRestaurants();
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server started. Waiting for client...");
         Admin admin = new Admin();
@@ -50,15 +49,12 @@ public class Server {
                         }
                         if (findUser) {
                             out.println("Found");
-//                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//                            outputStream.writeObject(admin);
-//                            outputStream.close();
                             out.println(admin.getName()+","+admin.getPassword()+","+admin.getPhoneNumber()+","+admin.getAddress()+","+admin.getEmail());
                             System.out.println("admin sent to client.");
-//                            sendRestaurants(out);
-                            while(true){
-                                handleClientConnection(socket, admin);
-                            }
+                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                            outputStream.writeObject(restaurants);
+                            outputStream.close();
+                            System.out.println("Sent ArrayList");
                         } else {
                             out.println("!Found");
                         }
@@ -90,43 +86,45 @@ public class Server {
                 restaurants.add(new Restaurant(parts[0], parts[1], parts[2], isTakeAway, count, parts[5]));
                 int menu_items = Integer.parseInt(parts[6]);
                 Restaurant rest = restaurants.get(restaurants.size() - 1);
+
                 for (int i = 0; i < menu_items && (menline = menuFile.readLine()) != null; i++) {
                     String[] foodParts = menline.split(",");
                     double price = Double.parseDouble(foodParts[1]);
                     boolean isAvailable = foodParts[2].equals("true");
                     rest.add_menu(new Food(foodParts[0], price, isAvailable, foodParts[3]));
                 }
-                menuFile.close();
-                restaurantFile.close();
             }
+            menuFile.close();
+            restaurantFile.close();
         }catch (IOException e){
             e.printStackTrace();
         }
     }
-    private static void sendRestaurants(Socket socket, PrintWriter out) throws IOException {
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-        outputStream.writeObject(restaurants);
-        outputStream.close();
-        System.out.println("Restaurants sent to client.");
-    }
-    private static void handleClientConnection(Socket socket, Admin admin) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
-        String request = in.readLine();
-        if (request != null && request.equalsIgnoreCase("getRestaurants")) {
-            // Send the restaurants list to the client
-            sendRestaurants(socket, out);
-        }
-//        else {
-//            // Perform authentication for other requests
-//            performAuthentication(in, out, admin);
+//    private static void sendRestaurants(Socket socket, PrintWriter out) throws IOException {
+//        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//        outputStream.writeObject(restaurants);
+//        outputStream.close();
+//        System.out.println("Restaurants sent to client.");
+//    }
+//    private static void handleClientConnection(Socket socket, Admin admin) throws IOException {
+//        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+//
+//        String request = in.readLine();
+//        if (request != null && request.equalsIgnoreCase("getRestaurants")) {
+//            // Send the restaurants list to the client
+//            sendRestaurants(socket, out);
 //        }
-
-        System.out.println("Closing connection with the client...");
-        in.close();
-        out.close();
-        socket.close();
-    }
+////        else {
+////            // Perform authentication for other requests
+////            performAuthentication(in, out, admin);
+////        }
+//
+//        System.out.println("Closing connection with the client...");
+//        in.close();
+//        out.close();
+//        socket.close();
+//    }
 
 }
