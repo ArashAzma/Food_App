@@ -173,7 +173,7 @@
          </children>
       </VBox>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#restaurantButton" text="Restaurants" />
-      <Button layoutX="92.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="List" />
+      <Button layoutX="92.0" layoutY="14.0" mnemonicParsing="false" onAction="#cartButton" prefHeight="25.0" prefWidth="67.0" text="List" />
       <Label layoutX="503.0" layoutY="18.0" prefHeight="25.0" prefWidth="90.0" text="Mojodi:" />
    </children>
 </AnchorPane>

@@ -42,7 +42,7 @@ public class RestaurantPageController extends Main{
     @FXML
     private FlowPane flowPane = new FlowPane();
     private ArrayList<Restaurant> restaurants;
-    private ArrayList<Food> selectedItems = new ArrayList<>();
+    private static ArrayList<Food> selectedItems = new ArrayList<>();
 
 //    @FXML
     public void init() throws IOException {
@@ -82,7 +82,7 @@ public class RestaurantPageController extends Main{
                 for (int i = 0; i < quantity; i++) {
                     selectedItems.add(food);
                 }
-                System.out.println("Added " + quantity + " " + food.getName() + " to cart");
+                System.out.println("Selected " + quantity + " " + food.getName());
             });
 
             HBox hbox = new HBox(add, name);
@@ -100,13 +100,13 @@ public class RestaurantPageController extends Main{
     @FXML
     private void cartButton(ActionEvent e) throws IOException {
         cartController.initialize();
+        cartController.setIndex(index);
         switchToScene(e, "cartView.fxml", root);
     }
     @FXML
     private void addToCartButton(ActionEvent e) throws IOException {
         cartController.addItems(selectedItems);
         cartController.initialize();
-//        switchToScene(e, "cartView.fxml", root);
     }
     public void setIndex(int index) throws IOException {
         this.index = index;

@@ -27,8 +27,13 @@ public class Server {
             sachi.add_menu(new Food("sausage", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false, 127));
             sachi.add_menu(new Food("kalbus", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg",  false, 255));
 
+            Restaurant subway = new Restaurant("SubWay", "turkey 36", "", false, 5, "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\subwayLogo.jpg");
+            subway.add_menu(new Food("sandwich", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\aceBurger burger.jpg", true, 99));
+            subway.add_menu(new Food("peperoni", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\pizza.jpg", true, 99));
+            subway.add_menu(new Food("makhsoos", "C:\\Users\\10\\IdeaProjects\\ClientFx\\src\\main\\resources\\images\\pizza2.jpg", false, 99));
             restaurants.add(aceBurger);
             restaurants.add(sachi);
+            restaurants.add(subway);
 
             outputStream.writeObject(restaurants);
             System.out.println("Object sent to client.");

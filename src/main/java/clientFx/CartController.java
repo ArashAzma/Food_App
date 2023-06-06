@@ -21,7 +21,8 @@ public class CartController extends Main{
     private static Stage stage;
     private static Scene scene;
     private Parent root;
-    private ArrayList<Food> items = new ArrayList<>();
+    private int index;
+    private static ArrayList<Food> items = new ArrayList<>();
     @FXML
     private ListView<Food> listView = new ListView<>();
     @FXML
@@ -63,7 +64,12 @@ public class CartController extends Main{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RestaurantPageView.fxml"));
         root = loader.load();
         RestaurantPageController rpc = loader.getController();
-        rpc.init();
+        rpc.setIndex(index);
+//        rpc.init();
         switchToScene(e, "RestaurantPageView.fxml", root);
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

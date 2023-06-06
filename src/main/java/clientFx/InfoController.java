@@ -87,9 +87,14 @@ public class InfoController extends Main{
         updateEmailLabel(admin.getEmail());
     }
     public void restaurantButton(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
         root = loader.load();
-        switchToScene(e, "restaurantView.fxml", root);
+        switchToScene(e, "restaurantsView.fxml", root);
+    }
+    public void cartButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("cartView.fxml"));
+        root = loader.load();
+        switchToScene(e, "cartView.fxml", root);
     }
     private void changeFile(String newStr, int p) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
