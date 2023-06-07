@@ -30,7 +30,7 @@ public class Server {
                     PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                     String situation = in.readLine();
 
-                    if(situation.equals("!foundUser")){
+                    if(situation.equals("login")){
                         String username = in.readLine();
                         String password = in.readLine();
                         System.out.println(username + " " + password);
@@ -61,12 +61,13 @@ public class Server {
                             e.printStackTrace();
                         }
                     }
-                    else{
+                    else if(situation.equals("list")){
                         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                         outputStream.writeObject(restaurants);
                         outputStream.close();
                         System.out.println("Sent ArrayList");
                     }
+
                 } finally {
                     System.out.println("Closing connection...");
                     socket.close();

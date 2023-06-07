@@ -44,17 +44,16 @@ public class LoginController extends Main{
             System.out.println("socket = " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("!foundUser");
+            out.println("login");
             String name = nameBox.getText();
             String password = passBox.getText();
             out.println(name);
             out.println(password);
             String foundUser = in.readLine();
+            System.out.println(foundUser);
             if(foundUser.equals("Found")) {
                 System.out.println("found user");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
-                RestaurantsController rc = loader.getController();
-                rc.initialize();
                 root = loader.load();
                 switchToScene(e, "restaurantsView.fxml", root);
                 socket.close();

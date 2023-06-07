@@ -24,7 +24,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class RestaurantPageController extends LoginController{
+public class RestaurantPageController extends Main{
     private static Stage stage;
     private static Scene scene;
     private int index;
@@ -53,7 +53,7 @@ public class RestaurantPageController extends LoginController{
             System.out.println("socket = " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("foundUser");
+            out.println("list");
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
             System.out.println("received restauarants ");
@@ -72,9 +72,12 @@ public class RestaurantPageController extends LoginController{
         ArrayList<Food> menu = rest.getMenu();
         for(Food food: menu){
 //            System.out.println(food);
-            System.out.println(food.getImgPath());
-            String imagePath = "file://" + System.getProperty("user.dir") + food.getImgPath();
+//            System.out.println(food.getImgPath());
+//            String imagePath = "file://" + System.getProperty("user.dir") + food.getImgPath();
+//            Image image = new Image(imagePath);
+            String imagePath = RestaurantPageController.class.getResource(food.getImgPath()).toExternalForm();
             Image image = new Image(imagePath);
+
 
 //            Image image = new Image(food.getImgPath());
             Label name = new Label(food.getName());

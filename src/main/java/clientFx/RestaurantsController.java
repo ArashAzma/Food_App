@@ -45,7 +45,7 @@ public class RestaurantsController extends Main{
             System.out.println("socket = " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("foundUser");
+            out.println("list");
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
             System.out.println("received restauarants ");
@@ -63,7 +63,8 @@ public class RestaurantsController extends Main{
         }
         int i=0;
         for(Restaurant res: restaurants){
-            Image image = new Image(res.getImgPath());
+            String imagePath = RestaurantPageController.class.getResource(res.getImgPath()).toExternalForm();
+            Image image = new Image(imagePath);
             Button button = new Button(res.getName());
             Label address = new Label(res.getAddress());
             ImageView imageView = new ImageView(image);

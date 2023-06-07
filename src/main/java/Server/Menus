@@ -1,5 +1,5 @@
-fried chicken,99,true,src/main/resources/images/aceBurger burger.jpg
-burger,89,,true,src/main/resources/images/aceBurger burger.jpg
-potato chips,49,,true,src/main/resources/images/aceBurger burger.jpg
-hamburger,79,,true,src/main/resources/images/aceBurger burger.jpg
-soda,19,,true,src/main/resources/images/aceBurger burger.jpg
+fried chicken,99,true,/images/pizza.jpg
+burger,89,true,/images/pizza2.jpg
+potato chips,49,true,/images/aceBurger_burger.jpg
+hamburger,79,true,/images/pizza.jpg
+soda,19,true,/images/aceBurger_burger.jpg
