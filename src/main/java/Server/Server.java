@@ -28,39 +28,44 @@ public class Server {
                     System.out.println("Client connected.");
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                    String username = in.readLine();
-                    String password = in.readLine();
-                    System.out.println(username + " " + password);
-                    boolean findUser = false;
-                    try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))) {
-                        String line;
-                        while ((line = userFile.readLine()) != null && !findUser) {
-                            String[] parts = line.split(",");
-                            System.out.println(Arrays.toString(parts));
-                            if (parts[0].equals(username) && parts[1].equals(password)) {
-                                admin.setName(parts[0]);
-                                admin.setPassword(parts[1]);
-                                admin.setPhoneNumber(parts[2]);
-                                admin.setAddress(parts[3]);
-                                admin.setEmail(parts[4]);
-                                findUser = true;
-                                break;
+                    String situation = in.readLine();
+
+                    if(situation.equals("!foundUser")){
+                        String username = in.readLine();
+                        String password = in.readLine();
+                        System.out.println(username + " " + password);
+                        boolean findUser = false;
+                        try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))) {
+                            String line;
+                            while ((line = userFile.readLine()) != null && !findUser) {
+                                String[] parts = line.split(",");
+                                System.out.println(Arrays.toString(parts));
+                                if (parts[0].equals(username) && parts[1].equals(password)) {
+                                    admin.setName(parts[0]);
+                                    admin.setPassword(parts[1]);
+                                    admin.setPhoneNumber(parts[2]);
+                                    admin.setAddress(parts[3]);
+                                    admin.setEmail(parts[4]);
+                                    findUser = true;
+                                    break;
+                                }
                             }
+
+                            if (findUser) {
+                                out.println("Found");
+                            } else {
+                                out.println("!foundUser");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("Error reading usernames file: " + e.getMessage());
+                            e.printStackTrace();
                         }
-                        if (findUser) {
-                            out.println("Found");
-                            out.println(admin.getName()+","+admin.getPassword()+","+admin.getPhoneNumber()+","+admin.getAddress()+","+admin.getEmail());
-                            System.out.println("admin sent to client.");
-                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                            outputStream.writeObject(restaurants);
-                            outputStream.close();
-                            System.out.println("Sent ArrayList");
-                        } else {
-                            out.println("!Found");
-                        }
-                    } catch (IOException e) {
-                        System.out.println("Error reading usernames file: " + e.getMessage());
-                        e.printStackTrace();
+                    }
+                    else{
+                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                        outputStream.writeObject(restaurants);
+                        outputStream.close();
+                        System.out.println("Sent ArrayList");
                     }
                 } finally {
                     System.out.println("Closing connection...");
@@ -100,31 +105,5 @@ public class Server {
             e.printStackTrace();
         }
     }
-
-//    private static void sendRestaurants(Socket socket, PrintWriter out) throws IOException {
-//        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//        outputStream.writeObject(restaurants);
-//        outputStream.close();
-//        System.out.println("Restaurants sent to client.");
-//    }
-//    private static void handleClientConnection(Socket socket, Admin admin) throws IOException {
-//        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-//
-//        String request = in.readLine();
-//        if (request != null && request.equalsIgnoreCase("getRestaurants")) {
-//            // Send the restaurants list to the client
-//            sendRestaurants(socket, out);
-//        }
-////        else {
-////            // Perform authentication for other requests
-////            performAuthentication(in, out, admin);
-////        }
-//
-//        System.out.println("Closing connection with the client...");
-//        in.close();
-//        out.close();
-//        socket.close();
-//    }
 
 }

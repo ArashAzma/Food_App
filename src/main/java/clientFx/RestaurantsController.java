@@ -18,45 +18,49 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class RestaurantsController extends LoginController{
-    private Admin admin = Admin.getInstace(null, null, null, null, null);
+import static clientFx.LoginController.restaurants;
+
+public class RestaurantsController extends Main{
+//    private Admin admin = Admin.getInstace(null, null, null, null, null);
     private static Stage stage;
     private static Scene scene;
     private Parent root;
     @FXML
     private FlowPane flowPane = new FlowPane();
-//    private ArrayList<Restaurant> restaurants;
+    private ArrayList<Restaurant> restaurants;
 
     @FXML
-    public void initialize(){
-//        try {
-//             Connect to the server and receive the restaurants list
-//            InetAddress addr = InetAddress.getByName(null);
-//            System.out.println("addr = " + addr);
-//            Socket socket = new Socket(addr, PORT);
-//            System.out.println("Connected to server.");
-//
-//            // Send a request to the server to get the restaurants list
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//            outputStream.writeObject("getRestaurants");
-//            outputStream.flush();
-//
-//            // Receive the restaurants list from the server
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-//            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
-//            inputStream.close();
-//            socket.close();
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+    public void initialize() throws IOException {
+        InetAddress addr = InetAddress.getByName(null);
+        System.out.println("addr = " + addr);
+        Socket socket = new Socket(addr, PORT);
+        try{
+            System.out.println("Connected to server.");
+            System.out.println("socket = " + socket);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+            out.println("foundUser");
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
+            System.out.println("received restauarants ");
+            inputStream.close();
+
+        }catch(IOException error ){
+            System.out.println("\n IOException\n");
+            error.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("\nobject doesnt match\n");
+            throw new RuntimeException(e);
+        } finally{
+            System.out.println("closing...");
+            socket.close();
+        }
         int i=0;
         for(Restaurant res: restaurants){
             Image image = new Image(res.getImgPath());

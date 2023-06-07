@@ -19,8 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -41,23 +40,33 @@ public class RestaurantPageController extends LoginController{
     private CartController cartController = loader.getController();
     @FXML
     private FlowPane flowPane = new FlowPane();
-//    private ArrayList<Restaurant> restaurants;
+    private ArrayList<Restaurant> restaurants;
     private static ArrayList<Food> selectedItems = new ArrayList<>();
 
 //    @FXML
     public void init() throws IOException {
-//        try {
-//            InetAddress addr = InetAddress.getByName(null);
-//            Socket socket = new Socket(addr, PORT);
-//            System.out.println("Connected to server.");
-//
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-//            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
-//            inputStream.close();
-//            socket.close();
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        InetAddress addr = InetAddress.getByName(null);
+        System.out.println("addr = " + addr);
+        Socket socket = new Socket(addr, PORT);
+       try{
+            System.out.println("Connected to server.");
+            System.out.println("socket = " + socket);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+            out.println("foundUser");
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            restaurants = (ArrayList<Restaurant>) inputStream.readObject();
+            System.out.println("received restauarants ");
+            inputStream.close();
+
+        }catch(IOException error ){
+            error.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally{
+            System.out.println("closing...");
+            socket.close();
+        }
         cartController.initialize();
         Restaurant rest = restaurants.get(index);
         ArrayList<Food> menu = rest.getMenu();

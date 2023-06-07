@@ -44,6 +44,7 @@ public class LoginController extends Main{
             System.out.println("socket = " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+            out.println("!foundUser");
             String name = nameBox.getText();
             String password = passBox.getText();
             out.println(name);
@@ -51,29 +52,17 @@ public class LoginController extends Main{
             String foundUser = in.readLine();
             if(foundUser.equals("Found")) {
                 System.out.println("found user");
-                String line = in.readLine();
-                String[] parts = line.split(",");
-                Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
-                System.out.println("received Admin");
-                try{
-                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                    restaurants = (ArrayList<Restaurant>) inputStream.readObject();
-                    System.out.println("received Restaurants...");
-                    System.out.println(Arrays.toString(restaurants.toArray()));
-                    inputStream.close();
-                }catch (ClassNotFoundException error){
-                    error.printStackTrace();
-                }finally {
-                    socket.close();
-                }
-
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
+                RestaurantsController rc = loader.getController();
+                rc.initialize();
                 root = loader.load();
                 switchToScene(e, "restaurantsView.fxml", root);
+                socket.close();
             }
-            else System.out.println("Did not find user");
-            out.println("END");
-
+            else {
+                System.out.println("Did not find user");
+                passError.setText("Did not find user!");
+            }
         } catch(IOException error){
             error.printStackTrace();
         }finally{
