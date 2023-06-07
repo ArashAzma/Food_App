@@ -1,5 +1,6 @@
 package clientFx;
 
+import common.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,15 +8,22 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class SignUpController extends Main{
     private static Stage stage;
     private static Scene scene;
     private Parent root;
+    @FXML
+    private TextField nameBox;
+    @FXML
+    private PasswordField passwordBox;
     @FXML
     private TextField phoneBox;
     @FXML
@@ -24,48 +32,41 @@ public class SignUpController extends Main{
     private TextField addressBox;
     @FXML
     protected void signup(ActionEvent e){
+        String name = nameBox.getText();
+        String password = passwordBox.getText();
         String phone = phoneBox.getText();
         String email = emailBox.getText();
         String address = addressBox.getText();
         try{
-            FileWriter file = new FileWriter("usernames", true);
-            BufferedReader in = new BufferedReader(new FileReader("usernames"));
-            file.write(phone+",");
-            file.write(email+",");
-            file.write(address+",\n");
-            file.close();
-            String line;
-            String last = null;
-            while ((line = in.readLine()) != null) {
-                if (line != null) {
-                    last = line;
-                }
+            InetAddress addr = InetAddress.getByName(null);
+            System.out.println("addr = " + addr);
+            Socket socket = new Socket(addr, PORT);
+            try{
+                System.out.println("Connected to server.");
+                System.out.println("socket = " + socket);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+                out.println("signup");
+                Admin admin = new Admin(name, password, phone, email, address);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(admin);
+                outputStream.close();
+                System.out.println("Sent Admin");
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
+                root = loader.load();
+                switchToScene(e, "restaurantsView.fxml", root);
+
+            }catch(IOException error){
+                System.out.println("error");
+                error.printStackTrace();
             }
-            String[] parts = last.split(",");
-            Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
-            root = loader.load();
-            switchToScene(e, "restaurantsView.fxml", root);
-
-        }catch(IOException error){
-            System.out.println("error");
-            error.printStackTrace();
+        }catch (IOException E){
+            E.printStackTrace();
         }
     }
     @FXML
     protected void login(ActionEvent e) throws IOException {
-        RandomAccessFile f = new RandomAccessFile("usernames", "rw");
-        long length = f.length() - 1;
-        byte b;
-        do {
-            length -= 1;
-            f.seek(length);
-            b = f.readByte();
-        } while(b != 10);
-        f.setLength(length+1);
-        f.close();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("loginView.fxml"));
         root = loader.load();
         switchToScene(e, "loginView.fxml", root);

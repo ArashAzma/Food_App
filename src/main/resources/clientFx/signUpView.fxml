@@ -3,39 +3,53 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.SignUpController">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.SignUpController">
    <children>
-      <VBox layoutX="174.0" layoutY="26.0" prefHeight="364.0" prefWidth="253.0">
+      <VBox prefHeight="400.0" prefWidth="253.0">
          <children>
-            <Label prefHeight="36.0" prefWidth="223.0" text="Finish setting up your account ">
+            <Label alignment="CENTER" prefHeight="22.0" prefWidth="223.0" text="set up your account " VBox.vgrow="ALWAYS">
                <padding>
-                  <Insets bottom="15.0" top="15.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label prefHeight="22.0" prefWidth="535.0" text="enter your phone number">
+            <Label layoutX="25.0" layoutY="56.0" prefHeight="22.0" prefWidth="535.0" text="Name: ">
                <padding>
-                  <Insets bottom="8.0" top="15.0" />
+                  <Insets bottom="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="nameBox" layoutX="25.0" layoutY="83.0" prefHeight="25.0" prefWidth="301.0" />
+            <Label layoutX="25.0" layoutY="56.0" prefHeight="22.0" prefWidth="535.0" text="Password:">
+               <padding>
+                  <Insets bottom="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <PasswordField fx:id="passwordBox" />
+            <Label prefHeight="22.0" prefWidth="535.0" text="Phone number:">
+               <padding>
+                  <Insets bottom="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
             <TextField fx:id="phoneBox" prefHeight="25.0" prefWidth="301.0" />
-            <Label prefHeight="22.0" prefWidth="535.0" text="enter your email">
+            <Label prefHeight="22.0" prefWidth="535.0" text="Email:">
                <padding>
-                  <Insets bottom="8.0" top="15.0" />
+                  <Insets bottom="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
             <TextField fx:id="emailBox" prefHeight="25.0" prefWidth="301.0" />
-            <Label prefHeight="22.0" prefWidth="535.0" text="enter your address">
+            <Label prefHeight="22.0" prefWidth="535.0" text="Address:">
                <padding>
-                  <Insets bottom="8.0" right="15.0" top="15.0" />
+                  <Insets bottom="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
             <TextField fx:id="addressBox" prefHeight="25.0" prefWidth="301.0" />
@@ -44,7 +58,7 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets bottom="5.0" top="10.0" />
                </VBox.margin>
             </Button>
             <HBox prefHeight="100.0" prefWidth="200.0">
@@ -53,7 +67,7 @@
                   <Button mnemonicParsing="false" onAction="#login" prefHeight="38.0" prefWidth="88.0" text="login" />
                </children>
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
          </children>
@@ -62,4 +76,4 @@
          </padding>
       </VBox>
    </children>
-</AnchorPane>
+</Pane>

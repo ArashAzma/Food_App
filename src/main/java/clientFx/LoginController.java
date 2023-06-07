@@ -24,6 +24,8 @@ public class LoginController extends Main{
     private static Stage stage;
     private static Scene scene;
     private Parent root;
+    private String name;
+    private String password;
     @FXML
     private TextField nameBox;
     @FXML
@@ -69,42 +71,18 @@ public class LoginController extends Main{
             socket.close();
         }
     }
-
-//    @FXML
-//    protected void login(ActionEvent e) throws IOException {
-//        String name = nameBox.getText();
-//        String password = passBox.getText();
-//        try(BufferedReader file = new BufferedReader(new FileReader("usernames"))){
-//            String line;
-//            boolean findUser = false;
-//            while ((line = file.readLine()) != null) {
-//                String[] parts = line.split(",");
-//                if(parts[0].equals(name)  && parts[1].equals(password)){
-//                    Admin admin = Admin.getInstace(parts[0], parts[1], parts[2], parts[3], parts[4]);
-//                    System.out.println("Found it!!!");
-//                    findUser = true;
-//                    nameLabel.setText("Name");
-//                    passwordLabel.setText("Password");
-//
-//                    FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
-//                    root = loader.load();
-//                    Main.switchToScene(e, "restaurantsView.fxml", root);
-//                }
-//            }
-//            if(!findUser){
-//                passError.setTextFill(Color.RED);
-//                passError.setText("Couldnt find youe account! ");
-//            }
-//        }catch(IOException error){
-//            System.out.println("error");
-//            error.printStackTrace();
-//        }
-//    }
-
     @FXML
     protected void signUp(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("signUpView.fxml"));
         root = loader.load();
-        switchToScene(e, "mainView.fxml", root);
+        switchToScene(e, "signUpView.fxml", root);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,5 +1,8 @@
-package Server;
-public final class Admin {
+package common;
+
+import java.io.Serializable;
+
+public final class Admin implements Serializable {
     private String name;
     private String password;
     private String phoneNumber;
@@ -44,7 +47,7 @@ public final class Admin {
         this.email = email;
     }
     public String toString(){
-        return name+password+phoneNumber+address+email;
+        return name+" "+password+" "+phoneNumber+" "+address+" "+email;
     }
 }
 

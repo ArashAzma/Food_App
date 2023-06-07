@@ -1,4 +1,6 @@
 package Server;
+import clientFx.RestaurantPageController;
+import common.Admin;
 import common.Food;
 import common.Restaurant;
 
@@ -10,16 +12,16 @@ import java.util.Arrays;
 public class Server {
     public static final int PORT = 8080;
     private static ArrayList<Restaurant> restaurants = new ArrayList<>();
-
+    private static Admin admin = new Admin();
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-       loadRestaurants();
+
+        loadRestaurants();
         for(Restaurant i:restaurants){
             System.out.println(i);
         }
 
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server started. Waiting for client...");
-        Admin admin = new Admin();
 
         while (true) {
             try {
@@ -66,6 +68,36 @@ public class Server {
                         outputStream.writeObject(restaurants);
                         outputStream.close();
                         System.out.println("Sent ArrayList");
+                    }
+                    else if(situation.equals("signup")){
+                        try{
+                            FileWriter file = new FileWriter("src/main/java/Server/usernames", true);
+                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                            admin = (Admin) inputStream.readObject();
+                            System.out.println("received new Admin");
+                            inputStream.close();
+                            System.out.println(admin);
+                            file.write(admin.getName()+",");
+                            file.write(admin.getPassword()+",");
+                            file.write(admin.getPhoneNumber()+",");
+                            file.write(admin.getEmail()+",");
+                            file.write(admin.getAddress()+"\n");
+                            file.close();
+                        }catch (IOException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if(situation.equals("getAdmin")){
+                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                        outputStream.writeObject(admin);
+                        outputStream.close();
+                        System.out.println("Sent Admin");
+                    }
+                    else if(situation.equals("setAdmin")){
+                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                        admin = (Admin) inputStream.readObject();
+                        System.out.println("received new Admin ");
+                        inputStream.close();
                     }
 
                 } finally {

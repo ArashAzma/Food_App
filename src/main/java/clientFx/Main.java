@@ -13,10 +13,9 @@ import java.net.*;
 
 public class Main extends Application {
     public static final int PORT = 8080;
-//    protected  static ArrayList<Restaurant> restaurants;
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("BUH BUH!");
         stage.setScene(scene);

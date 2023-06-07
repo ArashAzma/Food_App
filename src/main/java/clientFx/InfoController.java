@@ -1,5 +1,6 @@
 package clientFx;
 
+import common.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class InfoController extends Main{
-    private Admin admin = Admin.getInstace(null, null, null, null, null);
+    private Admin admin;
     private static Stage stage;
     private static Scene scene;
     private Parent root;
@@ -40,6 +43,24 @@ public class InfoController extends Main{
     private TextField emailTextField;
     @FXML
     public void initialize() {
+        try{
+            InetAddress addr = InetAddress.getByName(null);
+            System.out.println("addr = " + addr);
+            Socket socket = new Socket(addr, PORT);
+
+            System.out.println("Connected to server.");
+            System.out.println("socket = " + socket);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+            out.println("getAdmin");
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            admin = (Admin) inputStream.readObject();
+            System.out.println("received Admin ");
+            inputStream.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         updateNameLabel(admin.getName());
         updatePassLabel(admin.getPassword());
         updatePhoneLabel(admin.getPhoneNumber());
