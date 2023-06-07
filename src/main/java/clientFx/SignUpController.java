@@ -4,10 +4,9 @@ import common.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -23,13 +22,23 @@ public class SignUpController extends Main{
     @FXML
     private TextField nameBox;
     @FXML
+    private Label nameLabel;
+    @FXML
     private PasswordField passwordBox;
+    @FXML
+    private Label passLabel;
     @FXML
     private TextField phoneBox;
     @FXML
+    private Label phoneLabel;
+    @FXML
     private TextField emailBox;
     @FXML
+    private Label emailLabel;
+    @FXML
     private TextField addressBox;
+    @FXML
+    private Label addressLabel;
     @FXML
     protected void signup(ActionEvent e){
         String name = nameBox.getText();
@@ -41,22 +50,51 @@ public class SignUpController extends Main{
             InetAddress addr = InetAddress.getByName(null);
             System.out.println("addr = " + addr);
             Socket socket = new Socket(addr, PORT);
+            System.out.println("Connected to server.");
+            System.out.println("socket = " + socket);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+            out.println("signup");
             try{
-                System.out.println("Connected to server.");
-                System.out.println("socket = " + socket);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-                out.println("signup");
                 Admin admin = new Admin(name, password, phone, email, address);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(admin);
-                outputStream.close();
                 System.out.println("Sent Admin");
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
-                root = loader.load();
-                switchToScene(e, "restaurantsView.fxml", root);
+                String errorCode = in.readLine();
+                if(!errorCode.equals("true")){
+                    int checkName = Integer.parseInt(errorCode.charAt(0)+"");
+                    int checkPass = Integer.parseInt(errorCode.charAt(1)+"");
+                    int checkNumber = Integer.parseInt(errorCode.charAt(2)+"");
+                    int checkEmail = Integer.parseInt(errorCode.charAt(3)+"");
 
+                    switch (checkName){
+                        case(1):
+                            nameLabel.setText("Name is already in use");
+                            break;
+                        case (2):
+                            nameLabel.setText("Name is too short");
+                            break;
+                        default:break;
+                    }
+                    switch (checkPass){
+                        case(1):
+                            passLabel.setText("Password is too weak!");
+                            break;
+                        case (2):
+                            passLabel.setText("Password is too short");
+                            break;
+                        default:break;
+                    }
+                    if(checkNumber==1)phoneLabel.setText("invalid number");
+                    if(checkEmail==1)emailLabel.setText("invalid Email");
+                }
+                else{
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
+                    root = loader.load();
+                    switchToScene(e, "restaurantsView.fxml", root);
+                }
+                outputStream.close();
             }catch(IOException error){
                 System.out.println("error");
                 error.printStackTrace();

@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.SignUpController">
    <children>
       <VBox prefHeight="400.0" prefWidth="253.0">
@@ -74,6 +73,31 @@
          <padding>
             <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
          </padding>
+      </VBox>
+      <VBox layoutX="250.0" layoutY="73.0" prefHeight="236.0" prefWidth="205.0">
+         <children>
+            <Label fx:id="nameLabel" prefHeight="24.0" prefWidth="206.0" textFill="RED" />
+            <Label fx:id="passLabel" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="206.0" textFill="RED">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="phoneLabel" layoutX="10.0" layoutY="64.0" prefHeight="24.0" prefWidth="206.0" textFill="RED">
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="emailLabel" layoutX="10.0" layoutY="113.0" prefHeight="24.0" prefWidth="206.0" textFill="RED">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="addressLabel" layoutX="10.0" layoutY="167.0" prefHeight="24.0" prefWidth="206.0" textFill="RED">
+               <VBox.margin>
+                  <Insets top="28.0" />
+               </VBox.margin>
+            </Label>
+         </children>
       </VBox>
    </children>
 </Pane>

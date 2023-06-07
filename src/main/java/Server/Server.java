@@ -75,15 +75,26 @@ public class Server {
                             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                             admin = (Admin) inputStream.readObject();
                             System.out.println("received new Admin");
+//                            int errorCode = Integer.parseInt(checkInput(admin));
+                            String errorCode = checkInput(admin);
+                            System.out.println(errorCode);
+                            if(errorCode.equals("00000")){
+                                out.println("true");
+                                System.out.println(admin);
+                                file.write(admin.getName()+",");
+                                file.write(admin.getPassword()+",");
+                                file.write(admin.getPhoneNumber()+",");
+                                file.write(admin.getEmail()+",");
+                                file.write(admin.getAddress()+"\n");
+                            }
+                            else {
+                                out.println(errorCode+"");
+//                                break;
+                            }
                             inputStream.close();
-                            System.out.println(admin);
-                            file.write(admin.getName()+",");
-                            file.write(admin.getPassword()+",");
-                            file.write(admin.getPhoneNumber()+",");
-                            file.write(admin.getEmail()+",");
-                            file.write(admin.getAddress()+"\n");
                             file.close();
                         }catch (IOException | ClassNotFoundException e) {
+                            System.out.println("\nerror\n");
                             e.printStackTrace();
                         }
                     }
@@ -138,5 +149,61 @@ public class Server {
             e.printStackTrace();
         }
     }
-
+    private static String checkInput(Admin admin){
+        String errorCode="";
+        errorCode +=checkName(admin.getName());
+        errorCode += checkPass(admin.getPassword());
+        errorCode += checkNumber(admin.getPhoneNumber());
+        errorCode += checkEmail(admin.getEmail());
+        errorCode += "0";
+        return errorCode+"";
+    }
+    private static int checkName(String name){
+        // 1== already in use
+        //2==short
+        try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))){
+            String line;
+            while((line = userFile.readLine()) != null){
+                String[] parts = line.split(",");
+                if(parts[0].equals(name))return 1;
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        if(name.length()<4)return 2;
+        return 0;
+    }
+    private static int checkPass(String pass){
+        //1 weak
+        //2 length
+        if(pass.length()<8)return 2;
+        char[] parts = pass.toCharArray();
+        int upperCaseCount=0;
+        int numberCount=0;
+        for(int i=0; i<pass.length(); i++){
+            int ascii = parts[i];
+            if(ascii>=65 && ascii<=90)upperCaseCount++;
+            else if((ascii>=48 && ascii<=57)) numberCount++;
+            else continue;
+        }
+        if(upperCaseCount<2 || numberCount<2)return 1;
+        return 0;
+    }
+    private static int checkNumber(String number){
+        //1 invalid
+        if(number.length() != 11)return 1;
+        if(!number.substring(0,2).equals("09"))return 1;
+        char[] parts = number.toCharArray();
+        for(int i=0; i<11; i++){
+            int ascii = parts[i];
+            if(ascii<48 || ascii>57)return 1;
+        }
+        return 0;
+    }
+    private static int checkEmail(String email){
+        //1 invalid
+        if(email.length()<10)return 1;
+        if(!(email.substring(email.length()-10,email.length()).equals("@gmail.com")) || !(email.substring(email.length()-10,email.length()).equals("@email.com"))) return 1;
+        return 0;
+    }
 }
