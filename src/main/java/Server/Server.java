@@ -16,13 +16,11 @@ public class Server {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         loadRestaurants();
-        for(Restaurant i:restaurants){
-            System.out.println(i);
-        }
-
+//        for(Restaurant i:restaurants){
+//            System.out.println(i);
+//        }
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server started. Waiting for client...");
-
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
@@ -31,10 +29,13 @@ public class Server {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                     String situation = in.readLine();
+                    System.out.println(situation);
 
                     if(situation.equals("login")){
                         String username = in.readLine();
                         String password = in.readLine();
+
+
                         System.out.println(username + " " + password);
                         boolean findUser = false;
                         try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))) {
@@ -72,15 +73,20 @@ public class Server {
                     else if(situation.equals("signup")){
                         try{
                             FileWriter file = new FileWriter("src/main/java/Server/usernames", true);
+                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                            outputStream.flush();
                             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                            admin = (Admin) inputStream.readObject();
+
+                            Admin tempAdmin = (Admin) inputStream.readObject();
+                            System.out.println(tempAdmin);
                             System.out.println("received new Admin");
-//                            int errorCode = Integer.parseInt(checkInput(admin));
-                            String errorCode = checkInput(admin);
+                            String errorCode = checkInput(tempAdmin);
                             System.out.println(errorCode);
                             if(errorCode.equals("00000")){
-                                out.println("true");
-                                System.out.println(admin);
+                                outputStream.writeUTF("true");
+                                outputStream.flush();
+                                System.out.println(tempAdmin);
+                                admin = tempAdmin;
                                 file.write(admin.getName()+",");
                                 file.write(admin.getPassword()+",");
                                 file.write(admin.getPhoneNumber()+",");
@@ -88,10 +94,12 @@ public class Server {
                                 file.write(admin.getAddress()+"\n");
                             }
                             else {
-                                out.println(errorCode+"");
+                                outputStream.writeUTF(errorCode);
+                                outputStream.flush();
 //                                break;
                             }
                             inputStream.close();
+                            outputStream.close();
                             file.close();
                         }catch (IOException | ClassNotFoundException e) {
                             System.out.println("\nerror\n");
@@ -110,7 +118,6 @@ public class Server {
                         System.out.println("received new Admin ");
                         inputStream.close();
                     }
-
                 } finally {
                     System.out.println("Closing connection...");
                     socket.close();

@@ -55,13 +55,18 @@ public class SignUpController extends Main{
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
             out.println("signup");
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             try{
-                Admin admin = new Admin(name, password, phone, email, address);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.flush();
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+
+                Admin admin = new Admin(name, password, phone, email, address);
                 outputStream.writeObject(admin);
+                outputStream.flush();
                 System.out.println("Sent Admin");
 
-                String errorCode = in.readLine();
+                String errorCode = inputStream.readUTF();
                 if(!errorCode.equals("true")){
                     int checkName = Integer.parseInt(errorCode.charAt(0)+"");
                     int checkPass = Integer.parseInt(errorCode.charAt(1)+"");
@@ -95,6 +100,8 @@ public class SignUpController extends Main{
                     switchToScene(e, "restaurantsView.fxml", root);
                 }
                 outputStream.close();
+                inputStream.close();
+//                out.close();
             }catch(IOException error){
                 System.out.println("error");
                 error.printStackTrace();
