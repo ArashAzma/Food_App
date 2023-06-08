@@ -50,9 +50,11 @@ public class InfoController extends Main{
 
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("getAdmin");
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.flush();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream.writeUTF("getAdmin");
+            outputStream.flush();
             admin = (Admin) inputStream.readObject();
             System.out.println("received Admin ");
             inputStream.close();

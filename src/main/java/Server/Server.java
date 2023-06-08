@@ -26,15 +26,15 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 try {
                     System.out.println("Client connected.");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                    String situation = in.readLine();
+                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                    outputStream.flush();
+                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                    String situation = inputStream.readUTF();
+
                     System.out.println(situation);
-
                     if(situation.equals("login")){
-                        String username = in.readLine();
-                        String password = in.readLine();
-
+                        String username = inputStream.readUTF();
+                        String password = inputStream.readUTF();
 
                         System.out.println(username + " " + password);
                         boolean findUser = false;
@@ -55,17 +55,22 @@ public class Server {
                             }
 
                             if (findUser) {
-                                out.println("Found");
+                                outputStream.writeUTF("Found");
+                                outputStream.flush();
                             } else {
-                                out.println("!foundUser");
+                                outputStream.writeUTF("!foundUser");
+                                outputStream.flush();
                             }
                         } catch (IOException e) {
                             System.out.println("Error reading usernames file: " + e.getMessage());
                             e.printStackTrace();
+                        }finally {
+                            outputStream.close();
+                            inputStream.close();
                         }
                     }
                     else if(situation.equals("list")){
-                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                         outputStream.writeObject(restaurants);
                         outputStream.close();
                         System.out.println("Sent ArrayList");
@@ -73,9 +78,9 @@ public class Server {
                     else if(situation.equals("signup")){
                         try{
                             FileWriter file = new FileWriter("src/main/java/Server/usernames", true);
-                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                             outputStream.flush();
-                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+//                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
                             Admin tempAdmin = (Admin) inputStream.readObject();
                             System.out.println(tempAdmin);
@@ -107,13 +112,14 @@ public class Server {
                         }
                     }
                     else if(situation.equals("getAdmin")){
-                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                         outputStream.writeObject(admin);
+                        outputStream.flush();
                         outputStream.close();
                         System.out.println("Sent Admin");
                     }
                     else if(situation.equals("setAdmin")){
-                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+//                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                         admin = (Admin) inputStream.readObject();
                         System.out.println("received new Admin ");
                         inputStream.close();

@@ -52,14 +52,11 @@ public class SignUpController extends Main{
             Socket socket = new Socket(addr, PORT);
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("signup");
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.flush();
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream.writeUTF("signup");
             try{
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.flush();
-                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
                 Admin admin = new Admin(name, password, phone, email, address);
                 outputStream.writeObject(admin);
@@ -101,7 +98,6 @@ public class SignUpController extends Main{
                 }
                 outputStream.close();
                 inputStream.close();
-//                out.close();
             }catch(IOException error){
                 System.out.println("error");
                 error.printStackTrace();

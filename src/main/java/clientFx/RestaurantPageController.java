@@ -51,10 +51,11 @@ public class RestaurantPageController extends Main{
        try{
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("list");
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.flush();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream.writeUTF("list");
+            outputStream.flush();
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
             System.out.println("received restauarants ");
             inputStream.close();
@@ -71,10 +72,6 @@ public class RestaurantPageController extends Main{
         Restaurant rest = restaurants.get(index);
         ArrayList<Food> menu = rest.getMenu();
         for(Food food: menu){
-//            System.out.println(food);
-//            System.out.println(food.getImgPath());
-//            String imagePath = "file://" + System.getProperty("user.dir") + food.getImgPath();
-//            Image image = new Image(imagePath);
             String imagePath = RestaurantPageController.class.getResource(food.getImgPath()).toExternalForm();
             Image image = new Image(imagePath);
 

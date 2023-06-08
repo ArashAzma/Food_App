@@ -44,14 +44,19 @@ public class LoginController extends Main{
         try {
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println("login");
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.flush();
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+
             String name = nameBox.getText();
             String password = passBox.getText();
-            out.println(name);
-            out.println(password);
-            String foundUser = in.readLine();
+            outputStream.writeUTF("login");
+            outputStream.flush();
+            outputStream.writeUTF(name);
+            outputStream.flush();
+            outputStream.writeUTF(password);
+            outputStream.flush();
+            String foundUser = inputStream.readUTF();
             System.out.println(foundUser);
             if(foundUser.equals("Found")) {
                 System.out.println("found user");
