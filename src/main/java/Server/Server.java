@@ -14,7 +14,6 @@ public class Server {
     private static ArrayList<Restaurant> restaurants = new ArrayList<>();
     private static Admin admin = new Admin();
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-
         loadRestaurants();
 //        for(Restaurant i:restaurants){
 //            System.out.println(i);
@@ -42,13 +41,13 @@ public class Server {
                             String line;
                             while ((line = userFile.readLine()) != null && !findUser) {
                                 String[] parts = line.split(",");
-                                System.out.println(Arrays.toString(parts));
+//                                System.out.println(Arrays.toString(parts));
                                 if (parts[0].equals(username) && parts[1].equals(password)) {
                                     admin.setName(parts[0]);
                                     admin.setPassword(parts[1]);
                                     admin.setPhoneNumber(parts[2]);
-                                    admin.setAddress(parts[3]);
-                                    admin.setEmail(parts[4]);
+                                    admin.setEmail(parts[3]);
+                                    admin.setAddress(parts[4]);
                                     findUser = true;
                                     break;
                                 }
@@ -78,10 +77,7 @@ public class Server {
                     else if(situation.equals("signup")){
                         try{
                             FileWriter file = new FileWriter("src/main/java/Server/usernames", true);
-//                            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                             outputStream.flush();
-//                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-
                             Admin tempAdmin = (Admin) inputStream.readObject();
                             System.out.println(tempAdmin);
                             System.out.println("received new Admin");
@@ -123,6 +119,51 @@ public class Server {
                         admin = (Admin) inputStream.readObject();
                         System.out.println("received new Admin ");
                         inputStream.close();
+                    }
+                    else if (situation.equals("changeInfo")){
+                        outputStream.flush();
+                        Admin tempAdmin = (Admin) inputStream.readObject();
+                        System.out.println(tempAdmin);
+                        System.out.println("received new Admin changes");
+                        String errorCode = checkInput(tempAdmin);
+                        System.out.println(errorCode);
+                        if(errorCode.equals("00000")){
+                            outputStream.writeUTF("true");
+                            outputStream.flush();
+                            System.out.println(tempAdmin);
+                            String newLine = tempAdmin.getName()+","+tempAdmin.getPassword()+","+tempAdmin.getPhoneNumber()+","+tempAdmin.getEmail()+","+tempAdmin.getAddress();
+                            try {
+                                // input the (modified) file content to the StringBuffer "input"
+                                BufferedReader file = new BufferedReader(new FileReader("src/main/java/Server/usernames"));
+                                StringBuffer inputBuffer = new StringBuffer();
+                                String line;
+
+                                while ((line = file.readLine()) != null) {
+                                    String[] parts = line.split(",");
+                                    if(parts[0].equals(admin.getName())){
+                                        line = newLine;
+                                    }
+                                    inputBuffer.append(line);
+                                    inputBuffer.append('\n');
+                                }
+                                file.close();
+
+                                // write the new string with the replaced line OVER the same file
+                                FileOutputStream fileOut = new FileOutputStream("src/main/java/Server/usernames");
+                                fileOut.write(inputBuffer.toString().getBytes());
+                                fileOut.close();
+
+                            } catch (Exception e) {
+                                System.out.println("Problem reading file.");
+                            }
+                            admin = tempAdmin;
+                        }
+                        else {
+                            outputStream.writeUTF(errorCode);
+                            outputStream.flush();
+                        }
+                        inputStream.close();
+                        outputStream.close();
                     }
                 } finally {
                     System.out.println("Closing connection...");
@@ -174,6 +215,7 @@ public class Server {
     private static int checkName(String name){
         // 1== already in use
         //2==short
+        if(name.length()<4)return 2;
         try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))){
             String line;
             while((line = userFile.readLine()) != null){
@@ -183,7 +225,6 @@ public class Server {
         }catch(IOException e){
             e.printStackTrace();
         }
-        if(name.length()<4)return 2;
         return 0;
     }
     private static int checkPass(String pass){
@@ -216,7 +257,7 @@ public class Server {
     private static int checkEmail(String email){
         //1 invalid
         if(email.length()<10)return 1;
-        if(!(email.substring(email.length()-10,email.length()).equals("@gmail.com")) || !(email.substring(email.length()-10,email.length()).equals("@email.com"))) return 1;
-        return 0;
+        if(email.endsWith("@gmail.com") || email.endsWith("@email.com")) return 0;
+        return 1;
     }
 }

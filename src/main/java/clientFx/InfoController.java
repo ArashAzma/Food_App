@@ -17,9 +17,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class InfoController extends Main{
-    private Admin admin;
-    private static Stage stage;
-    private static Scene scene;
+    private static Admin admin;
     private Parent root;
     @FXML
     private Label nameLabel;
@@ -42,6 +40,8 @@ public class InfoController extends Main{
     @FXML
     private TextField emailTextField;
     @FXML
+    private Label mojodiLabel;
+    @FXML
     public void initialize() {
         try{
             InetAddress addr = InetAddress.getByName(null);
@@ -58,56 +58,32 @@ public class InfoController extends Main{
             admin = (Admin) inputStream.readObject();
             System.out.println("received Admin ");
             inputStream.close();
+            updateNameLabel(admin.getName());
+            updatePassLabel(admin.getPassword());
+            updatePhoneLabel(admin.getPhoneNumber());
+            updateAddressLabel(admin.getAddress());
+            updateEmailLabel(admin.getEmail());
+            updateMojodiLabel(admin.getMojodi());
         }catch(IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        updateNameLabel(admin.getName());
-        updatePassLabel(admin.getPassword());
-        updatePhoneLabel(admin.getPhoneNumber());
-        updateAddressLabel(admin.getAddress());
-        updateEmailLabel(admin.getEmail());
     }
     public void updateNameLabel(String newName) {
         nameLabel.setText("Name: "+newName);
     }
-    public void getNewName() throws IOException {
-        changeFile(nameTextField.getText(), 0);
-        admin.setName(nameTextField.getText());
-        updateNameLabel(admin.getName());
-    }
     public void updatePassLabel(String newPass) {
         passLabel.setText("Password: "+newPass);
-    }
-    public void getNewPass() throws IOException {
-        changeFile(passTextField.getText(), 1);
-        admin.setPassword(passTextField.getText());
-        updatePassLabel(admin.getPassword());
     }
     public void updatePhoneLabel(String newPhone) {
         phoneLabel.setText("Phonenumber: "+newPhone);
     }
-    public void getNewPhone() throws IOException {
-        changeFile(phoneTextField.getText(), 2);
-        admin.setPhoneNumber(phoneTextField.getText());
-        updatePhoneLabel(admin.getPhoneNumber());
-    }
     public void updateAddressLabel(String newAddress) {
         addressLabel.setText("Address: "+newAddress);
     }
-    public void getNewAddress() throws IOException {
-        changeFile(addressTextField.getText(), 4);
-        admin.setAddress(addressTextField.getText());
-        updateAddressLabel(admin.getAddress());
-    }
     public void updateEmailLabel(String newEmail) {
         emailLabel.setText("Email: "+newEmail);
-    }
-    public void getNewEmail() throws IOException {
-        changeFile(emailTextField.getText(), 3);
-        admin.setEmail(emailTextField.getText());
-        updateEmailLabel(admin.getEmail());
     }
     public void restaurantButton(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
@@ -119,6 +95,111 @@ public class InfoController extends Main{
         root = loader.load();
         switchToScene(e, "cartView.fxml", root);
     }
+    private void updateMojodiLabel(double amount){
+        this.mojodiLabel.setText("Mojodi: "+amount);
+    }
+    public void changeInfo(ActionEvent e) throws IOException {
+        System.out.println(admin);
+        Admin tempAdmin = new Admin();
+        System.out.println("ZZ");
+        System.out.println(nameTextField.getText());
+        System.out.println(passTextField.getText());
+        System.out.println("ZZ");
+        if(!nameTextField.getText().equals("")) {
+            tempAdmin.setName(nameTextField.getText());
+        }
+        else {
+            tempAdmin.setName(admin.getName());
+        }
+        if(!passTextField.getText().equals("")){
+            tempAdmin.setPassword(passTextField.getText());
+        }
+        else {
+            tempAdmin.setPassword(admin.getPassword());
+        }
+        if(!phoneTextField.getText().equals("")) {
+            tempAdmin.setPhoneNumber(phoneTextField.getText());
+        }
+        else {
+            tempAdmin.setPhoneNumber(admin.getPhoneNumber());
+        }
+        if(!addressTextField.getText().equals("")){
+            tempAdmin.setAddress(addressTextField.getText());
+        }
+        else {
+            tempAdmin.setAddress(admin.getAddress());
+        }
+        if(!emailTextField.getText().equals("")){
+            tempAdmin.setEmail(emailTextField.getText());
+        }
+        else {
+            tempAdmin.setEmail(admin.getEmail());
+        }
+        System.out.println(tempAdmin);
+        try{
+            InetAddress addr = InetAddress.getByName(null);
+            System.out.println("addr = " + addr);
+            Socket socket = new Socket(addr, PORT);
+            System.out.println("Connected to server.");
+            System.out.println("socket = " + socket);
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.flush();
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream.writeUTF("changeInfo");
+            try{
+                outputStream.writeObject(tempAdmin);
+                outputStream.flush();
+                System.out.println("Sent Admin");
+
+                String errorCode = inputStream.readUTF();
+                System.out.println(errorCode);
+                if(!errorCode.equals("true")){
+                    int checkName = Integer.parseInt(errorCode.charAt(0)+"");
+                    int checkPass = Integer.parseInt(errorCode.charAt(1)+"");
+                    int checkNumber = Integer.parseInt(errorCode.charAt(2)+"");
+                    int checkEmail = Integer.parseInt(errorCode.charAt(3)+"");
+
+                    switch (checkName){
+                        case(1):
+                            nameLabel.setText("Name is already in use");
+                            break;
+                        case (2):
+                            nameLabel.setText("Name is too short");
+                            break;
+                        default:
+                            nameLabel.setText(admin.getName());
+                            break;
+                    }
+                    switch (checkPass){
+                        case(1):
+                            passLabel.setText("Password is too weak!");
+                            break;
+                        case (2):
+                            passLabel.setText("Password is too short");
+                            break;
+                        default:
+                            passLabel.setText(admin.getPassword());
+                            break;
+                    }
+                    if(checkNumber==1)phoneLabel.setText("invalid number");
+                    else phoneLabel.setText(admin.getPhoneNumber());
+                    if(checkEmail==1)emailLabel.setText("invalid Email");
+                    else emailLabel.setText(admin.getPhoneNumber());
+                }
+                else{
+                    initialize();
+                }
+                outputStream.close();
+                inputStream.close();
+            }catch(IOException error){
+                System.out.println("error");
+                error.printStackTrace();
+            }
+        }catch (IOException E){
+            E.printStackTrace();
+        }
+    }
+
     private void changeFile(String newStr, int p) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader file = new BufferedReader(new FileReader("usernames"))) {

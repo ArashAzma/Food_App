@@ -8,6 +8,7 @@ public final class Admin implements Serializable {
     private String phoneNumber;
     private String address;
     private String email;
+    private double mojodi = 25;
     public Admin(){};
     public Admin(String name, String password, String phoneNumber, String address, String email){
         this.name = name;
@@ -48,6 +49,16 @@ public final class Admin implements Serializable {
     }
     public String toString(){
         return name+" "+password+" "+phoneNumber+" "+address+" "+email;
+    }
+    public void deposit(double amount){
+        mojodi+=amount;
+    }
+    public double getMojodi() {
+        return mojodi;
+    }
+
+    public void setMojodi(double mojodi) {
+        this.mojodi = mojodi;
     }
 }
 

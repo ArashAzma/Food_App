@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.InfoController">
    <children>
-      <VBox layoutX="183.0" layoutY="30.0" prefHeight="340.0" prefWidth="230.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="187.0" AnchorPane.topAnchor="30.0">
+      <VBox layoutX="183.0" layoutY="30.0" prefHeight="354.0" prefWidth="230.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="187.0">
          <children>
             <HBox prefHeight="46.0" prefWidth="229.0">
                <children>
@@ -22,17 +22,10 @@
                            </VBox.margin></Label>
                         <HBox prefHeight="12.0" prefWidth="230.0">
                            <children>
-                              <TextField fx:id="nameTextField" prefHeight="44.0" prefWidth="149.0" promptText="Enter new name">
+                              <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="307.0" promptText="Enter new name">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></TextField>
-                              <Button mnemonicParsing="false" onAction="#getNewName" prefHeight="50.0" prefWidth="87.0" text="change">
-                                 <padding>
-                                    <Insets left="5.0" right="6.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin></Button>
                            </children>
                         </HBox>
                      </children>
@@ -53,19 +46,11 @@
                         </Label>
                         <HBox prefHeight="12.0" prefWidth="230.0">
                            <children>
-                              <TextField fx:id="passTextField" prefHeight="44.0" prefWidth="149.0" promptText="Enter new password">
+                              <TextField fx:id="passTextField" prefHeight="25.0" prefWidth="298.0" promptText="Enter new password">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </TextField>
-                              <Button mnemonicParsing="false" onAction="#getNewPass" prefHeight="50.0" prefWidth="87.0" text="change">
-                                 <padding>
-                                    <Insets left="5.0" right="6.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Button>
                            </children>
                         </HBox>
                      </children>
@@ -88,19 +73,11 @@
                         </Label>
                         <HBox prefHeight="12.0" prefWidth="230.0">
                            <children>
-                              <TextField fx:id="phoneTextField" prefHeight="44.0" prefWidth="149.0" promptText="Enter new phonenumber">
+                              <TextField fx:id="phoneTextField" prefHeight="25.0" prefWidth="304.0" promptText="Enter new phonenumber">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </TextField>
-                              <Button mnemonicParsing="false" onAction="#getNewPhone" prefHeight="50.0" prefWidth="87.0" text="change">
-                                 <padding>
-                                    <Insets left="5.0" right="6.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Button>
                            </children>
                         </HBox>
                      </children>
@@ -120,19 +97,11 @@
                         </Label>
                         <HBox prefHeight="12.0" prefWidth="230.0">
                            <children>
-                              <TextField fx:id="addressTextField" prefHeight="44.0" prefWidth="149.0" promptText="Enter new address">
+                              <TextField fx:id="addressTextField" prefHeight="25.0" prefWidth="271.0" promptText="Enter new address">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </TextField>
-                              <Button mnemonicParsing="false" onAction="#getNewAddress" prefHeight="50.0" prefWidth="87.0" text="change">
-                                 <padding>
-                                    <Insets left="5.0" right="6.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Button>
                            </children>
                         </HBox>
                      </children>
@@ -152,28 +121,28 @@
                         </Label>
                         <HBox prefHeight="12.0" prefWidth="230.0">
                            <children>
-                              <TextField fx:id="emailTextField" prefHeight="44.0" prefWidth="149.0" promptText="Enter new email">
+                              <TextField fx:id="emailTextField" prefHeight="25.0" prefWidth="285.0" promptText="Enter new email">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </TextField>
-                              <Button mnemonicParsing="false" onAction="#getNewEmail" prefHeight="50.0" prefWidth="87.0" text="change">
-                                 <padding>
-                                    <Insets left="5.0" right="6.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Button>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
                </children></HBox>
+            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#changeInfo" prefHeight="50.0" prefWidth="87.0" text="change">
+               <padding>
+                  <Insets left="5.0" right="6.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="142.0" top="15.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#restaurantButton" text="Restaurants" />
       <Button layoutX="92.0" layoutY="14.0" mnemonicParsing="false" onAction="#cartButton" prefHeight="25.0" prefWidth="67.0" text="List" />
-      <Label layoutX="503.0" layoutY="18.0" prefHeight="25.0" prefWidth="90.0" text="Mojodi:" />
+      <Label fx:id="mojodiLabel" layoutX="503.0" layoutY="18.0" prefHeight="25.0" prefWidth="90.0" text="Mojodi:" />
    </children>
 </AnchorPane>
