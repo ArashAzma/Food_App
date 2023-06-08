@@ -32,10 +32,7 @@ public class LoginController extends Main{
     private PasswordField passBox;
     @FXML
     private Label passError;
-    @FXML
-    private Label nameLabel;
-    @FXML
-    private Label passwordLabel;
+
     @FXML
     private void login(ActionEvent e)throws IOException{
         InetAddress addr = InetAddress.getByName(null);
