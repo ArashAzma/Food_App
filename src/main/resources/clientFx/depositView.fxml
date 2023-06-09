@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.DepositController">
+   <children>
+      <Label fx:id="taxLabel" layoutX="298.0" layoutY="214.0" prefHeight="72.0" prefWidth="104.0" />
+      <VBox alignment="TOP_CENTER" layoutX="124.0" layoutY="43.0" prefHeight="414.0" prefWidth="453.0">
+         <children>
+            <HBox layoutX="15.0" layoutY="50.0" prefHeight="25.0" prefWidth="443.0">
+               <children>
+                  <TextField fx:id="amount" prefHeight="66.0" prefWidth="281.0" />
+                  <Label alignment="CENTER_RIGHT" layoutX="288.0" layoutY="10.0" prefHeight="91.0" prefWidth="168.0" text="مقدار افزایش:" textAlignment="RIGHT" />
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="amountError" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="90.0" prefHeight="22.0" prefWidth="443.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="25.0" prefWidth="443.0">
+               <children>
+                  <TextField fx:id="accountNumber" prefHeight="66.0" prefWidth="281.0" />
+                  <Label alignment="CENTER_RIGHT" layoutX="288.0" layoutY="10.0" prefHeight="91.0" prefWidth="168.0" text="شماره کارت" textAlignment="RIGHT" />
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="accError" alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="443.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="443.0">
+               <children>
+                  <PasswordField fx:id="password" prefHeight="88.0" prefWidth="286.0" />
+                  <Label alignment="CENTER_RIGHT" prefHeight="91.0" prefWidth="168.0" text="رمز" />
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="passError" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="50.0" prefHeight="22.0" prefWidth="443.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="453.0">
+               <children>
+                  <TextField fx:id="cvv2" prefHeight="66.0" prefWidth="287.0" />
+                  <Label alignment="CENTER_RIGHT" prefHeight="91.0" prefWidth="168.0" text="CCV2" />
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="cvv2Error" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="112.0" prefHeight="22.0" prefWidth="443.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="122.0" prefHeight="25.0" prefWidth="453.0">
+               <children>
+                  <TextField fx:id="year" prefHeight="25.0" prefWidth="125.0" promptText="سال">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="month" prefHeight="25.0" prefWidth="125.0" promptText="ماه">
+                     <HBox.margin>
+                        <Insets left="10.0" right="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="143.0" text="تاریخ انقضا" />
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="dateError" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="174.0" prefHeight="22.0" prefWidth="443.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="178.0" prefHeight="25.0" prefWidth="453.0">
+               <children>
+                  <Label fx:id="cost" alignment="CENTER" prefHeight="25.0" prefWidth="482.0" textAlignment="CENTER" textFill="#00e823">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="234.0" prefHeight="35.0" prefWidth="453.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" text="انصراف" />
+                  <Button mnemonicParsing="false" onAction="#complete" prefHeight="35.0" prefWidth="123.0" text="پرداخت">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

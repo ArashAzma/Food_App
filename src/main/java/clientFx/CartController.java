@@ -1,5 +1,6 @@
 package clientFx;
 
+import common.Admin;
 import common.Food;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,21 +15,46 @@ import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CartController extends Main{
-    private static Stage stage;
-    private static Scene scene;
     private Parent root;
     private int index;
-    private  ArrayList<Food> items = new ArrayList<>();
+    private Admin admin;
+    private  static ArrayList<Food> items = new ArrayList<>();
     @FXML
     private ListView<Food> listView = new ListView<>();
     @FXML
     private Label priceLabel;
     @FXML
+    private Label mojodi;
+    @FXML
     public void initialize(){
+        try{
+            InetAddress addr = InetAddress.getByName(null);
+            System.out.println("addr = " + addr);
+            Socket socket = new Socket(addr, PORT);
+            System.out.println("Connected to server.");
+            System.out.println("socket = " + socket);
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.flush();
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream.writeUTF("getAdmin");
+            outputStream.flush();
+            admin = (Admin) inputStream.readObject();
+            System.out.println("received  Admin ");
+            inputStream.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        mojodi.setText("Mojodi : $"+admin.getMojodi());
         ObservableList<Food> observableItems = FXCollections.observableArrayList(items);
         System.out.println(Arrays.toString(items.toArray()));
         listView.setItems(observableItems);
@@ -67,6 +93,12 @@ public class CartController extends Main{
         rpc.setIndex(index);
 //        rpc.init();
         switchToScene(e, "RestaurantPageView.fxml", root);
+    }
+    @FXML
+    private void depositButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("bankView.fxml"));
+        root = loader.load();
+        switchToScene(e, "bankView.fxml", root);
     }
 
     public void setIndex(int index) {

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class RestaurantPageController extends Main{
     private static Stage stage;
     private static Scene scene;
-    private int index;
+    private static int index;
     private FXMLLoader loader = new FXMLLoader(getClass().getResource("cartView.fxml"));
     private Parent root;
     {
@@ -74,9 +74,6 @@ public class RestaurantPageController extends Main{
         for(Food food: menu){
             String imagePath = RestaurantPageController.class.getResource(food.getImgPath()).toExternalForm();
             Image image = new Image(imagePath);
-
-
-//            Image image = new Image(food.getImgPath());
             Label name = new Label(food.getName());
             Label isAvailable = new Label(food.isAvailable());
 
@@ -111,9 +108,10 @@ public class RestaurantPageController extends Main{
         switchToScene(e, "InfoView.fxml", root);
     }
     @FXML
-    private void cartButton(ActionEvent e) throws IOException {
+    public void cartButton(ActionEvent e) throws IOException {
         cartController.initialize();
         cartController.setIndex(index);
+        System.out.println(index);
         switchToScene(e, "cartView.fxml", root);
     }
     @FXML
