@@ -1,5 +1,4 @@
 package Server;
-import clientFx.RestaurantPageController;
 import common.Admin;
 import common.Food;
 import common.Restaurant;
@@ -8,6 +7,8 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Server {
     public static final int PORT = 8080;
@@ -204,6 +205,8 @@ public class Server {
         }
     }
     private static String checkInput(Admin admin){
+        System.out.println(admin.getEmail());
+        System.out.println(checkEmail(admin.getEmail()));
         String errorCode="";
         errorCode +=checkName(admin.getName());
         errorCode += checkPass(admin.getPassword());
@@ -254,10 +257,49 @@ public class Server {
         }
         return 0;
     }
-    private static int checkEmail(String email){
-        //1 invalid
-        if(email.length()<10)return 1;
-        if(email.endsWith("@gmail.com") || email.endsWith("@email.com")) return 0;
-        return 1;
+    public static int checkEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            return 1;
+        }
+        // Check if the email contains an @ symbol
+        int atIndex = email.indexOf('@');
+        if (atIndex == -1) {
+            return 1;
+        }
+
+        // Check if there is at least one character before the @ symbol
+        if (atIndex == 0) {
+            return 1;
+        }
+
+        // Check if there is at least one character after the @ symbol
+        if (atIndex == email.length() - 1) {
+            return 1;
+        }
+
+        // Split the email into local-part and domain
+        String localPart = email.substring(0, atIndex);
+        String domainPart = email.substring(atIndex + 1);
+
+        // Check if the local-part is valid
+        if (!isValidLocalPart(localPart)) {
+            return 1;
+        }
+
+        // Check if the domain part is valid
+        if (!isValidDomainPart(domainPart)) {
+            return 1;
+        }
+
+        return 0;
     }
+    private static boolean isValidLocalPart(String localPart) {
+        String localPartPattern = "[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+";
+        return localPart.matches(localPartPattern);
+    }
+    private static boolean isValidDomainPart(String domainPart) {
+        String domainPartPattern = "[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*";
+        return domainPart.matches(domainPartPattern) || domainPart.matches("[a-zA-Z]{2,}");
+    }
+
 }

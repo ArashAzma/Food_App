@@ -58,7 +58,7 @@ public class SignUpController extends Main{
             outputStream.writeUTF("signup");
             try{
 
-                Admin admin = new Admin(name, password, phone, email, address);
+                Admin admin = new Admin(name, password, phone, address, email);
                 outputStream.writeObject(admin);
                 outputStream.flush();
                 System.out.println("Sent Admin");
@@ -77,7 +77,9 @@ public class SignUpController extends Main{
                         case (2):
                             nameLabel.setText("Name is too short");
                             break;
-                        default:break;
+                        default:
+                            nameLabel.setText("");
+                            break;
                     }
                     switch (checkPass){
                         case(1):
@@ -86,10 +88,14 @@ public class SignUpController extends Main{
                         case (2):
                             passLabel.setText("Password is too short");
                             break;
-                        default:break;
+                        default:
+                            passLabel.setText("");
+                            break;
                     }
                     if(checkNumber==1)phoneLabel.setText("invalid number");
+                    else phoneLabel.setText("");
                     if(checkEmail==1)emailLabel.setText("invalid Email");
+                    else emailLabel.setText("");
                 }
                 else{
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
