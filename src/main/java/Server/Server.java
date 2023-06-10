@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Server {
-    public static final int PORT = 8080;
+    public static final int PORT = 8888;
     private static ArrayList<Restaurant> restaurants = new ArrayList<>();
     private static Admin admin = new Admin();
     public static void main(String[] args) throws IOException, ClassNotFoundException {

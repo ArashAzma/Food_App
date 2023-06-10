@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -89,9 +90,15 @@ public class DepositController {
         check+=checkYear(Year);
 
 
-        if(Integer.parseInt(check)==0){
+        bank.deposit(Double.parseDouble(Amount));
+        if(bank.getCost() == -1){
+            cost.setTextFill(Color.RED);
+            cost.setText("The amount is too low");
+        }
+        else if(Integer.parseInt(check)==0){
 
-            bank.deposit(Double.parseDouble(Amount));
+//            bank.deposit(Double.parseDouble(Amount));
+            cost.setTextFill(Color.GREEN);
             cost.setText("$ "+bank.getCost());
             finalButton.setDisable(false);
         }

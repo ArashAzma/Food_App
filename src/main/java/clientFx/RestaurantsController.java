@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -69,10 +72,11 @@ public class RestaurantsController extends Main{
             Button button = new Button(res.getName());
             Label address = new Label(res.getAddress());
             ImageView imageView = new ImageView(image);
-            button.setMinWidth(180);
-            address.setMinWidth(180);
-            imageView.setFitWidth(180);
-            imageView.setFitHeight(180);
+            button.setMinWidth(290);
+            address.setMinWidth(290);
+            address.setMinHeight(60);
+            imageView.setFitWidth(290);
+            imageView.setFitHeight(120);
             final int index = i;
 
             button.setOnAction((ActionEvent e) -> {
@@ -81,14 +85,18 @@ public class RestaurantsController extends Main{
                     root = loader.load();
                     RestaurantPageController rpc = loader.getController();
                     rpc.setIndex(index);
-//                    System.out.println(index);
-//                    System.out.println("Button clicked: " + res.getName());
                     switchToScene(e, "restaurantPageView.fxml", root);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             });
+            button.setStyle("-fx-background-color: white; -fx-font-weight: bold; -fx-border-width: 2 2 2 2; -fx-border-color: #116D6E; -fx-border-radius: 50%");
+            button.setCursor(Cursor.OPEN_HAND);
+            address.setStyle("-fx-background-color: white;");
+            imageView.setStyle("-fx-border-radius: 50%;");
             VBox vbox = new VBox(imageView, button, address);
+            vbox.setStyle("-fx-border-radius: 10px; -fx-border-color: white; -fx-border-width: 1px;");
+            vbox.setAlignment(Pos.TOP_CENTER);
             flowPane.getChildren().add(i, vbox);
             i++;
         }

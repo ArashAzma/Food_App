@@ -11,5 +11,4 @@ public class Bank1 extends Bank{
     public void deposit(double amount) {
         super.cost = amount*tax+amount;
     }
-
 }

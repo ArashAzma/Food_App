@@ -78,17 +78,17 @@ public class RestaurantPageController extends Main{
             Label isAvailable = new Label(food.isAvailable());
 
             ImageView imageView = new ImageView(image);
-            name.setMinWidth(180);
-            isAvailable.setMinWidth(180);
-            imageView.setFitWidth(180);
-            imageView.setFitHeight(180);
+            name.setMinWidth(250);
+            isAvailable.setMinWidth(250);
+            imageView.setFitWidth(250);
+            imageView.setFitHeight(120);
 
             ChoiceBox<Integer> add = new ChoiceBox<>();
             for (int i = 0; i <= 4; i++) {
                 add.getItems().add(i);
             }
             add.setOnAction((ActionEvent e) -> {
-               int quantity = add.getValue();
+                int quantity = add.getValue();
                 for (int i = 0; i < quantity; i++) {
                     selectedItems.add(food);
                 }
@@ -97,6 +97,11 @@ public class RestaurantPageController extends Main{
 
             HBox hbox = new HBox(add, name);
             VBox vbox = new VBox(imageView, hbox, isAvailable);
+            name.setStyle("-fx-background-color: white; -fx-font-weight: bold; -fx-border-width: 2 2 2 2; -fx-border-color: #116D6E; -fx-border-radius: 50%");
+            add.setStyle("-fx-background-color: white;");
+            hbox.setStyle("-fx-background-color: white;");
+            hbox.setSpacing(10);
+            vbox.setStyle("-fx-background-color: white;");
             flowPane.getChildren().add(0, vbox);
         }
     }
