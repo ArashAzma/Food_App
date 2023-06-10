@@ -49,6 +49,7 @@ public class Server {
                                     admin.setPhoneNumber(parts[2]);
                                     admin.setEmail(parts[3]);
                                     admin.setAddress(parts[4]);
+                                    admin.setMojodi(Double.parseDouble(parts[5]));
                                     findUser = true;
                                     break;
                                 }
@@ -93,7 +94,8 @@ public class Server {
                                 file.write(admin.getPassword()+",");
                                 file.write(admin.getPhoneNumber()+",");
                                 file.write(admin.getEmail()+",");
-                                file.write(admin.getAddress()+"\n");
+                                file.write(admin.getAddress()+",");
+                                file.write(admin.getMojodi()+"\n");
                             }
                             else {
                                 outputStream.writeUTF(errorCode);
@@ -121,6 +123,38 @@ public class Server {
                         System.out.println("received new Admin ");
                         inputStream.close();
                     }
+                    else if(situation.equals("changeMojodi")){
+                        outputStream.flush();
+                        Admin tempAdmin = (Admin) inputStream.readObject();
+                        System.out.println(tempAdmin.getMojodi());
+                        System.out.println("received new Mojodi");
+                        String newLine = tempAdmin.getName()+","+tempAdmin.getPassword()+","+tempAdmin.getPhoneNumber()+","+tempAdmin.getEmail()+","+tempAdmin.getAddress()+","+tempAdmin.getMojodi();
+                        try {
+                            // input the (modified) file content to the StringBuffer "input"
+                            BufferedReader file = new BufferedReader(new FileReader("src/main/java/Server/usernames"));
+                            StringBuffer inputBuffer = new StringBuffer();
+                            String line;
+
+                            while ((line = file.readLine()) != null) {
+                                String[] parts = line.split(",");
+                                if(parts[0].equals(admin.getName())){
+                                    line = newLine;
+                                }
+                                inputBuffer.append(line);
+                                inputBuffer.append('\n');
+                            }
+                            file.close();
+
+                            // write the new string with the replaced line OVER the same file
+                            FileOutputStream fileOut = new FileOutputStream("src/main/java/Server/usernames");
+                            fileOut.write(inputBuffer.toString().getBytes());
+                            fileOut.close();
+
+                        } catch (Exception e) {
+                            System.out.println("Problem reading file.");
+                        }
+                        admin = tempAdmin;
+                    }
                     else if (situation.equals("changeInfo")){
                         outputStream.flush();
                         Admin tempAdmin = (Admin) inputStream.readObject();
@@ -132,7 +166,7 @@ public class Server {
                             outputStream.writeUTF("true");
                             outputStream.flush();
                             System.out.println(tempAdmin);
-                            String newLine = tempAdmin.getName()+","+tempAdmin.getPassword()+","+tempAdmin.getPhoneNumber()+","+tempAdmin.getEmail()+","+tempAdmin.getAddress();
+                            String newLine = tempAdmin.getName()+","+tempAdmin.getPassword()+","+tempAdmin.getPhoneNumber()+","+tempAdmin.getEmail()+","+tempAdmin.getAddress()+","+tempAdmin.getMojodi();
                             try {
                                 // input the (modified) file content to the StringBuffer "input"
                                 BufferedReader file = new BufferedReader(new FileReader("src/main/java/Server/usernames"));

@@ -4,10 +4,12 @@ import common.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,9 +19,12 @@ import java.net.Socket;
 import static clientFx.Main.PORT;
 
 public class DepositController {
-    private Parent root;
-    private Bank bank;
-    private Admin admin;
+    private static Parent root;
+    private static Bank bank;
+    private static Admin admin;
+    private static String Amount;
+    @FXML
+    private Button finalButton;
     @FXML
     private TextField amount;
     @FXML
@@ -69,17 +74,50 @@ public class DepositController {
     }
     @FXML
     private void complete(ActionEvent e) throws IOException {
-        String Amount = amount.getText();
+        Amount = amount.getText();
         String account = accountNumber.getText();
         String pass = password.getText();
         String CVV2 = cvv2.getText();
         String Month = month.getText();
         String Year = year.getText();
+        String check = "";
+        check+=checkAmount(Amount);
+        check+=checkAcc(account);
+        check+=checkPass(pass);
+        check+=checkCVV2(CVV2);
+        check+=checkMonth(Month);
+        check+=checkYear(Year);
 
-        bank.deposit(Double.parseDouble(Amount));
-        cost.setText("$ "+bank.getCost());
+
+        if(Integer.parseInt(check)==0){
+
+            bank.deposit(Double.parseDouble(Amount));
+            cost.setText("$ "+bank.getCost());
+            finalButton.setDisable(false);
+        }
+        else{
+            int amError = Integer.parseInt(check.charAt(0)+"");
+            int acError = Integer.parseInt(check.charAt(1)+"");
+            int pasError = Integer.parseInt(check.charAt(2)+"");
+            int cvError = Integer.parseInt(check.charAt(3)+"");
+            int moError = Integer.parseInt(check.charAt(4)+"");
+            int yeError = Integer.parseInt(check.charAt(5)+"");
+            if(amError==1) amountError.setText("Invalid Amount");
+            else amountError.setText("");
+            if(acError==1) accError.setText("Invalid Account");
+            else accError.setText("");
+            if(pasError==1) passError.setText("Invalid Password");
+            else passError.setText("");
+            if(cvError==1) cvv2Error.setText("Invalid Cvv2");
+            else cvv2Error.setText("");
+            if(moError==1 || yeError==1) dateError.setText("Invalid Date");
+            else dateError.setText("");
+        }
+    }
+    @FXML
+    private void Final(ActionEvent e) throws IOException {
         double sum = admin.getMojodi();
-        admin.setMojodi(sum+Double.parseDouble(Amount));
+        admin.setMojodi(Double.parseDouble(Amount)+sum);
         try{
             InetAddress addr = InetAddress.getByName(null);
             System.out.println("addr = " + addr);
@@ -89,7 +127,7 @@ public class DepositController {
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.flush();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            outputStream.writeUTF("setAdmin");
+            outputStream.writeUTF("changeMojodi");
             outputStream.flush();
             outputStream.writeObject(admin);
             outputStream.flush();
@@ -104,5 +142,36 @@ public class DepositController {
         root = loader.load();
         RestaurantPageController rpc = loader.getController();
         rpc.cartButton(e);
+    }
+
+
+    private static String checkAcc(String str){
+        if(str.length() != 16) return "1";
+        if(str.matches("\\d+")) return "0";
+        return "1";
+    }
+    private static String checkPass(String str){
+        if(str.length() != 4) return "1";
+        if(str.matches("\\d+")) return "0";
+        return "1";
+    }
+    private static String checkCVV2(String str){
+        if(str.length() != 4) return "1";
+        if(str.matches("\\d+")) return "0";
+        return "1";
+    }
+    private static String checkMonth(String str){
+        if(str.length() != 2) return "1";
+        if(str.matches("\\d+")) return "0";
+        return "1";
+    }
+    private static String checkYear(String str){
+        if(str.length() != 2) return "1";
+        if(str.matches("\\d+")) return "0";
+        return "1";
+    }
+    private static String checkAmount(String str){
+        if(str.matches("\\d+")) return "0";
+        return "1";
     }
 }

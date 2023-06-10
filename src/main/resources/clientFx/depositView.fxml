@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.DepositController">
    <children>
       <Label fx:id="taxLabel" layoutX="298.0" layoutY="214.0" prefHeight="72.0" prefWidth="104.0" />
@@ -113,6 +112,11 @@
                   <Button mnemonicParsing="false" onAction="#complete" prefHeight="35.0" prefWidth="123.0" text="پرداخت">
                      <HBox.margin>
                         <Insets left="30.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="finalButton" disable="true" layoutX="166.0" layoutY="10.0" mnemonicParsing="false" onAction="#Final" prefHeight="35.0" prefWidth="123.0" text="نهایی کردن ">
+                     <HBox.margin>
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
                </children>

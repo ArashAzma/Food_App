@@ -26,9 +26,25 @@ public class Main extends Application {
         launch();
     }
     public static void switchToScene(ActionEvent event, String Scene, Parent root)  throws IOException {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Node sourceNode = (Node) event.getSource();
+        Scene currentScene = sourceNode.getScene();
+
+        if (currentScene != null) {
+            Stage stage = (Stage) currentScene.getWindow();
+            if (stage != null) {
+                Scene newScene = new Scene(root);
+                stage.setScene(newScene);
+                stage.show();
+            } else {
+                throw new IllegalStateException("Cannot retrieve the stage from the current scene.");
+            }
+        } else {
+            throw new IllegalStateException("The source node does not have a valid scene.");
+        }
+
+//        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
 }
