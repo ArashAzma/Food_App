@@ -199,29 +199,4 @@ public class InfoController extends Main{
             E.printStackTrace();
         }
     }
-
-    private void changeFile(String newStr, int p) throws IOException {
-        ArrayList<String> lines = new ArrayList<>();
-        try (BufferedReader file = new BufferedReader(new FileReader("usernames"))) {
-            String line;
-            while ((line = file.readLine()) != null) {
-                lines.add(line);
-            }
-        }
-        for (int i = 0; i < lines.size(); i++) {
-            String[] parts = lines.get(i).split(",");
-            if (parts[0].equals(admin.getName()) && parts[1].equals(admin.getPassword())) {
-                parts[p] = newStr;
-                lines.set(i, String.join(",", parts));
-                break;
-            }
-        }
-        try (BufferedWriter file = new BufferedWriter(new FileWriter("usernames"))) {
-            for (String line : lines) {
-                file.write(line);
-                file.newLine();
-            }
-        }
-    }
-
 }

@@ -108,7 +108,7 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="234.0" prefHeight="35.0" prefWidth="453.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" text="انصراف" />
+                  <Button mnemonicParsing="false" onAction="#cancelButton" prefHeight="35.0" prefWidth="126.0" text="انصراف" />
                   <Button mnemonicParsing="false" onAction="#complete" prefHeight="35.0" prefWidth="123.0" text="پرداخت">
                      <HBox.margin>
                         <Insets left="30.0" />

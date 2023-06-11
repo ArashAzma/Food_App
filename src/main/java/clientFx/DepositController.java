@@ -101,6 +101,11 @@ public class DepositController {
             cost.setTextFill(Color.GREEN);
             cost.setText("$ "+bank.getCost());
             finalButton.setDisable(false);
+            amountError.setText("");
+            accError.setText("");
+            passError.setText("");
+            cvv2Error.setText("");
+            dateError.setText("");
         }
         else{
             int amError = Integer.parseInt(check.charAt(0)+"");
@@ -150,7 +155,13 @@ public class DepositController {
         RestaurantPageController rpc = loader.getController();
         rpc.cartButton(e);
     }
-
+    @FXML
+    private void cancelButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantPageView.fxml"));
+        root = loader.load();
+        RestaurantPageController rpc = loader.getController();
+        rpc.cartButton(e);
+    }
 
     private static String checkAcc(String str){
         if(str.length() != 16) return "1";

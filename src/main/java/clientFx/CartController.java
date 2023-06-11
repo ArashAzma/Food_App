@@ -26,6 +26,7 @@ public class CartController extends Main{
     private Parent root;
     private int index;
     private Admin admin;
+    private static double sum;
     private  static ArrayList<Food> items = new ArrayList<>();
     @FXML
     private ListView<Food> listView = new ListView<>();
@@ -33,6 +34,8 @@ public class CartController extends Main{
     private Label priceLabel;
     @FXML
     private Label mojodi;
+    @FXML
+    private Label errorMojodi;
     @FXML
     public void initialize(){
         try{
@@ -59,7 +62,7 @@ public class CartController extends Main{
         System.out.println(Arrays.toString(items.toArray()));
         listView.setItems(observableItems);
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        double sum= 0;
+        sum= 0;
         for(Food i:items){
             sum += i.getPrice();
         }
@@ -99,6 +102,39 @@ public class CartController extends Main{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("bankView.fxml"));
         root = loader.load();
         switchToScene(e, "bankView.fxml", root);
+    }
+    @FXML
+    private void purchaseButton(ActionEvent e) throws IOException {
+        if(sum<=admin.getMojodi()){
+            admin.setMojodi(admin.getMojodi()-sum);
+            try{
+                InetAddress addr = InetAddress.getByName(null);
+                System.out.println("addr = " + addr);
+                Socket socket = new Socket(addr, PORT);
+                System.out.println("Connected to server.");
+                System.out.println("socket = " + socket);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.flush();
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                outputStream.writeUTF("changeMojodi");
+                outputStream.flush();
+                outputStream.writeObject(admin);
+                outputStream.flush();
+                outputStream.close();
+                System.out.println("Sent Admin");
+                inputStream.close();
+            }catch (IOException error){
+                error.printStackTrace();
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("purchaseView.fxml"));
+            root = loader.load();
+            switchToScene(e, "purchaseView.fxml", root);
+            errorMojodi.setOpacity(0);
+        }
+        else{
+            errorMojodi.setOpacity(1);
+        }
+
     }
 
     public void setIndex(int index) {
