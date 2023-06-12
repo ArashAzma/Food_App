@@ -39,19 +39,18 @@ public class CartController extends Main{
     @FXML
     public void initialize(){
         try{
-            InetAddress addr = InetAddress.getByName(null);
-            System.out.println("addr = " + addr);
-            Socket socket = new Socket(addr, PORT);
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            InetAddress addr = InetAddress.getByName(null);
+//            System.out.println("addr = " + addr);
+//            Socket socket = new Socket(addr, PORT);
+//            System.out.println("Connected to server.");
+//            System.out.println("socket = " + socket);
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.writeUTF("getAdmin");
             outputStream.flush();
             admin = (Admin) inputStream.readObject();
             System.out.println("received  Admin ");
-            inputStream.close();
         }catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -108,21 +107,17 @@ public class CartController extends Main{
         if(sum<=admin.getMojodi()){
             admin.setMojodi(admin.getMojodi()-sum);
             try{
-                InetAddress addr = InetAddress.getByName(null);
-                System.out.println("addr = " + addr);
-                Socket socket = new Socket(addr, PORT);
-                System.out.println("Connected to server.");
-                System.out.println("socket = " + socket);
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//                InetAddress addr = InetAddress.getByName(null);
+//                System.out.println("addr = " + addr);
+//                Socket socket = new Socket(addr, PORT);
+//                System.out.println("Connected to server.");
+//                System.out.println("socket = " + socket);
                 outputStream.flush();
-                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 outputStream.writeUTF("changeMojodi");
                 outputStream.flush();
                 outputStream.writeObject(admin);
                 outputStream.flush();
-                outputStream.close();
                 System.out.println("Sent Admin");
-                inputStream.close();
             }catch (IOException error){
                 error.printStackTrace();
             }

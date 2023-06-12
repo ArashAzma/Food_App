@@ -19,7 +19,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import static clientFx.Main.PORT;
 
-public class DepositController {
+public class DepositController extends Main{
     private static Parent root;
     private static Bank bank;
     private static Admin admin;
@@ -54,19 +54,18 @@ public class DepositController {
     public void initialize(Bank bank) {
         this.bank = bank;
         try{
-            InetAddress addr = InetAddress.getByName(null);
-            System.out.println("addr = " + addr);
-            Socket socket = new Socket(addr, PORT);
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            InetAddress addr = InetAddress.getByName(null);
+//            System.out.println("addr = " + addr);
+//            Socket socket = new Socket(addr, PORT);
+//            System.out.println("Connected to server.");
+//            System.out.println("socket = " + socket);
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.writeUTF("getAdmin");
             outputStream.flush();
             admin = (Admin) inputStream.readObject();
             System.out.println("received  Admin ");
-            inputStream.close();
         }catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -131,21 +130,19 @@ public class DepositController {
         double sum = admin.getMojodi();
         admin.setMojodi(Double.parseDouble(Amount)+sum);
         try{
-            InetAddress addr = InetAddress.getByName(null);
-            System.out.println("addr = " + addr);
-            Socket socket = new Socket(addr, PORT);
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            InetAddress addr = InetAddress.getByName(null);
+//            System.out.println("addr = " + addr);
+//            Socket socket = new Socket(addr, PORT);
+//            System.out.println("Connected to server.");
+//            System.out.println("socket = " + socket);
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.writeUTF("changeMojodi");
             outputStream.flush();
             outputStream.writeObject(admin);
             outputStream.flush();
-            outputStream.close();
             System.out.println("Sent Admin");
-            inputStream.close();
         }catch (IOException error){
             error.printStackTrace();
         }

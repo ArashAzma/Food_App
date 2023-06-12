@@ -47,11 +47,11 @@ public class SignUpController extends Main{
         String email = emailBox.getText();
         String address = addressBox.getText();
         try{
-            InetAddress addr = InetAddress.getByName(null);
-            System.out.println("addr = " + addr);
-            Socket socket = new Socket(addr, PORT);
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
+//            InetAddress addr = InetAddress.getByName(null);
+//            System.out.println("addr = " + addr);
+//            Socket socket = new Socket(addr, PORT);
+//            System.out.println("Connected to server.");
+//            System.out.println("socket = " + socket);
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.flush();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());

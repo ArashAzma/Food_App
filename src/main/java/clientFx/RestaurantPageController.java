@@ -45,20 +45,19 @@ public class RestaurantPageController extends Main{
 
 //    @FXML
     public void init() throws IOException {
-        InetAddress addr = InetAddress.getByName(null);
-        System.out.println("addr = " + addr);
-        Socket socket = new Socket(addr, PORT);
+//        InetAddress addr = InetAddress.getByName(null);
+//        System.out.println("addr = " + addr);
+//        Socket socket = new Socket(addr, PORT);
        try{
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//           ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+           outputStream.flush();
             outputStream.writeUTF("list");
             outputStream.flush();
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
             System.out.println("received restauarants ");
-            inputStream.close();
 
         }catch(IOException error ){
             error.printStackTrace();
@@ -66,7 +65,6 @@ public class RestaurantPageController extends Main{
             throw new RuntimeException(e);
         } finally{
             System.out.println("closing...");
-            socket.close();
         }
         cartController.initialize();
         Restaurant rest = restaurants.get(index);

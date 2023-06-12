@@ -40,20 +40,17 @@ public class RestaurantsController extends Main{
 
     @FXML
     public void initialize() throws IOException {
-        InetAddress addr = InetAddress.getByName(null);
-        System.out.println("addr = " + addr);
-        Socket socket = new Socket(addr, PORT);
         try{
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+
             outputStream.writeUTF("list");
             outputStream.flush();
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
             System.out.println("received restauarants ");
-            inputStream.close();
 
         }catch(IOException error ){
             System.out.println("\n IOException\n");
@@ -62,8 +59,7 @@ public class RestaurantsController extends Main{
             System.out.println("\nobject doesnt match\n");
             throw new RuntimeException(e);
         } finally{
-            System.out.println("closing...");
-            socket.close();
+            System.out.println("RESTAURANTS FINISHED...");
         }
         int i=0;
         for(Restaurant res: restaurants){

@@ -35,15 +35,13 @@ public class LoginController extends Main{
 
     @FXML
     private void login(ActionEvent e)throws IOException{
-        InetAddress addr = InetAddress.getByName(null);
-        System.out.println("addr = " + addr);
-        Socket socket = new Socket(addr, PORT);
         try {
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+//            ObjectOutputStream.reset().
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
             String name = nameBox.getText();
             String password = passBox.getText();
@@ -60,7 +58,6 @@ public class LoginController extends Main{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
                 root = loader.load();
                 switchToScene(e, "restaurantsView.fxml", root);
-                socket.close();
             }
             else {
                 System.out.println("Did not find user");
@@ -69,8 +66,7 @@ public class LoginController extends Main{
         } catch(IOException error){
             error.printStackTrace();
         }finally{
-            System.out.println("closing...");
-            socket.close();
+            System.out.println("Login completed ...");
         }
     }
     @FXML

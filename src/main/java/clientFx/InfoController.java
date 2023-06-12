@@ -4,17 +4,10 @@ import common.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.ArrayList;
 
 public class InfoController extends Main{
     private static Admin admin;
@@ -44,20 +37,11 @@ public class InfoController extends Main{
     @FXML
     public void initialize() {
         try{
-            InetAddress addr = InetAddress.getByName(null);
-            System.out.println("addr = " + addr);
-            Socket socket = new Socket(addr, PORT);
-
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.writeUTF("getAdmin");
             outputStream.flush();
             admin = (Admin) inputStream.readObject();
             System.out.println("received Admin ");
-            inputStream.close();
             updateNameLabel(admin.getName());
             updatePassLabel(admin.getPassword());
             updatePhoneLabel(admin.getPhoneNumber());
@@ -105,47 +89,21 @@ public class InfoController extends Main{
         System.out.println(nameTextField.getText());
         System.out.println(passTextField.getText());
         System.out.println("ZZ");
-        if(!nameTextField.getText().equals("")) {
-            tempAdmin.setName(nameTextField.getText());
-        }
-        else {
-            tempAdmin.setName(admin.getName());
-        }
-        if(!passTextField.getText().equals("")){
-            tempAdmin.setPassword(passTextField.getText());
-        }
-        else {
-            tempAdmin.setPassword(admin.getPassword());
-        }
-        if(!phoneTextField.getText().equals("")) {
-            tempAdmin.setPhoneNumber(phoneTextField.getText());
-        }
-        else {
-            tempAdmin.setPhoneNumber(admin.getPhoneNumber());
-        }
-        if(!addressTextField.getText().equals("")){
-            tempAdmin.setAddress(addressTextField.getText());
-        }
-        else {
-            tempAdmin.setAddress(admin.getAddress());
-        }
-        if(!emailTextField.getText().equals("")){
-            tempAdmin.setEmail(emailTextField.getText());
-        }
-        else {
-            tempAdmin.setEmail(admin.getEmail());
-        }
+        if(!nameTextField.getText().equals(""))  tempAdmin.setName(nameTextField.getText());
+        else tempAdmin.setName(admin.getName());
+        if(!passTextField.getText().equals("")) tempAdmin.setPassword(passTextField.getText());
+        else tempAdmin.setPassword(admin.getPassword());
+        if(!phoneTextField.getText().equals("")) tempAdmin.setPhoneNumber(phoneTextField.getText());
+        else tempAdmin.setPhoneNumber(admin.getPhoneNumber());
+        if(!addressTextField.getText().equals("")) tempAdmin.setAddress(addressTextField.getText());
+        else tempAdmin.setAddress(admin.getAddress());
+        if(!emailTextField.getText().equals("")) tempAdmin.setEmail(emailTextField.getText());
+        else tempAdmin.setEmail(admin.getEmail());
         System.out.println(tempAdmin);
         try{
-            InetAddress addr = InetAddress.getByName(null);
-            System.out.println("addr = " + addr);
-            Socket socket = new Socket(addr, PORT);
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.writeUTF("changeInfo");
+            outputStream.flush();
             try{
                 outputStream.writeObject(tempAdmin);
                 outputStream.flush();
@@ -189,8 +147,6 @@ public class InfoController extends Main{
                 else{
                     initialize();
                 }
-                outputStream.close();
-                inputStream.close();
             }catch(IOException error){
                 System.out.println("error");
                 error.printStackTrace();
