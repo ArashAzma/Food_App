@@ -54,13 +54,6 @@ public class DepositController extends Main{
     public void initialize(Bank bank) {
         this.bank = bank;
         try{
-//            InetAddress addr = InetAddress.getByName(null);
-//            System.out.println("addr = " + addr);
-//            Socket socket = new Socket(addr, PORT);
-//            System.out.println("Connected to server.");
-//            System.out.println("socket = " + socket);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
             outputStream.writeUTF("getAdmin");
             outputStream.flush();

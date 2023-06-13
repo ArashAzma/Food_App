@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #116D6E;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #116D6E;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantPageController">
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
-         <Button onAction="#infoButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2 2 2 2; -fx-border-radius: 25%;" text="info" textFill="WHITE">
+         <Button onAction="#infoButton" prefHeight="25.0" prefWidth="60.0" styleClass="hover-button" text="info" textFill="WHITE">
             <HBox.margin>
                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
             </HBox.margin>
@@ -22,7 +22,7 @@
             <cursor>
                <Cursor fx:constant="OPEN_HAND" />
             </cursor></Button>
-         <Button onAction="#cartButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2 2 2 2; -fx-border-radius: 25%;" text="cart" textFill="WHITE">
+         <Button onAction="#cartButton" prefHeight="25.0" prefWidth="60.0" styleClass="hover-button" text="cart" textFill="WHITE">
             <HBox.margin>
                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
             </HBox.margin>
@@ -34,19 +34,30 @@
             </cursor></Button>
       </children>
    </HBox>
-   <ScrollPane prefHeight="488.0" prefWidth="700.0" style="-fx-background-color: #BACDDB;">
+   <ScrollPane hbarPolicy="NEVER" prefHeight="488.0" prefWidth="700.0" style="-fx-background-color: #116D6E;">
       <content>
-         <FlowPane fx:id="flowPane" hgap="30.0" prefHeight="422.0" prefWidth="698.0" style="-fx-background-color: #BACDDB;" vgap="25.0">
+         <FlowPane fx:id="flowPane" alignment="CENTER" columnHalignment="CENTER" prefHeight="422.0" prefWidth="698.0" style="-fx-background-color: #116D6E;" vgap="25.0">
             <padding>
-               <Insets bottom="20.0" left="50.0" top="20.0" />
+               <Insets left="255.0" right="250.0" top="25.0" />
             </padding></FlowPane>
       </content>
    </ScrollPane>
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
-         <Button alignment="CENTER" contentDisplay="CENTER" onAction="#addToCartButton" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2 2 2 2; -fx-border-radius: 25%;" text="add to cart" textFill="WHITE">
+         <Button alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="20.0" onAction="#restaurants" styleClass="hover-button" text="Restaurants" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="OPEN_HAND" />
+            </cursor>
             <HBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin>
+         </Button>
+         <Button alignment="CENTER" contentDisplay="CENTER" onAction="#addToCartButton" styleClass="res-button" text="add to cart" textFill="WHITE">
+            <HBox.margin>
+               <Insets bottom="10.0" left="500.0" right="10.0" top="10.0" />
             </HBox.margin>
             <font>
                <Font name="System Bold" size="12.0" />

@@ -1,38 +1,23 @@
 package clientFx;
 
 import common.Restaurant;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 
-import static clientFx.LoginController.restaurants;
-
 public class RestaurantsController extends Main{
-//    private Admin admin = Admin.getInstace(null, null, null, null, null);
-    private static Stage stage;
-    private static Scene scene;
     private Parent root;
     @FXML
     private FlowPane flowPane = new FlowPane();
@@ -43,8 +28,6 @@ public class RestaurantsController extends Main{
         try{
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
 
             outputStream.writeUTF("list");
@@ -66,11 +49,11 @@ public class RestaurantsController extends Main{
             String imagePath = RestaurantPageController.class.getResource(res.getImgPath()).toExternalForm();
             Image image = new Image(imagePath);
             Button button = new Button(res.getName());
-            Label address = new Label(res.getAddress());
+            Label info = new Label(res.getAddress()+"\nTime: "+res.getTime()+"   Take away: "+res.isIs_takeAway());
             ImageView imageView = new ImageView(image);
             button.setMinWidth(290);
-            address.setMinWidth(290);
-            address.setMinHeight(60);
+            info.setMinWidth(290);
+            info.setMinHeight(60);
             imageView.setFitWidth(290);
             imageView.setFitHeight(120);
             final int index = i;
@@ -86,13 +69,19 @@ public class RestaurantsController extends Main{
                     throw new RuntimeException(ex);
                 }
             });
-            button.setStyle("-fx-background-color: white; -fx-font-weight: bold; -fx-border-width: 2 2 2 2; -fx-border-color: #116D6E; -fx-border-radius: 50%");
-            button.setCursor(Cursor.OPEN_HAND);
-            address.setStyle("-fx-background-color: white;");
-            imageView.setStyle("-fx-border-radius: 50%;");
-            VBox vbox = new VBox(imageView, button, address);
-            vbox.setStyle("-fx-border-radius: 10px; -fx-border-color: white; -fx-border-width: 1px;");
+            VBox vbox = new VBox(imageView, button, info);
+            vbox.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            vbox.getStyleClass().add("glassmorphism-vbox");
             vbox.setAlignment(Pos.TOP_CENTER);
+            vbox.setPadding(new Insets(10));
+            vbox.setSpacing(15);
+
+            button.getStyleClass().add("res-button");
+            info.getStyleClass().add("info-label");
+            flowPane.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            flowPane.getStyleClass().add("flowpane-background");
+
+
             flowPane.getChildren().add(i, vbox);
             i++;
         }

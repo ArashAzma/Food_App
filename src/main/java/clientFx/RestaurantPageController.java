@@ -5,11 +5,10 @@ import common.Restaurant;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,13 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class RestaurantPageController extends Main{
-    private static Stage stage;
-    private static Scene scene;
     private static int index;
     private FXMLLoader loader = new FXMLLoader(getClass().getResource("cartView.fxml"));
     private Parent root;
@@ -45,15 +40,10 @@ public class RestaurantPageController extends Main{
 
 //    @FXML
     public void init() throws IOException {
-//        InetAddress addr = InetAddress.getByName(null);
-//        System.out.println("addr = " + addr);
-//        Socket socket = new Socket(addr, PORT);
        try{
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//           ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-           outputStream.flush();
+            outputStream.flush();
             outputStream.writeUTF("list");
             outputStream.flush();
             restaurants = (ArrayList<Restaurant>) inputStream.readObject();
@@ -73,15 +63,18 @@ public class RestaurantPageController extends Main{
             String imagePath = RestaurantPageController.class.getResource(food.getImgPath()).toExternalForm();
             Image image = new Image(imagePath);
             Label name = new Label(food.getName());
-            Label isAvailable = new Label(food.isAvailable());
+            Label isAvailable = new Label("Availability: "+food.isAvailable());
 
             ImageView imageView = new ImageView(image);
-            name.setMinWidth(250);
-            isAvailable.setMinWidth(250);
-            imageView.setFitWidth(250);
-            imageView.setFitHeight(120);
+            name.setMinWidth(150);
+            isAvailable.setMinWidth(150);
+            imageView.setFitWidth(150);
+            imageView.setFitHeight(150);
 
             ChoiceBox<Integer> add = new ChoiceBox<>();
+            if(food.isAvailable().equals("no")) {
+                add.setDisable(true);
+            }
             for (int i = 0; i <= 4; i++) {
                 add.getItems().add(i);
             }
@@ -95,11 +88,20 @@ public class RestaurantPageController extends Main{
 
             HBox hbox = new HBox(add, name);
             VBox vbox = new VBox(imageView, hbox, isAvailable);
-            name.setStyle("-fx-background-color: white; -fx-font-weight: bold; -fx-border-width: 2 2 2 2; -fx-border-color: #116D6E; -fx-border-radius: 50%");
-            add.setStyle("-fx-background-color: white;");
-            hbox.setStyle("-fx-background-color: white;");
-            hbox.setSpacing(10);
-            vbox.setStyle("-fx-background-color: white;");
+            vbox.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            vbox.getStyleClass().add("glassmorphism-vbox");
+            vbox.setAlignment(Pos.TOP_CENTER);
+            vbox.setPadding(new Insets(10));
+            vbox.setSpacing(15);
+
+            name.getStyleClass().add("info-label");
+            isAvailable.getStyleClass().add("info-label");
+            imageView.setPreserveRatio(false);
+            add.getStyleClass().add("choice-box")
+            ;
+            hbox.setSpacing(5);
+            hbox.getStyleClass().add("glassmorphism-vbox");
+            hbox.setAlignment(Pos.CENTER);
             flowPane.getChildren().add(0, vbox);
         }
     }
@@ -109,6 +111,12 @@ public class RestaurantPageController extends Main{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
         root = loader.load();
         switchToScene(e, "InfoView.fxml", root);
+    }
+    @FXML
+    private void restaurants(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
+        root = loader.load();
+        switchToScene(e, "restaurantsView.fxml", root);
     }
     @FXML
     public void cartButton(ActionEvent e) throws IOException {

@@ -1,5 +1,7 @@
-fried chicken,99,true,/images/pizza.jpg
+fried chicken,99,false,/images/pizza.jpg
 burger,89,true,/images/pizza2.jpg
-potato chips,49,true,/images/aceBurger_burger.jpg
-hamburger,79,true,/images/pizza.jpg
+potato chips,49,false,/images/aceBurger_burger.jpg
+hamburger,79,false,/images/pizza.jpg
+soda,19,true,/images/aceBurger_burger.jpg
+hamburger,79,false,/images/pizza.jpg
 soda,19,true,/images/aceBurger_burger.jpg

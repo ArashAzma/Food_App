@@ -9,7 +9,9 @@ public class Restaurant implements Serializable {
     private String address;
     private ArrayList<Food> menu = new ArrayList<Food>();
     private int foodCount;
+
     private String time;
+
     private boolean is_takeAway;
     private int tableCount = 0;
     private int courierCount = 0;
@@ -37,6 +39,21 @@ public class Restaurant implements Serializable {
     }
     public int getFoodCount() {
         return foodCount;
+    }
+    public String getTime() {
+        return time;
+    }
+
+    public boolean isIs_takeAway() {
+        return is_takeAway;
+    }
+
+    public int getTableCount() {
+        return tableCount;
+    }
+
+    public int getCourierCount() {
+        return courierCount;
     }
     public String toString(){
         String str = name+" "+address+" "+time;
