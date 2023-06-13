@@ -6,70 +6,67 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.LoginController">
-   <left>
-      <AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #8675A9;" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <AnchorPane prefHeight="700.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.LoginController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/login.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="249.0" layoutY="109.0" prefHeight="295.0" prefWidth="219.0" spacing="5.0" styleClass="glassmorphism-vbox" stylesheets="@styles.css">
          <children>
-            <VBox alignment="CENTER" layoutX="100.0" layoutY="100.0" prefHeight="298.0" prefWidth="200.0" AnchorPane.bottomAnchor="102.0" AnchorPane.topAnchor="100.0">
+            <Label text="Welcome Back" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nameBox" promptText="username" styleClass="hover-textField">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <PasswordField fx:id="passBox" promptText="password" styleClass="hover-textField" />
+            <Label fx:id="passError" prefHeight="17.0" prefWidth="228.0" textFill="RED" />
+            <Button mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #C3AED6;" styleClass="hover-button" text="Login" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </Button>
+            <HBox alignment="CENTER" prefHeight="28.0" prefWidth="200.0">
                <children>
-                  <Label text="Welcome Back">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="15.0" />
-                     </VBox.margin>
+                  <Label prefHeight="17.0" prefWidth="105.0" text="Dont have an account? " textFill="#727272">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="10.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nameBox" promptText="username" style="-fx-border-color: #C3AED6; -fx-border-width: 0 0 2 0; -fx-background-color: transparent;">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <PasswordField fx:id="passBox" promptText="password" style="-fx-border-color: #C3AED6; -fx-border-width: 0 0 2 0; -fx-background-color: transparent;">
-                     <VBox.margin>
-                        <Insets bottom="15.0" top="15.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Label fx:id="passError" layoutX="10.0" layoutY="125.0" prefHeight="17.0" prefWidth="228.0" textFill="RED" />
-                  <Button mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #C3AED6;" text="Login" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="15.0" />
-                     </VBox.margin>
+                  <Button mnemonicParsing="false" onAction="#signUp" prefHeight="25.0" prefWidth="63.0" styleClass="hover-button" text="Signup" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <HBox alignment="CENTER" prefHeight="28.0" prefWidth="200.0">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Dont have an account? " />
-                        <Button mnemonicParsing="false" onAction="#signUp" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: transparent;" text="Signup" textFill="#8675a9" underline="true">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
                </children>
-            </VBox>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

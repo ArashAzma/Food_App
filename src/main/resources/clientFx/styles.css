@@ -1,0 +1,47 @@
+.hover-button {
+ -fx-background-color: rgba(255, 255, 255, 0.25);
+}
+
+.hover-button:hover {
+    -fx-opacity: 0.7;
+}
+.hover-textField{
+    -fx-prompt-text-fill: white;
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: #C3AED6;
+    -fx-border-width: 0 0 2 0;
+}
+.hover-textField:focused{
+    -fx-border-width: 2 2 2 2;
+    -fx-transition-duration: 0.7s;
+}
+.hover-textField .text-input {
+    -fx-prompt-text-fill: white;
+    -fx-font-weight: bold;
+}
+.glassmorphism-vbox {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-radius: 10px;
+   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-font-weight: bold;
+}
+.glassmorphism-vbox .background-glow {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, white, 20, 0, 0, 0);
+}
+
+.glassmorphism-vbox .content {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 10px;
+}
+
+.glassmorphism-vbox .text-field .text-input {
+    -fx-prompt-text-fill: white;}
+}
+
+.glassmorphism-vbox .blur-container {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
