@@ -37,6 +37,8 @@ public class RestaurantPageController extends Main{
     private FlowPane flowPane = new FlowPane();
     private ArrayList<Restaurant> restaurants;
     private static ArrayList<Food> selectedItems = new ArrayList<>();
+    @FXML
+    private Label add;
 
 //    @FXML
     public void init() throws IOException {
@@ -129,6 +131,7 @@ public class RestaurantPageController extends Main{
     private void addToCartButton(ActionEvent e) throws IOException {
         cartController.addItems(selectedItems);
         cartController.initialize();
+        add.setOpacity(1);
     }
     public void setIndex(int index) throws IOException {
         this.index = index;

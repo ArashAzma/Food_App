@@ -107,11 +107,6 @@ public class CartController extends Main{
         if(sum<=admin.getMojodi()){
             admin.setMojodi(admin.getMojodi()-sum);
             try{
-//                InetAddress addr = InetAddress.getByName(null);
-//                System.out.println("addr = " + addr);
-//                Socket socket = new Socket(addr, PORT);
-//                System.out.println("Connected to server.");
-//                System.out.println("socket = " + socket);
                 outputStream.flush();
                 outputStream.writeUTF("changeMojodi");
                 outputStream.flush();

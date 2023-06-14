@@ -38,4 +38,15 @@ public class BankController extends Main{
         dc.initialize(new Bank3("a","b","c",1,2));
         switchToScene(e, "depositView.fxml", root);
     }
+    @FXML
+    private void infoButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoView.fxml"));
+        root = loader.load();
+        switchToScene(e, "InfoView.fxml", root);
+    }
+    public void cartButton(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("cartView.fxml"));
+        root = loader.load();
+        switchToScene(e, "cartView.fxml", root);
+    }
 }
