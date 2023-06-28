@@ -54,7 +54,7 @@ public class serverAdmin {
                     Restaurant r = (Restaurant) in.readObject();
                     restaurants.add(r);
                     FileWriter writer = new FileWriter("src\\main\\java\\Server\\Restaurants",true);
-                    writer.write(r.getName()+","+r.getAddress()+","+r.getTime()+","+r.isIs_takeAway()+","+r.getTableCount()+","+r.getCourierCount()+","+r.getImgPath()+"\n");
+                    writer.write(r.getName()+","+r.getAddress()+","+r.getTime()+","+r.isTake_away()+","+r.getTableCount()+","+r.getCourierCount()+","+r.getImgPath()+"\n");
                     writer.close();
 
                 }else if (str.equals("add food")) { // giving new food object to add to arraylist

@@ -44,6 +44,10 @@ public class Restaurant implements Serializable {
     public boolean isIs_takeAway() {
         return is_takeAway;
     }
+   public boolean isTake_away() {
+       return is_takeAway;
+   }
+
 
     public int getTableCount() {
         return tableCount;

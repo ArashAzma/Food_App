@@ -17,7 +17,7 @@
             <TableColumn fx:id="nameColumn" prefWidth="51.0" text="name" />
             <TableColumn fx:id="surnameColumn" prefWidth="78.0" text="address" />
             <TableColumn fx:id="timeColumn" prefWidth="52.0" text="time" />
-            <TableColumn fx:id="takeColumn" prefWidth="83.0" text="take away" />
+            <TableColumn fx:id="takeColumn" prefWidth="83.0" text="is_takeAway" />
             <TableColumn fx:id="tableColumn" prefWidth="56.0" text="table" />
             <TableColumn fx:id="courierColumn" prefWidth="61.0" text="courier" />
             <TableColumn fx:id="imgPathColumn" prefWidth="87.0" text="imgPath" />

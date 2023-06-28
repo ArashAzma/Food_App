@@ -79,7 +79,7 @@ public class restController extends Main {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        takeColumn.setCellValueFactory(new PropertyValueFactory<>("take_away"));
+        takeColumn.setCellValueFactory(new PropertyValueFactory<>("is_takeAway"));
         tableColumn.setCellValueFactory(new PropertyValueFactory<>("tableCount"));
         courierColumn.setCellValueFactory(new PropertyValueFactory<>("courierCount"));
         imgPathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
