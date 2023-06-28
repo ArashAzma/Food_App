@@ -4,5 +4,8 @@ module com.example.clientfx {
 
 
     opens clientFx to javafx.fxml;
+    opens Admin to javafx.fxml;
+    opens common to javafx.base;
     exports clientFx;
+    exports Admin;
 }

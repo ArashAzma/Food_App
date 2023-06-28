@@ -16,16 +16,13 @@ public class Restaurant implements Serializable {
     private int tableCount = 0;
     private int courierCount = 0;
     public Restaurant(String name){this.name = name;}
-    public Restaurant(String name, String address, String time, boolean is_takeAway, int count, String imgPath){
+    public Restaurant(String name, String address, String time, boolean is_takeAway, int courierCount, int tabelCount, String imgPath){
         this.name = name;
         this.address = address;
         this.time = time;
         this.is_takeAway = is_takeAway;
-        if (is_takeAway) {
-            this.courierCount = count;
-        } else {
-            this.tableCount = count;
-        }
+        this.courierCount = courierCount;
+        this.tableCount = tabelCount;
         this.imgPath = imgPath;
     }
     public void add_menu(Food food){
@@ -54,6 +51,15 @@ public class Restaurant implements Serializable {
 
     public int getCourierCount() {
         return courierCount;
+    }
+    public ArrayList<Food> getFoodsArray(){
+        return menu;
+    }
+    public void add_food(Food food){
+        menu.add(food);
+    }
+    public void setFoodsArray(ArrayList<Food> foodsArray){
+        this.menu = foodsArray;
     }
     public String toString(){
         String str = name+" "+address+" "+time;
