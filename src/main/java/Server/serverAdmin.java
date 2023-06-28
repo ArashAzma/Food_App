@@ -64,9 +64,32 @@ public class serverAdmin {
                     FileWriter writer = new FileWriter("src\\main\\java\\Server\\Menus",true);
                     writer.write(restaurant.getName()+","+food.getName()+","+food.getType()+","+food.getPrice()+","+food.isAvailable()+","+food.getImgPath()+"\n");
                     writer.close();
+                }else if(str.equals("login")) {
+                    String username = in.readUTF();
+                    String password = in.readUTF();
+
+                    System.out.println(username + " " + password);
+                    boolean findUser = false;
+                    try (BufferedReader userFile = new BufferedReader(new FileReader("src\\main\\java\\Server\\adminInfo"))) {
+                        String line = userFile.readLine();
+                        String[] parts = line.split(",");
+                        System.out.println(parts[0]+"   "+parts[1]);
+                        if(username.equals(parts[0]) && password.equals(parts[1])){
+                            findUser = true;
+                        }
+                        if (findUser) {
+                            out.writeUTF("Found");
+                            out.flush();
+                        } else {
+                            out.writeUTF("!foundUser");
+                            out.flush();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error reading usernames file: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
             }catch (IOException ignored){
-
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }finally {
