@@ -17,7 +17,7 @@ public class serverAdmin {
         // my restaurants information
 
         BufferedReader restaurantFile = new BufferedReader(new FileReader("src/main/java/Server/Restaurants"));
-        BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
+        //BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
         //reading data from Restaurants.txt and add to restaurants
         String resline;
         String menline;
@@ -25,6 +25,7 @@ public class serverAdmin {
             String[] fields = resline.split(",");
             Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6]);
             restaurants.add(rest);
+            BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
             while ((menline=menuFile.readLine()) != null){
                 String[] fields2 = menline.split(",");
                 if(fields2[0].equals(fields[0])){
