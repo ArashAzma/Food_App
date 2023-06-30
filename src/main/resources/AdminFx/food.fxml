@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.foodController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.foodController">
    <children>
-      <TableView fx:id="foods" layoutX="100.0" layoutY="40.0" prefHeight="257.0" prefWidth="379.0">
+      <TableView fx:id="foods" layoutX="100.0" layoutY="40.0" prefHeight="373.0" prefWidth="377.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="70.0" text="name" />
           <TableColumn fx:id="typeColumn" prefWidth="63.0" text="type" />
@@ -15,11 +18,16 @@
             <TableColumn fx:id="imgpathColumn" prefWidth="72.0" text="img path" />
         </columns>
       </TableView>
-      <Button fx:id="add" layoutX="505.0" layoutY="311.0" mnemonicParsing="false" onAction="#add_food" text="add" />
-      <TextField fx:id="foodnameField" layoutX="100.0" layoutY="311.0" prefHeight="31.0" prefWidth="58.0" promptText="name" />
-      <TextField fx:id="typeFeild" layoutX="167.0" layoutY="311.0" prefHeight="31.0" prefWidth="58.0" promptText="type" />
-      <TextField fx:id="priceField" layoutX="235.0" layoutY="311.0" prefHeight="31.0" prefWidth="52.0" promptText="price" />
-      <TextField fx:id="isAvailableField" layoutX="300.0" layoutY="311.0" prefHeight="31.0" prefWidth="88.0" promptText="isAvailable" />
-      <TextField fx:id="imgpathField" layoutX="402.0" layoutY="311.0" prefHeight="31.0" prefWidth="77.0" promptText="img path" />
+      <Button fx:id="add" layoutX="519.0" layoutY="429.0" mnemonicParsing="false" onAction="#add_food" prefHeight="31.0" prefWidth="65.0" text="add food" />
+      <HBox layoutX="100.0" layoutY="429.0" prefHeight="43.0" prefWidth="377.0" spacing="12.0">
+         <children>
+            <TextField fx:id="foodnameField" prefHeight="31.0" prefWidth="58.0" promptText="name" />
+            <TextField fx:id="typeFeild" prefHeight="31.0" prefWidth="58.0" promptText="type" />
+            <TextField fx:id="priceField" prefHeight="31.0" prefWidth="52.0" promptText="price" />
+            <TextField fx:id="isAvailableField" prefHeight="31.0" prefWidth="88.0" promptText="is Available" />
+            <TextField fx:id="imgpathField" prefHeight="31.0" prefWidth="77.0" promptText="img path" />
+         </children>
+      </HBox>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#restaurantScene" text="&lt;" />
    </children>
 </AnchorPane>

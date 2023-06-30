@@ -1,3 +1,4 @@
-McDonald,Khayam11,Time,true,8,10,/images/mcDonaldLogo.jpg,true
-SubWay,GhaziTabaTabyee,Time,false,8,20,/images/subwayLogo.jpg,false
-KFC,london,Time,false,8,30,/images/kfcLogo.jpg,true
+McDonald,Khayam11,ZAMAN,true,8,10,/images/mcDonaldLogo.jpg,true
+SubWay,GhaziTabaTabyee,Time,false,9,15,/images/subwayLogo.jpg,false
+KFC,MSHD,Time,false,11,5,/images/kfcLogo.jpg,true
+ACE,GhaziTabaTabyee,Time,false,9,15,/images/subwayLogo.jpg,false

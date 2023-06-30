@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.UpdateRestaurantController">
+   <children>
+      <VBox layoutX="184.0" layoutY="29.0" prefHeight="440.0" prefWidth="332.0">
+         <children>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Name:" />
+            <TextField fx:id="textfeildName" />
+            <Label layoutX="10.0" layoutY="50.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Address:" />
+            <TextField fx:id="textfeildAddress" layoutX="10.0" layoutY="90.0" />
+            <Label layoutX="10.0" layoutY="115.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Time:" />
+            <TextField fx:id="textfeildTime" layoutX="10.0" layoutY="155.0" />
+            <Label layoutX="10.0" layoutY="180.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Take away mode:" />
+            <TextField fx:id="textfeildTake_away" layoutX="10.0" layoutY="220.0" />
+            <Label layoutX="10.0" layoutY="245.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Courier count:" />
+            <TextField fx:id="textfeildCourier_count" layoutX="10.0" layoutY="285.0" />
+            <Label layoutX="10.0" layoutY="310.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Table count:" />
+            <TextField fx:id="textfeildTable_count" layoutX="10.0" layoutY="350.0" />
+            <Label layoutX="10.0" layoutY="375.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Image path:" />
+            <TextField fx:id="textFieldImgPath" layoutX="10.0" layoutY="415.0" />
+            <Label layoutX="10.0" layoutY="389.0" prefHeight="40.0" prefWidth="335.0" text="Enter new Availability:" />
+            <TextField fx:id="textfieldIs_able" layoutX="10.0" layoutY="422.0" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <Button layoutX="553.0" layoutY="437.0" mnemonicParsing="false" onAction="#update" prefHeight="25.0" prefWidth="101.0" text="Update" />
+      <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#restaurantScene" prefHeight="25.0" prefWidth="27.0" text="&lt;" />
+   </children>
+</AnchorPane>

@@ -10,30 +10,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class serverAdmin {
-    public static final int PORT = 3030;
-
+    public static final int PORT = 3033;
+    private static ArrayList<Restaurant> restaurants;
     public static void main(String[] args) throws IOException{
-        ArrayList<Restaurant> restaurants = new ArrayList<>();
-        // my restaurants information
-
-        BufferedReader restaurantFile = new BufferedReader(new FileReader("src/main/java/Server/Restaurants"));
-        //BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
-        //reading data from Restaurants.txt and add to restaurants
-        String resline;
-        String menline;
-        while ((resline=restaurantFile.readLine()) != null) {
-            String[] fields = resline.split(",");
-            Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
-            restaurants.add(rest);
-            BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
-            while ((menline=menuFile.readLine()) != null){
-                String[] fields2 = menline.split(",");
-                if(fields2[0].equals(fields[0])){
-                    rest.getFoodsArray().add(new Food(fields2[1],fields2[2],Double.parseDouble(fields2[3]),Boolean.parseBoolean(fields2[4]),fields2[5]));
-                }
-            }
-        }
-//        restaurants.add(new Restaurant("sachi", "khonm", "4", true, 5,0,"jbhk"));
         ServerSocket s = new ServerSocket(PORT);
         Socket socket = s.accept();
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -45,11 +24,15 @@ public class serverAdmin {
                 String str = in.readUTF();
                 System.out.println(str);
                 if (str.equals("restaurants")) {  // sending restaurants arraylist for table view
-                    System.out.print("wsd");
+//                    System.out.println(restaurants.get(0).getTime());
+                    restaurants = loadRestaurants();
+                    System.out.println(restaurants.get(0).getTime());
+                    System.out.print("sent Restaurants");
                     out.writeObject(restaurants);
                     out.flush();
 
-                } else if (str.equals("add restaurant")) { // giving new restaurant object to add to arraylist
+                }
+                else if (str.equals("add restaurant")) { // giving new restaurant object to add to arraylist
                     System.out.println("adding..");
                     Restaurant r = (Restaurant) in.readObject();
                     restaurants.add(r);
@@ -57,7 +40,8 @@ public class serverAdmin {
                     writer.write(r.getName()+","+r.getAddress()+","+r.getTime()+","+r.isTake_away()+","+r.getTableCount()+","+r.getCourierCount()+","+r.getImgPath()+","+r.getIs_able()+"\n");
                     writer.close();
 
-                }else if (str.equals("add food")) { // giving new food object to add to arraylist
+                }
+                else if (str.equals("add food")) { // giving new food object to add to arraylist
                     System.out.println("adding food");
                     Restaurant restaurant = (Restaurant) in.readObject();
                     Food food = (Food) in.readObject();
@@ -65,7 +49,8 @@ public class serverAdmin {
                     FileWriter writer = new FileWriter("src\\main\\java\\Server\\Menus",true);
                     writer.write(restaurant.getName()+","+food.getName()+","+food.getType()+","+food.getPrice()+","+food.isAvailable()+","+food.getImgPath()+"\n");
                     writer.close();
-                }else if(str.equals("login")) {
+                }
+                else if(str.equals("login")) {
                     String username = in.readUTF();
                     String password = in.readUTF();
 
@@ -90,13 +75,60 @@ public class serverAdmin {
                         e.printStackTrace();
                     }
                 }
+                else if(str.equals("change restaurant")){
+                    String resName = in.readUTF();
+                    System.out.println(resName);
+                    String newline = in.readUTF();
+                    System.out.println(newline);
+                    try {
+                        BufferedReader file = new BufferedReader(new FileReader("src\\main\\java\\Server\\Restaurants"));
+                        StringBuffer inputBuffer = new StringBuffer();
+                        String line;
+
+                        while ((line = file.readLine()) != null) {
+                            String[] parts = line.split(",");
+                            if(parts[0].equals(resName)){
+                                line = newline;
+                            }
+                            inputBuffer.append(line);
+                            inputBuffer.append('\n');
+                        }
+                        file.close();
+
+                        FileOutputStream fileOut = new FileOutputStream("src\\main\\java\\Server\\Restaurants");
+                        fileOut.write(inputBuffer.toString().getBytes());
+                        fileOut.close();
+
+                    } catch (Exception e) {
+                        System.out.println("Problem reading file.");
+                    }
+
+                }
             }catch (IOException ignored){
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
-            }finally {
-//                reader2.close();
-//                reader.close();
             }
         }
+    }
+    public static ArrayList<Restaurant> loadRestaurants() throws IOException {
+        BufferedReader restaurantFile = new BufferedReader(new FileReader("src/main/java/Server/Restaurants"));
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        //reading data from Restaurants.txt and add to restaurants
+        String resline;
+        String menline;
+        while ((resline=restaurantFile.readLine()) != null) {
+            String[] fields = resline.split(",");
+//            System.out.println(resline);
+            Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
+            restaurants.add(rest);
+            BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
+            while ((menline=menuFile.readLine()) != null){
+                String[] fields2 = menline.split(",");
+                if(fields2[0].equals(fields[0])){
+                    rest.getFoodsArray().add(new Food(fields2[1],fields2[2],Double.parseDouble(fields2[3]),Boolean.parseBoolean(fields2[4]),fields2[5]));
+                }
+            }
+        }
+        return restaurants;
     }
 }

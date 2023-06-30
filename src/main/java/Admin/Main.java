@@ -28,7 +28,7 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException {
         InetAddress addr =
                 InetAddress.getByName(null);
-        socket = new Socket(addr, 3030);
+        socket = new Socket(addr, 3033);
         out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         in = new ObjectInputStream(socket.getInputStream());

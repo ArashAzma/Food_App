@@ -4,6 +4,7 @@ import common.Restaurant;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -89,6 +90,7 @@ public class restController extends Main {
     private int index = -1;
     @FXML
     public void initialize() throws IOException {
+        restaurants.getItems().clear();
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -98,11 +100,11 @@ public class restController extends Main {
         imgPathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
         is_ableColumn.setCellValueFactory(new PropertyValueFactory<>("is_able"));
         try {
-            // giving restaurants arraylist
-
+            // receive restaurants arraylist
             out.writeUTF("restaurants");
             out.flush();
             list = (ArrayList<Restaurant>) in.readObject();
+            System.out.println(list.get(0).getTime());
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -124,65 +126,27 @@ public class restController extends Main {
         this.clicked = restaurants.getSelectionModel().getSelectedItem();
         int index = restaurants.getSelectionModel().getFocusedIndex();
         this.index = index;
-        textfeildName.setText(nameColumn.getCellData(index).toString());
-        textfeildAddress.setText(surnameColumn.getCellData(index).toString());
-        textfeildTime.setText(timeColumn.getCellData(index).toString());
-        textFieldImgPath.setText(imgPathColumn.getCellData(index).toString());
-        textfeildCourier_count.setText(courierColumn.getCellData(index).toString());
-        textfeildTable_count.setText(tableColumn.getCellData(index).toString());
-        textfeildTake_away.setText(takeColumn.getCellData(index).toString());
-        textfieldIs_able.setText(is_ableColumn.getCellData(index).toString());
+//        textfeildName.setText(nameColumn.getCellData(index).toString());
+//        textfeildAddress.setText(surnameColumn.getCellData(index).toString());
+//        textfeildTime.setText(timeColumn.getCellData(index).toString());
+//        textFieldImgPath.setText(imgPathColumn.getCellData(index).toString());
+//        textfeildCourier_count.setText(courierColumn.getCellData(index).toString());
+//        textfeildTable_count.setText(tableColumn.getCellData(index).toString());
+//        textfeildTake_away.setText(takeColumn.getCellData(index).toString());
+//        textfieldIs_able.setText(is_ableColumn.getCellData(index).toString());
     }
 
     @FXML
     void update(ActionEvent event) throws IOException {
-        try{
-            if(textfeildName.getText() == null){
-                this.name = clicked.getName();
-            }
-            this.name = textfeildName.getText();
-            if(textfeildAddress.getText() == null){
-                this.address = clicked.getAddress();
-            }
-            this.address = textfeildAddress.getText();
-            if(textfeildTime.getText() == null){
-                this.time = clicked.getTime();
-            }
-            this.time = textfeildTime.getText();
-            if(textFieldImgPath.getText() == null){
-                this.imgPath = clicked.getImgPath();
-            }
-            this.imgPath = textFieldImgPath.getText();
-            if(textfeildTable_count.getText() == null){
-                this.table = clicked.getTableCount();
-            }
-            this.table = Integer.parseInt(textfeildTable_count.getText());
-            if(textfeildCourier_count.getText() == null){
-                this.courier = clicked.getCourierCount();
-            }
-            this.courier = Integer.parseInt(textfeildCourier_count.getText());
-            if(textfeildTake_away.getText() == null){
-                this.take = clicked.isTake_away();
-            }
-            this.take = Boolean.parseBoolean(textfeildTake_away.getText());
-            if(textfieldIs_able.getText() == null){
-                this.available = clicked.getIs_able();
-            }
-            this.available = Boolean.parseBoolean(textfieldIs_able.getText());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/updateRestaurant.fxml"));
+        Parent root = loader.load();
+        UpdateRestaurantController upc = loader.getController();
+        upc.setClicked(clicked);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
-        }catch (Exception ignored){
-        }
-        restaurants.getItems().clear();
-        clicked.setName(name);
-        clicked.setAddress(address);
-        clicked.setTime(time);
-        clicked.setImgPath(imgPath);
-        clicked.setTableCount(table);
-        clicked.setCourierCount(courier);
-        clicked.setIs_takeAway(take);
-        clicked.setIs_able(available);
-
-        initialize();
     }
     @FXML
     void add(ActionEvent event) {
