@@ -37,6 +37,9 @@ public class Server {
             String menline;
             while ((resline = restaurantFile.readLine()) != null) {
                 String[] parts = resline.split(",");
+                if(!parts[7].equals("true")){
+                    continue;
+                }
                 boolean isTakeAway = (parts[3].equals("true"));
                 boolean isAble = (parts[7].equals("true"));
                 int courierCount = Integer.parseInt(parts[4]);
