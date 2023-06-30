@@ -126,28 +126,52 @@ public class restController extends Main {
         textfeildName.setText(nameColumn.getCellData(index).toString());
         textfeildAddress.setText(surnameColumn.getCellData(index).toString());
         textfeildTime.setText(timeColumn.getCellData(index).toString());
+        textFieldImgPath.setText(imgPathColumn.getCellData(index).toString());
         textfeildCourier_count.setText(courierColumn.getCellData(index).toString());
         textfeildTable_count.setText(tableColumn.getCellData(index).toString());
         textfeildTake_away.setText(takeColumn.getCellData(index).toString());
         textfieldIs_able.setText(is_ableColumn.getCellData(index).toString());
     }
-    public void Edit (){
+
+    @FXML
+    void update(ActionEvent event) throws IOException {
         try{
+            if(textfeildName.getText() == null){
+                this.name = clicked.getName();
+            }
             this.name = textfeildName.getText();
+            if(textfeildAddress.getText() == null){
+                this.address = clicked.getAddress();
+            }
             this.address = textfeildAddress.getText();
+            if(textfeildTime.getText() == null){
+                this.time = clicked.getTime();
+            }
             this.time = textfeildTime.getText();
+            if(textFieldImgPath.getText() == null){
+                this.imgPath = clicked.getImgPath();
+            }
             this.imgPath = textFieldImgPath.getText();
+            if(textfeildTable_count.getText() == null){
+                this.table = clicked.getTableCount();
+            }
             this.table = Integer.parseInt(textfeildTable_count.getText());
+            if(textfeildCourier_count.getText() == null){
+                this.courier = clicked.getCourierCount();
+            }
             this.courier = Integer.parseInt(textfeildCourier_count.getText());
+            if(textfeildTake_away.getText() == null){
+                this.take = clicked.isTake_away();
+            }
             this.take = Boolean.parseBoolean(textfeildTake_away.getText());
+            if(textfieldIs_able.getText() == null){
+                this.available = clicked.getIs_able();
+            }
             this.available = Boolean.parseBoolean(textfieldIs_able.getText());
 
         }catch (Exception ignored){
         }
-    }
-
-    @FXML
-    void update(ActionEvent event) {
+        restaurants.getItems().clear();
         clicked.setName(name);
         clicked.setAddress(address);
         clicked.setTime(time);
@@ -157,7 +181,7 @@ public class restController extends Main {
         clicked.setIs_takeAway(take);
         clicked.setIs_able(available);
 
-        restaurants.getItems().get(index).setName(name);
+        initialize();
     }
     @FXML
     void add(ActionEvent event) {
