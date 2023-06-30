@@ -68,11 +68,13 @@ public class Restaurant implements Serializable {
         return menu;
     }
     public void setImgPath(String imgPath){
-        this.imgPath = imgPath;
+        if(!imgPath.equals(""))
+            this.imgPath = imgPath;
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(!name.equals(""))
+            this.name = name;
     }
 
     public boolean isIs_able() {
@@ -80,7 +82,8 @@ public class Restaurant implements Serializable {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        if(!address.equals(""))
+            this.address = address;
     }
 
     public void setCourierCount(int courierCount) {
@@ -104,7 +107,8 @@ public class Restaurant implements Serializable {
     }
 
     public void setTime(String time) {
-        this.time = time;
+        if(!time.equals(""))
+            this.time = time;
     }
 
     public void add_food(Food food){
