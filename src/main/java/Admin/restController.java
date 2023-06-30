@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class restController extends Main {
 
     @FXML
     private Button add;
-
+    @FXML
+    private Button updateButton;
     @FXML
     private Button editFoodButton;
 
@@ -68,11 +70,22 @@ public class restController extends Main {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private Restaurant clicked;
+    //Connection conn = null;
     private static Restaurant restaurant;
     protected static ArrayList<Restaurant> list;
     public static Restaurant giveRestaurant(){
         return restaurant;
     }
+    String name;
+    String address;
+    String time;
+    String imgPath;
+    int table;
+    int courier;
+    boolean take;
+    boolean available;
+    private int index = -1;
     @FXML
     public void initialize() throws IOException {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -105,7 +118,47 @@ public class restController extends Main {
             window.setScene(new Scene(root));
             }
         }
+    @FXML
+    void rowClicked(MouseEvent event) {
+        this.clicked = restaurants.getSelectionModel().getSelectedItem();
+        int index = restaurants.getSelectionModel().getFocusedIndex();
+        this.index = index;
+        textfeildName.setText(nameColumn.getCellData(index).toString());
+        textfeildAddress.setText(surnameColumn.getCellData(index).toString());
+        textfeildTime.setText(timeColumn.getCellData(index).toString());
+        textfeildCourier_count.setText(courierColumn.getCellData(index).toString());
+        textfeildTable_count.setText(tableColumn.getCellData(index).toString());
+        textfeildTake_away.setText(takeColumn.getCellData(index).toString());
+        textfieldIs_able.setText(is_ableColumn.getCellData(index).toString());
+    }
+    public void Edit (){
+        try{
+            this.name = textfeildName.getText();
+            this.address = textfeildAddress.getText();
+            this.time = textfeildTime.getText();
+            this.imgPath = textFieldImgPath.getText();
+            this.table = Integer.parseInt(textfeildTable_count.getText());
+            this.courier = Integer.parseInt(textfeildCourier_count.getText());
+            this.take = Boolean.parseBoolean(textfeildTake_away.getText());
+            this.available = Boolean.parseBoolean(textfieldIs_able.getText());
 
+        }catch (Exception ignored){
+        }
+    }
+
+    @FXML
+    void update(ActionEvent event) {
+        clicked.setName(name);
+        clicked.setAddress(address);
+        clicked.setTime(time);
+        clicked.setImgPath(imgPath);
+        clicked.setTableCount(table);
+        clicked.setCourierCount(courier);
+        clicked.setIs_takeAway(take);
+        clicked.setIs_able(available);
+
+        restaurants.getItems().get(index).setName(name);
+    }
     @FXML
     void add(ActionEvent event) {
         Restaurant restaurant = new Restaurant(textfeildName.getText(), textfeildAddress.getText(),textfeildTime.getText(),Boolean.parseBoolean(textfeildTake_away.getText()), Short.parseShort(textfeildTable_count.getText()), Short.parseShort(textfeildCourier_count.getText()),textFieldImgPath.getText(),Boolean.parseBoolean(textfieldIs_able.getText()));

@@ -67,6 +67,46 @@ public class Restaurant implements Serializable {
     public ArrayList<Food> getFoodsArray(){
         return menu;
     }
+    public void setImgPath(String imgPath){
+        this.imgPath = imgPath;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isIs_able() {
+        return is_able;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCourierCount(int courierCount) {
+        this.courierCount = courierCount;
+    }
+
+    public void setFoodCount(int foodCount) {
+        this.foodCount = foodCount;
+    }
+
+    public void setIs_takeAway(boolean is_takeAway) {
+        this.is_takeAway = is_takeAway;
+    }
+
+    public void setMenu(ArrayList<Food> menu) {
+        this.menu = menu;
+    }
+
+    public void setTableCount(int tableCount) {
+        this.tableCount = tableCount;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public void add_food(Food food){
         menu.add(food);
     }

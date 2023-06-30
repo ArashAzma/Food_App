@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.restController">
    <children>
-      <TableView fx:id="restaurants" layoutX="12.0" layoutY="29.0" prefHeight="315.0" prefWidth="541.0" AnchorPane.topAnchor="29.0">
+      <TableView fx:id="restaurants" layoutX="12.0" layoutY="29.0" onMouseClicked="#rowClicked" prefHeight="315.0" prefWidth="541.0" AnchorPane.topAnchor="29.0">
          <columns>
             <TableColumn fx:id="nameColumn" prefWidth="51.0" text="name" />
             <TableColumn fx:id="surnameColumn" prefWidth="78.0" text="address" />
@@ -21,7 +21,7 @@
             <TableColumn fx:id="courierColumn" prefWidth="61.0" text="courier" />
             <TableColumn fx:id="tableColumn" prefWidth="65.0" text="table" />
             <TableColumn fx:id="takeColumn" prefWidth="78.0" text="is_takeAway" />
-            <TableColumn fx:id="is_ableColumn" prefWidth="75.0" text="is able" />
+            <TableColumn fx:id="is_ableColumn" prefWidth="75.0" text="is available" />
          </columns></TableView>
       <TextField fx:id="textfeildName" layoutX="14.0" layoutY="352.0" prefHeight="31.0" prefWidth="52.0" promptText="name" />
       <TextField fx:id="textfeildAddress" layoutX="72.0" layoutY="352.0" prefHeight="31.0" prefWidth="68.0" promptText="address" />
@@ -32,6 +32,7 @@
       <Button fx:id="add" layoutX="557.0" layoutY="352.0" mnemonicParsing="false" onAction="#add" text="add" />
       <Button fx:id="editFoodButton" layoutX="557.0" layoutY="187.0" mnemonicParsing="false" onAction="#switchToFood" text="foods" />
       <TextField fx:id="textFieldImgPath" layoutX="206.0" layoutY="352.0" prefHeight="31.0" prefWidth="76.0" promptText="imgPath" />
-      <TextField fx:id="textfieldIs_able" layoutX="493.0" layoutY="352.0" prefHeight="31.0" prefWidth="58.0" promptText="is able" />
+      <TextField fx:id="textfieldIs_able" layoutX="493.0" layoutY="352.0" prefHeight="31.0" prefWidth="58.0" promptText="is available" />
+      <Button fx:id="updateButton" layoutX="538.0" layoutY="395.0" mnemonicParsing="false" onAction="#update" text="update" />
    </children>
 </AnchorPane>
