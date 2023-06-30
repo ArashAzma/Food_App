@@ -38,9 +38,10 @@ public class Server {
             while ((resline = restaurantFile.readLine()) != null) {
                 String[] parts = resline.split(",");
                 boolean isTakeAway = (parts[3].equals("true"));
+                boolean isAble = (parts[7].equals("true"));
                 int courierCount = Integer.parseInt(parts[4]);
                 int tabelCount = Integer.parseInt(parts[5]);
-                restaurants.add(new Restaurant(parts[0], parts[1], parts[2], isTakeAway, courierCount, tabelCount, parts[6]));
+                restaurants.add(new Restaurant(parts[0], parts[1], parts[2], isTakeAway, courierCount, tabelCount, parts[6],isAble));
                 Restaurant rest = restaurants.get(restaurants.size() - 1);
                 while((menline = menuFile.readLine()) != null){
                     String[] foodParts = menline.split(",");

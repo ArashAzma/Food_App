@@ -45,27 +45,26 @@ public class restController extends Main {
     @FXML
     private TextField textfeildAddress;
     @FXML
+    private TextField textfieldIs_able;
+    @FXML
     private TableView<Restaurant> restaurants;
 
     @FXML
     private TableColumn<Restaurant, ?> surnameColumn;
-
     @FXML
     private TableColumn<Restaurant, ?> timeColumn;
-
     @FXML
     private TableColumn<Restaurant, ?> takeColumn;
-
     @FXML
     private TableColumn<Restaurant, ?> nameColumn;
-
     @FXML
     private TableColumn<Restaurant, ?> tableColumn;
-
     @FXML
     private TableColumn<Restaurant, ?> courierColumn;
     @FXML
     private TableColumn<Restaurant, ?> imgPathColumn;
+    @FXML
+    private TableColumn<Restaurant, ?> is_ableColumn;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -83,6 +82,7 @@ public class restController extends Main {
         tableColumn.setCellValueFactory(new PropertyValueFactory<>("tableCount"));
         courierColumn.setCellValueFactory(new PropertyValueFactory<>("courierCount"));
         imgPathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
+        is_ableColumn.setCellValueFactory(new PropertyValueFactory<>("is_able"));
         try {
             // giving restaurants arraylist
 
@@ -108,11 +108,9 @@ public class restController extends Main {
 
     @FXML
     void add(ActionEvent event) {
-        Restaurant restaurant = new Restaurant(textfeildName.getText(), textfeildAddress.getText(),textfeildTime.getText(),Boolean.parseBoolean(textfeildTake_away.getText()), Short.parseShort(textfeildTable_count.getText()), Short.parseShort(textfeildCourier_count.getText()),textFieldImgPath.getText());
+        Restaurant restaurant = new Restaurant(textfeildName.getText(), textfeildAddress.getText(),textfeildTime.getText(),Boolean.parseBoolean(textfeildTake_away.getText()), Short.parseShort(textfeildTable_count.getText()), Short.parseShort(textfeildCourier_count.getText()),textFieldImgPath.getText(),Boolean.parseBoolean(textfieldIs_able.getText()));
         list.add(restaurant);
         restaurants.getItems().add(restaurant);
-
-
         try {
             //out.flush();
             out.writeUTF("add restaurant");

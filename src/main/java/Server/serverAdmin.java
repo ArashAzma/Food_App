@@ -23,7 +23,7 @@ public class serverAdmin {
         String menline;
         while ((resline=restaurantFile.readLine()) != null) {
             String[] fields = resline.split(",");
-            Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6]);
+            Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
             restaurants.add(rest);
             BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
             while ((menline=menuFile.readLine()) != null){
@@ -54,7 +54,7 @@ public class serverAdmin {
                     Restaurant r = (Restaurant) in.readObject();
                     restaurants.add(r);
                     FileWriter writer = new FileWriter("src\\main\\java\\Server\\Restaurants",true);
-                    writer.write(r.getName()+","+r.getAddress()+","+r.getTime()+","+r.isTake_away()+","+r.getTableCount()+","+r.getCourierCount()+","+r.getImgPath()+"\n");
+                    writer.write(r.getName()+","+r.getAddress()+","+r.getTime()+","+r.isTake_away()+","+r.getTableCount()+","+r.getCourierCount()+","+r.getImgPath()+","+r.getIs_able()+"\n");
                     writer.close();
 
                 }else if (str.equals("add food")) { // giving new food object to add to arraylist

@@ -15,8 +15,15 @@ public class Restaurant implements Serializable {
     private boolean is_takeAway;
     private int tableCount = 0;
     private int courierCount = 0;
+    private boolean is_able;
+    public boolean getIs_able(){
+        return is_able;
+    }
+    public void setIs_able(boolean is_able){
+        this.is_able = is_able;
+    }
     public Restaurant(String name){this.name = name;}
-    public Restaurant(String name, String address, String time, boolean is_takeAway, int courierCount, int tabelCount, String imgPath){
+    public Restaurant(String name, String address, String time, boolean is_takeAway, int courierCount, int tabelCount, String imgPath, boolean is_able){
         this.name = name;
         this.address = address;
         this.time = time;
@@ -24,6 +31,7 @@ public class Restaurant implements Serializable {
         this.courierCount = courierCount;
         this.tableCount = tabelCount;
         this.imgPath = imgPath;
+        this.is_able = is_able;
     }
     public void add_menu(Food food){
         menu.add(food);
