@@ -29,6 +29,18 @@ public class Food implements Serializable {
         isAvailable = available;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public String getName() {
         return name;
     }

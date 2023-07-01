@@ -101,8 +101,57 @@ public class serverAdmin {
                     } catch (Exception e) {
                         System.out.println("Problem reading file.");
                     }
-                }
-                else if(str.equals("change food")){
+                } else if (str.equals("remove restaurant")) {
+                    String name = in.readUTF();
+                    ArrayList<Restaurant> replace = new ArrayList<>();
+                    for(int i = 0; i < restaurants.size(); ++i){
+                        if(restaurants.get(i).getName().equals(name)){
+                            for(int j = 0; j < restaurants.size(); ++j){
+                                if(i != j){
+                                    replace.add(restaurants.get(j));
+                                }
+                            }
+                        }
+                    }
+                    restaurants.clear();
+                    restaurants = new ArrayList<>(replace);
+                    System.out.println(restaurants.get(0).getName());
+                    File rest = new File("src\\main\\java\\Server\\Restaurants");
+                    PrintWriter writerEmpty = new PrintWriter(rest);
+                    writerEmpty.print("");
+                    writerEmpty.close();
+                    FileWriter writer = new FileWriter("src\\main\\java\\Server\\Restaurants",true);
+                    for (Restaurant i : restaurants){
+                        writer.write(i.getName()+","+i.getAddress()+","+i.getTime()+","+i.isTake_away()+","+i.getTableCount()+","+i.getCourierCount()+","+i.getImgPath()+","+i.getIs_able()+"\n");
+                    }
+                    writer.close();
+                } else if (str.equals("remove food")) {
+                    String restName = in.readUTF();
+                    String foodName = in.readUTF();
+                    ArrayList<Food> replace = new ArrayList<>();
+                    for(int i = 0; i < restaurants.size(); ++i){
+                        if(restaurants.get(i).getName().equals(restName)){
+                            for(int j = 0; j < restaurants.get(i).getFoodsArray().size(); ++j){
+                                if(!restaurants.get(i).getFoodsArray().get(j).getName().equals(foodName)){
+                                    replace.add(restaurants.get(i).getFoodsArray().get(j));
+                                }
+                            }
+                            restaurants.get(i).getFoodsArray().clear();
+                            restaurants.get(i).setFoodsArray(replace);
+                        }
+                    }
+                    File rest = new File("src\\main\\java\\Server\\Menus");
+                    PrintWriter writerEmpty = new PrintWriter(rest);
+                    writerEmpty.print("");
+                    writerEmpty.close();
+                    FileWriter writer = new FileWriter("src\\main\\java\\Server\\Menus",true);
+                    for (Restaurant i : restaurants) {
+                        for (Food j : i.getFoodsArray()) {
+                            writer.write(i.getName()+","+j.getName()+","+j.getType()+","+j.getPrice()+","+j.isAvailable()+","+j.getImgPath()+"\n");
+                        }
+                    }
+                    writer.close();
+                } else if(str.equals("change food")){
                     String resName = in.readUTF();
                     String foodName = in.readUTF();
                     String newline = in.readUTF();
