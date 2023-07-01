@@ -31,8 +31,8 @@ public class Server {
     }
     private static void loadRestaurants(){
         try {
+            BufferedReader menuFile = null;
             BufferedReader restaurantFile = new BufferedReader(new FileReader("src/main/java/Server/Restaurants"));
-            BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
             String resline;
             String menline;
             while ((resline = restaurantFile.readLine()) != null) {
@@ -46,6 +46,7 @@ public class Server {
                 int tabelCount = Integer.parseInt(parts[5]);
                 restaurants.add(new Restaurant(parts[0], parts[1], parts[2], isTakeAway, courierCount, tabelCount, parts[6],isAble));
                 Restaurant rest = restaurants.get(restaurants.size() - 1);
+                menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
                 while((menline = menuFile.readLine()) != null){
                     String[] foodParts = menline.split(",");
                     if(foodParts[0].equals(parts[0])){

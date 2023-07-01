@@ -4,21 +4,11 @@ import common.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import static clientFx.Main.PORT;
-
 public class DepositController extends Main{
     private static Parent root;
     private static Bank bank;
@@ -88,8 +78,6 @@ public class DepositController extends Main{
             cost.setText("The amount is too low");
         }
         else if(Integer.parseInt(check)==0){
-
-//            bank.deposit(Double.parseDouble(Amount));
             cost.setTextFill(Color.GREEN);
             cost.setText("$ "+bank.getCost());
             finalButton.setDisable(false);
@@ -123,13 +111,6 @@ public class DepositController extends Main{
         double sum = admin.getMojodi();
         admin.setMojodi(Double.parseDouble(Amount)+sum);
         try{
-//            InetAddress addr = InetAddress.getByName(null);
-//            System.out.println("addr = " + addr);
-//            Socket socket = new Socket(addr, PORT);
-//            System.out.println("Connected to server.");
-//            System.out.println("socket = " + socket);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
             outputStream.writeUTF("changeMojodi");
             outputStream.flush();

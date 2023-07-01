@@ -5,19 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
 
 public class SignUpController extends Main{
-    private static Stage stage;
-    private static Scene scene;
     private Parent root;
     @FXML
     private TextField nameBox;
@@ -47,11 +41,6 @@ public class SignUpController extends Main{
         String email = emailBox.getText();
         String address = addressBox.getText();
         try{
-//            InetAddress addr = InetAddress.getByName(null);
-//            System.out.println("addr = " + addr);
-//            Socket socket = new Socket(addr, PORT);
-//            System.out.println("Connected to server.");
-//            System.out.println("socket = " + socket);
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.flush();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());

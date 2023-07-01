@@ -47,6 +47,6 @@ public class Food implements Serializable {
         return type;
     }
     public String toString(){
-        return name+" "+price+" "+imgPath;
+        return name+"   Type: "+type+"  Price: "+price;
     }
 }

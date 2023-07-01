@@ -112,14 +112,14 @@
 }
 
 .flowpane-background {
-    -fx-background-image: url("restaurants.jpg");
+    -fx-background-image: url("backGroundRes.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
 .res-button {
-    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-color: rgba(255, 255, 255, 0.4);
     -fx-font-family: "Arial";
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-text-fill:  white;
     -fx-font-weight: bold;
     -fx-border-color: transparent;
@@ -130,23 +130,84 @@
 .res-button:hover {
     -fx-border-color: white;
     -fx-border-width: 2px;
-    -fx-opacity: 0.85;
-    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-opacity: 1;
+    -fx-background-color: rgba(255, 255, 255, 0.2);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
 .info-label{
     -fx-font-family: "Arial";
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-text-fill:  white;
     -fx-font-weight: bold;
 }
+.btn2-hover {
+    -fx-pref-width: 60px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-margin: 5px;
+    -fx-pref-height: 20px;
+    -fx-alignment: center;
+    -fx-background-color: rgba(149, 85, 207, 0.55);
+    -fx-background-size: 300% 100%;
+
+    -fx-background-radius: 50px;
+    -fx-transition: 4s;
+}
+
+.btn2-hover:hover {
+    -fx-background-color: rgba(149, 85, 207, 0.8);
+
+}
+.btn3-hover {
+    -fx-pref-width: 128px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-margin: 5px;
+    -fx-pref-height: 25px;
+    -fx-alignment: center;
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+    -fx-background-size: 300% 100%;
+
+    -fx-background-radius: 50px;
+    -fx-transition: 4s;
+}
+
+.btn3-hover:hover {
+    -fx-background-color: rgba(149, 85, 207, 1);
+}
+.btn-hover {
+    -fx-pref-width: 82px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-margin: 5px;
+    -fx-pref-height: 25px;
+    -fx-alignment: center;
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+    -fx-background-size: 300% 100%;
+
+    -fx-background-radius: 50px;
+    -fx-transition: 4s;
+}
+
+.btn-hover:hover {
+    -fx-background-color: rgba(149, 85, 207, 1);
+}
+
+
 .hover-button {
- -fx-background-color: rgba(255, 255, 255, 0.25);
+ -fx-background-color: rgba(255, 255, 255, 0.5);
 }
 
 .hover-button:hover {
-    -fx-opacity: 0.7;
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+
 }
 .hover-textField{
     -fx-text-fill:  white;
@@ -166,22 +227,24 @@
 .glassmorphism-vbox {
     -fx-background-color: rgba(255, 255, 255, 0.3);
     -fx-background-radius: 10px;
-   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 10);
     -fx-font-weight: bold;
 }
 .glassmorphism-vbox .background-glow {
     -fx-background-color: white;
     -fx-background-radius: 10px;
-    -fx-effect: dropshadow(gaussian, white, 20, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, white, 20, 0, 0, 10);
 }
 
 .glassmorphism-vbox .content {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-color: rgba(255, 255, 255, 1);
     -fx-background-radius: 10px;
+    -fx-font-weight: bold;
 }
 
 .glassmorphism-vbox .text-field .text-input {
-    -fx-prompt-text-fill: white;}
+    -fx-prompt-text-fill: white;
+    -fx-font-weight: bold;
 }
 
 .glassmorphism-vbox .blur-container {

@@ -24,7 +24,7 @@ public class RestaurantsController extends Main{
     private ArrayList<Restaurant> restaurants;
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize(){
         try{
             System.out.println("Connected to server.");
             System.out.println("socket = " + socket);

@@ -9,11 +9,6 @@ import java.io.IOException;
 
 public class PurchaseController extends Main{
     private Parent root;
-    @FXML
-    public void initialize() throws IOException {
-//        outputStream.close();
-//        socket.close();
-    }
 
     public void restaurantButton(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));

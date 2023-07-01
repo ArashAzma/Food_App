@@ -4,7 +4,6 @@ import common.Admin;
 
 public abstract class Bank {
     protected double tax = 0.05;
-    private Admin admin;
     private String accountNumber;
     private String passWord;
     private String cvv2;

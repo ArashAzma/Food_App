@@ -13,17 +13,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.LoginController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/login.jpg" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" layoutX="249.0" layoutY="109.0" prefHeight="295.0" prefWidth="219.0" spacing="5.0" styleClass="glassmorphism-vbox" stylesheets="@styles.css">
          <children>
-            <Label text="Welcome Back" textFill="WHITE">
+            <Label style="-fx-font-family: ubunto;" text="Welcome Back" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -35,7 +34,7 @@
             </TextField>
             <PasswordField fx:id="passBox" promptText="password" styleClass="hover-textField" />
             <Label fx:id="passError" prefHeight="17.0" prefWidth="228.0" textFill="RED" />
-            <Button mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #C3AED6;" styleClass="hover-button" text="Login" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="82.0" styleClass="btn-hover" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -50,7 +49,7 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#signUp" prefHeight="25.0" prefWidth="63.0" styleClass="hover-button" text="Signup" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#signUp" prefHeight="25.0" prefWidth="63.0" styleClass="btn2-hover" text="Signup" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

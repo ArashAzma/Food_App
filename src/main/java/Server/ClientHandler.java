@@ -1,21 +1,14 @@
 package Server;
 
 import common.Admin;
-import common.Restaurant;
-
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ClientHandler extends Server implements Runnable {
-
     private  Admin admin;
-
     private Socket socket;
-
     private ObjectOutputStream out;
     private ObjectInputStream in;
-
     public ClientHandler(Socket socket, Admin admin) throws IOException {
         this.socket = socket;
         this.admin = admin;

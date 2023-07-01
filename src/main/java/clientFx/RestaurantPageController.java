@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -16,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -41,10 +39,8 @@ public class RestaurantPageController extends Main{
     private Label add;
 
 //    @FXML
-    public void init() throws IOException {
+    public void init(){
        try{
-            System.out.println("Connected to server.");
-            System.out.println("socket = " + socket);
             outputStream.flush();
             outputStream.writeUTF("list");
             outputStream.flush();
@@ -128,7 +124,7 @@ public class RestaurantPageController extends Main{
         switchToScene(e, "cartView.fxml", root);
     }
     @FXML
-    private void addToCartButton(ActionEvent e) throws IOException {
+    private void addToCartButton(ActionEvent e){
         cartController.addItems(selectedItems);
         cartController.initialize();
         add.setOpacity(1);

@@ -8,17 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -39,13 +33,6 @@ public class CartController extends Main{
     @FXML
     public void initialize(){
         try{
-//            InetAddress addr = InetAddress.getByName(null);
-//            System.out.println("addr = " + addr);
-//            Socket socket = new Socket(addr, PORT);
-//            System.out.println("Connected to server.");
-//            System.out.println("socket = " + socket);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.flush();
             outputStream.writeUTF("getAdmin");
             outputStream.flush();
