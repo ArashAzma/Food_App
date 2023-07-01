@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class restController extends Main {
 
@@ -73,12 +72,8 @@ public class restController extends Main {
     private Scene scene;
     private Parent root;
     private Restaurant clicked;
-    //Connection conn = null;
     private static Restaurant restaurant;
     protected static ArrayList<Restaurant> list;
-    public static Restaurant giveRestaurant(){
-        return restaurant;
-    }
     String name;
     String address;
     String time;
@@ -135,19 +130,20 @@ public class restController extends Main {
 //        textfeildTake_away.setText(takeColumn.getCellData(index).toString());
 //        textfieldIs_able.setText(is_ableColumn.getCellData(index).toString());
     }
-
     @FXML
     void update(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/updateRestaurant.fxml"));
-        Parent root = loader.load();
-        UpdateRestaurantController upc = loader.getController();
-        upc.setClicked(clicked);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        if (restaurants.getSelectionModel().getSelectedItem() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/updateRestaurant.fxml"));
+            Parent root = loader.load();
+            UpdateRestaurantController upc = loader.getController();
+            upc.setClicked(clicked);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
+
     @FXML
     void add(ActionEvent event) {
         Restaurant restaurant = new Restaurant(textfeildName.getText(), textfeildAddress.getText(),textfeildTime.getText(),Boolean.parseBoolean(textfeildTake_away.getText()), Short.parseShort(textfeildTable_count.getText()), Short.parseShort(textfeildCourier_count.getText()),textFieldImgPath.getText(),Boolean.parseBoolean(textfieldIs_able.getText()));
@@ -163,6 +159,21 @@ public class restController extends Main {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public static Restaurant giveRestaurant() throws Exception {
+        updateRestaurant();
+        return restaurant;
+    }
+    public static void updateRestaurant() throws Exception {
+        out.flush();
+        out.writeUTF("restaurants");
+        out.flush();
+        ArrayList<Restaurant> rests = (ArrayList<Restaurant>)in.readObject();
+        for(Restaurant i : rests){
+            if (i.getName().equals(restaurant.getName())){
+                restaurant = i;
+            }
         }
     }
 }
