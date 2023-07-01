@@ -15,11 +15,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class foodController extends restController {
+public class foodController extends Main {
+    private Food clicked;
 
     @FXML
     private Button add;
@@ -61,7 +63,7 @@ public class foodController extends restController {
         this.r = r;
     }
     @FXML
-    public void initialize() {
+    public void initialize() throws Exception {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -78,12 +80,7 @@ public class foodController extends restController {
     void add_food(ActionEvent event) throws IOException {
         Food food = new Food(foodnameField.getText(), typeFeild.getText(),Double.valueOf(priceField.getText()),Boolean.parseBoolean(isAvailableField.getText()),imgpathField.getText());
         foods.getItems().add(food);
-       /* InetAddress addr =
-                InetAddress.getByName(null);
-        System.out.println("addr = " + addr);
-        Socket socket =
-                new Socket(addr, 3030);
-        */try {
+       try {
             out.writeUTF("add food");
             out.flush();
             out.writeObject(r);
@@ -92,6 +89,25 @@ public class foodController extends restController {
             out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    void rowClicked(MouseEvent event) {
+        this.clicked = foods.getSelectionModel().getSelectedItem();
+    }
+    @FXML
+    public void updateFood(ActionEvent e) throws IOException{
+        if (foods.getSelectionModel().getSelectedItem() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/updateFood.fxml"));
+            Parent root = loader.load();
+
+            UpdateFoodController ufc = loader.getController();
+            ufc.setClicked(clicked);
+            ufc.setRestaurant(r);
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
     }
     @FXML

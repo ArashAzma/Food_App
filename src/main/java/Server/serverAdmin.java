@@ -24,7 +24,6 @@ public class serverAdmin {
                 String str = in.readUTF();
                 System.out.println(str);
                 if (str.equals("restaurants")) {  // sending restaurants arraylist for table view
-//                    System.out.println(restaurants.get(0).getTime());
                     restaurants = loadRestaurants();
                     System.out.println(restaurants.get(0).getTime());
                     System.out.print("sent Restaurants");
@@ -77,9 +76,9 @@ public class serverAdmin {
                 }
                 else if(str.equals("change restaurant")){
                     String resName = in.readUTF();
-                    System.out.println(resName);
+//                    System.out.println(resName);
                     String newline = in.readUTF();
-                    System.out.println(newline);
+//                    System.out.println(newline);
                     try {
                         BufferedReader file = new BufferedReader(new FileReader("src\\main\\java\\Server\\Restaurants"));
                         StringBuffer inputBuffer = new StringBuffer();
@@ -96,6 +95,34 @@ public class serverAdmin {
                         file.close();
 
                         FileOutputStream fileOut = new FileOutputStream("src\\main\\java\\Server\\Restaurants");
+                        fileOut.write(inputBuffer.toString().getBytes());
+                        fileOut.close();
+
+                    } catch (Exception e) {
+                        System.out.println("Problem reading file.");
+                    }
+                }
+                else if(str.equals("change food")){
+                    String resName = in.readUTF();
+                    String foodName = in.readUTF();
+                    String newline = in.readUTF();
+
+                    try {
+                        BufferedReader file = new BufferedReader(new FileReader("src\\main\\java\\Server\\Menus"));
+                        StringBuffer inputBuffer = new StringBuffer();
+                        String line;
+
+                        while ((line = file.readLine()) != null) {
+                            String[] parts = line.split(",");
+                            if(parts[0].equals(resName) && parts[1].equals(foodName)){
+                                line = newline;
+                            }
+                            inputBuffer.append(line);
+                            inputBuffer.append('\n');
+                        }
+                        file.close();
+
+                        FileOutputStream fileOut = new FileOutputStream("src\\main\\java\\Server\\Menus");
                         fileOut.write(inputBuffer.toString().getBytes());
                         fileOut.close();
 
