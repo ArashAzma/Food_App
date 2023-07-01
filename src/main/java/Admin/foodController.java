@@ -119,4 +119,17 @@ public class foodController extends Main {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    public void remove() throws Exception {
+        this.clicked = foods.getSelectionModel().getSelectedItem();
+        out.flush();
+        out.writeUTF("remove food");
+        out.flush();
+        out.writeUTF(r.getName());
+        out.flush();
+        out.writeUTF(clicked.getName());
+        out.flush();
+        foods.getItems().clear();
+        initialize();
+    }
 }

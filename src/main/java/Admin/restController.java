@@ -26,7 +26,8 @@ public class restController extends Main {
     private Button updateButton;
     @FXML
     private Button editFoodButton;
-
+    @FXML
+    private Button removeRest;
     @FXML
     private TextField textFieldImgPath;
 
@@ -175,5 +176,15 @@ public class restController extends Main {
                 restaurant = i;
             }
         }
+    }
+    public void removeRest() throws IOException {
+        this.clicked = restaurants.getSelectionModel().getSelectedItem();
+        out.flush();
+        out.writeUTF("remove restaurant");
+        out.flush();
+        out.writeUTF(clicked.getName());
+        out.flush();
+        restaurants.getItems().clear();
+        initialize();
     }
 }
