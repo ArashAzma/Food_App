@@ -23,7 +23,7 @@ public class Restaurant implements Serializable {
         this.is_able = is_able;
     }
     public Restaurant(String name){this.name = name;}
-    public Restaurant(String name, String address, String time, boolean is_takeAway, int courierCount, int tabelCount, String imgPath, boolean is_able){
+    public Restaurant(String name, String address, String time, boolean is_takeAway, int tabelCount, int courierCount, String imgPath, boolean is_able){
         this.name = name;
         this.address = address;
         this.time = time;
