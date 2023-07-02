@@ -20,9 +20,9 @@
          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
       </VBox.margin>
    </Button>
-    <ScrollPane hbarPolicy="NEVER" prefHeight="460.0" prefWidth="700.0" scaleShape="false" stylesheets="@styles.css">
+    <ScrollPane hbarPolicy="NEVER" prefHeight="460.0" prefWidth="700.0" scaleShape="false" styleClass="scroll-pane" stylesheets="@styles.css">
         <content>
-            <FlowPane fx:id="flowPane" columnHalignment="CENTER" hgap="30.0" prefHeight="465.0" prefWidth="700.0" rowValignment="TOP" scaleShape="false" styleClass="flowpane-background" stylesheets="@styles.css" vgap="25.0">
+            <FlowPane fx:id="flowPane" columnHalignment="CENTER" hgap="30.0" prefHeight="465.0" prefWidth="700.0" rowValignment="TOP" scaleShape="false" style="-fx-background-color: transparent;" stylesheets="@styles.css" vgap="25.0">
             <padding>
                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>

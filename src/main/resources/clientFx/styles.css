@@ -77,6 +77,12 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
+.scroll-pane{
+   -fx-background-color:transparent;
+}
+.scroll-pane .viewport {
+       -fx-background-color: transparent;
+}
 .error2_label{
     -fx-background-color: rgba(149, 85, 207, 0.75);
         -fx-font-family: "Arial";

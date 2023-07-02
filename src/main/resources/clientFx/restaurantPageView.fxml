@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="vbox-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.RestaurantPageController">
-   <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #f9cfff;" styleClass="vbox-background">
+   <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: transparent;">
       <children>
          <Button onAction="#infoButton" prefHeight="25.0" prefWidth="60.0" styleClass="btn-hover" text="info" textFill="WHITE">
             <HBox.margin>
@@ -46,15 +46,16 @@
          </Button>
       </children>
    </HBox>
-   <ScrollPane hbarPolicy="NEVER" prefHeight="488.0" prefWidth="700.0" scaleShape="false" style="-fx-background-color: #f9cfff;" stylesheets="@styles.css">
+   <ScrollPane hbarPolicy="NEVER" prefHeight="488.0" prefWidth="700.0" scaleShape="false" stylesheets="@styles.css">
       <content>
-         <FlowPane fx:id="flowPane" alignment="CENTER" columnHalignment="CENTER" prefHeight="422.0" prefWidth="698.0" scaleShape="false" styleClass="flowpane-background" vgap="25.0">
+         <FlowPane fx:id="flowPane" alignment="CENTER" columnHalignment="CENTER" prefHeight="413.0" prefWidth="698.0" scaleShape="false" style="-fx-background-color: transparent;" vgap="25.0">
             <padding>
                <Insets left="255.0" right="250.0" top="25.0" />
-            </padding></FlowPane>
+            </padding>
+         </FlowPane>
       </content>
    </ScrollPane>
-   <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #f9cfff;" styleClass="vbox-background">
+   <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: transparent;">
       <children>
          <Label fx:id="add" alignment="CENTER_RIGHT" opacity="0.0" prefHeight="32.0" prefWidth="506.0" styleClass="addToCart-label" text="*Added to cart" textFill="#0cf500">
             <HBox.margin>
