@@ -197,8 +197,13 @@ public class ClientHandler extends Server implements Runnable {
         errorCode += checkPass(admin.getPassword());
         errorCode += checkNumber(admin.getPhoneNumber());
         errorCode += checkEmail(admin.getEmail());
-        errorCode += "0";
-        return errorCode+"";
+        if(admin.getAddress().equals("")){
+            errorCode += "1";
+        }
+        else {
+            errorCode += "0";
+        }
+            return errorCode+"";
     }
     private static int checkName(String name){
         // 1== already in use

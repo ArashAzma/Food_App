@@ -8,29 +8,29 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="500.0" maxWidth="700.0" minHeight="500.0" minWidth="700.0" spacing="10.0" style="-fx-background-color: #116D6E;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.CartController">
-   <HBox prefHeight="33.0" prefWidth="700.0">
+<VBox alignment="TOP_CENTER" maxHeight="500.0" maxWidth="700.0" minHeight="500.0" minWidth="700.0" spacing="10.0" styleClass="cart-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.CartController">
+   <HBox prefHeight="33.0" prefWidth="680.0">
       <children>
-         <Button alignment="TOP_LEFT" onAction="#backButton" prefHeight="25.0" prefWidth="28.0" styleClass="res-button" text="&lt;">
+         <Button alignment="TOP_LEFT" onAction="#backButton" prefHeight="25.0" prefWidth="28.0" styleClass="btnsmall-hover" text="&lt;">
             <HBox.margin>
                <Insets bottom="10.0" left="20.0" right="10.0" top="5.0" />
             </HBox.margin>
          </Button>
-         <Button alignment="TOP_LEFT" onAction="#infoButton" prefHeight="28.0" prefWidth="46.0" styleClass="res-button" text="info">
+         <Button alignment="TOP_LEFT" onAction="#infoButton" prefHeight="28.0" prefWidth="46.0" styleClass="btn-hover" text="info">
             <HBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
             </HBox.margin>
          </Button>
-         <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" styleClass="glassmorphism-vbox">
+         <VBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="112.0">
             <children>
-               <Label fx:id="mojodi" prefHeight="17.0" prefWidth="93.0" styleClass="info-label" text="Mojodi: ">
+               <Label fx:id="mojodi" prefHeight="24.0" prefWidth="112.0" styleClass="sum-label" text="Mojodi: ">
                   <VBox.margin>
                      <Insets />
                   </VBox.margin></Label>
-               <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#depositButton" prefHeight="25.0" prefWidth="110.0" styleClass="res-button" text="افزایش موجودی" textAlignment="CENTER" />
+               <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#depositButton" prefHeight="28.0" prefWidth="138.0" styleClass="moj-button" text="افزایش موجودی" textAlignment="CENTER" />
             </children>
             <HBox.margin>
-               <Insets left="445.0" top="5.0" />
+               <Insets left="362.0" top="5.0" />
             </HBox.margin>
          </VBox>
       </children>
@@ -38,40 +38,43 @@
          <Insets />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER" prefHeight="406.0" prefWidth="615.0">
+   <HBox alignment="CENTER" prefHeight="413.0" prefWidth="680.0">
       <ListView fx:id="listView" prefHeight="376.0" prefWidth="503.0">
          <HBox.margin>
             <Insets left="20.0" />
          </HBox.margin></ListView>
-      <Button alignment="CENTER" contentDisplay="CENTER" onAction="#removeButtonClicked" prefHeight="52.0" prefWidth="65.0" styleClass="rem-button" text="Remove">
+      <VBox alignment="CENTER" prefHeight="371.0" prefWidth="97.0" spacing="10.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#purchaseButton" prefHeight="31.0" prefWidth="104.0" styleClass="pur-button" text="Purchase" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#removeButtonClicked" prefHeight="30.0" prefWidth="102.0" styleClass="rem-button" text="Remove" />
+         </children>
          <HBox.margin>
-            <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </HBox.margin>
-      </Button>
+      </VBox>
    </HBox>
    <HBox prefHeight="56.0" prefWidth="700.0">
       <children>
-         <Label fx:id="priceLabel" prefHeight="41.0" prefWidth="144.0" styleClass="info-label" text="Sum : ">
+         <Label fx:id="priceLabel" prefHeight="31.0" prefWidth="144.0" styleClass="sum-label" text="Sum : ">
             <HBox.margin>
-               <Insets left="50.0" />
+               <Insets left="50.0" right="50.0" />
             </HBox.margin>
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="errorMojodi" layoutX="110.0" layoutY="10.0" opacity="0.0" prefHeight="41.0" prefWidth="216.0" styleClass="error_label" text="موجودی کافی نیست" textFill="RED">
+         <Label fx:id="errorMojodi" layoutX="110.0" layoutY="10.0" opacity="0.0" prefHeight="30.0" prefWidth="197.0" styleClass="error2_label" text="Not enough Credit" textFill="RED">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" onAction="#purchaseButton" prefHeight="43.0" prefWidth="138.0" styleClass="pur-button" text="Purchase" textFill="WHITE">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Button>
       </children>
    </HBox>
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
    </padding>
 </VBox>

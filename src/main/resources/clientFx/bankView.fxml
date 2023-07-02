@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #116D6E;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.BankController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="cart-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientFx.BankController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="217.0" layoutY="158.0" prefHeight="236.0" prefWidth="268.0">
          <children>

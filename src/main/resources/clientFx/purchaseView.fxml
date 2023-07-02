@@ -28,6 +28,6 @@
             </Label>
          </children>
       </VBox>
-      <Button layoutX="28.0" layoutY="19.0" mnemonicParsing="false" onAction="#restaurantButton" prefHeight="35.0" prefWidth="99.0" styleClass="res-button" text="Restaurants" />
+      <Button layoutX="28.0" layoutY="19.0" mnemonicParsing="false" onAction="#restaurantButton" prefHeight="35.0" prefWidth="120.0" styleClass="res-button" text="Restaurants" />
    </children>
 </AnchorPane>

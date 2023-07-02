@@ -41,10 +41,9 @@ public class SignUpController extends Main{
         String email = emailBox.getText();
         String address = addressBox.getText();
         try{
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.flush();
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream.writeUTF("signup");
+            outputStream.flush();
             try{
 
                 Admin admin = new Admin(name, password, phone, address, email);
@@ -58,6 +57,7 @@ public class SignUpController extends Main{
                     int checkPass = Integer.parseInt(errorCode.charAt(1)+"");
                     int checkNumber = Integer.parseInt(errorCode.charAt(2)+"");
                     int checkEmail = Integer.parseInt(errorCode.charAt(3)+"");
+                    int checkAddress = Integer.parseInt(errorCode.charAt(4)+"");
 
                     switch (checkName){
                         case(1):
@@ -85,14 +85,15 @@ public class SignUpController extends Main{
                     else phoneLabel.setText("");
                     if(checkEmail==1)emailLabel.setText("invalid Email");
                     else emailLabel.setText("");
+                    if(checkAddress==1)addressLabel.setText("Please enter your address");
+                    else addressLabel.setText("");
                 }
+
                 else{
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
                     root = loader.load();
                     switchToScene(e, "restaurantsView.fxml", root);
                 }
-                outputStream.close();
-                inputStream.close();
             }catch(IOException error){
                 System.out.println("error");
                 error.printStackTrace();

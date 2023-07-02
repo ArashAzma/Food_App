@@ -41,7 +41,7 @@
     -fx-text-fill: white;
 }
 .rem-button {
-    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-color: rgba(149, 85, 207, 0.75);
     -fx-font-family: "Arial";
     -fx-font-size: 12px;
     -fx-text-fill:  white;
@@ -59,7 +59,7 @@
 }
 
 .pur-button {
-    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-color: rgba(149, 85, 207, 0.75);
     -fx-font-family: "Arial";
     -fx-font-size: 12px;
     -fx-text-fill:  white;
@@ -77,7 +77,15 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
-
+.error2_label{
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+        -fx-font-family: "Arial";
+        -fx-font-size: 20px;
+        -fx-text-fill:  red;
+        -fx-font-weight: bold;
+        -fx-border-color: transparent;
+        -fx-transition-duration: 0.3s;
+}
 .error_label{
     -fx-background-color: rgba(255, 255, 255, 0.5);
         -fx-font-family: "Arial";
@@ -110,11 +118,39 @@
 .choice-box .arrow-button:pressed {
     -fx-background-color: #999999;
 }
-
-.flowpane-background {
-    -fx-background-image: url("backGroundRes.jpg");
+.cart-background {
+    -fx-background-image: url("cartBack2.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
+}
+.flowpane-background {
+    -fx-background-image: url("notfullbackground.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.vbox-background {
+    -fx-background-image: url("fullbackground.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.moj-button {
+    -fx-background-color:rgba(149, 85, 207, 0.5);
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill:  white;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-transition-duration: 0.3s;
+}
+
+.moj-button:hover {
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-opacity: 1;
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 .res-button {
     -fx-background-color: rgba(255, 255, 255, 0.4);
@@ -135,11 +171,44 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
+.addToCart-label{
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-text-fill:  white;
+    -fx-font-weight: bold;
+}
+.sum-label{
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill:  white;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+}
 .info-label{
     -fx-font-family: "Arial";
     -fx-font-size: 14px;
     -fx-text-fill:  white;
     -fx-font-weight: bold;
+}
+.login-hover {
+    -fx-pref-width: 60px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill:  #FF6969;
+    -fx-cursor: hand;
+    -fx-margin: 5px;
+    -fx-pref-height: 20px;
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 300% 100%;
+
+    -fx-background-radius: 50px;
+    -fx-transition: 4s;
+}
+
+.login-hover:hover {
+    -fx-text-fill:  white;
+    -fx-background-color:  #FF6969;
 }
 .btn2-hover {
     -fx-pref-width: 60px;
@@ -180,6 +249,25 @@
 .btn3-hover:hover {
     -fx-background-color: rgba(149, 85, 207, 1);
 }
+.btnsmall-hover {
+    -fx-pref-width: 52px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-margin: 5px;
+    -fx-pref-height: 25px;
+    -fx-alignment: center;
+    -fx-background-color: rgba(149, 85, 207, 0.75);
+    -fx-background-size: 300% 100%;
+
+    -fx-background-radius: 50px;
+    -fx-transition: 4s;
+}
+
+.btnsmall-hover:hover {
+    -fx-background-color: rgba(149, 85, 207, 1);
+}
 .btn-hover {
     -fx-pref-width: 82px;
     -fx-font-size: 14px;
@@ -198,6 +286,26 @@
 
 .btn-hover:hover {
     -fx-background-color: rgba(149, 85, 207, 1);
+}
+
+.signup-hover {
+    -fx-pref-width: 82px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-margin: 5px;
+    -fx-pref-height: 25px;
+    -fx-alignment: center;
+    -fx-background-color: rgba(235, 64, 52, 0.75);
+    -fx-background-size: 300% 100%;
+
+    -fx-background-radius: 50px;
+    -fx-transition: 4s;
+}
+
+.signup-hover:hover {
+    -fx-background-color: rgba(235, 64, 52, 1);
 }
 
 

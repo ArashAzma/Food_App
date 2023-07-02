@@ -91,7 +91,11 @@ public class CartController extends Main{
     }
     @FXML
     private void purchaseButton(ActionEvent e) throws IOException {
-        if(sum<=admin.getMojodi()){
+        if(listView.getItems().isEmpty()){
+            errorMojodi.setText("Cart is Empty");
+            errorMojodi.setOpacity(1);
+        }
+        else if(sum<=admin.getMojodi()){
             admin.setMojodi(admin.getMojodi()-sum);
             try{
                 outputStream.flush();
@@ -111,7 +115,6 @@ public class CartController extends Main{
         else{
             errorMojodi.setOpacity(1);
         }
-
     }
 
     public void setIndex(int index) {

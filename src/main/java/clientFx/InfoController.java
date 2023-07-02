@@ -111,11 +111,12 @@ public class InfoController extends Main{
 
                 String errorCode = inputStream.readUTF();
                 System.out.println(errorCode);
-                if(!errorCode.equals("true")){
+                if(!errorCode.equals("true") || tempAdmin.getAddress().equals("")){
                     int checkName = Integer.parseInt(errorCode.charAt(0)+"");
                     int checkPass = Integer.parseInt(errorCode.charAt(1)+"");
                     int checkNumber = Integer.parseInt(errorCode.charAt(2)+"");
                     int checkEmail = Integer.parseInt(errorCode.charAt(3)+"");
+                    int checkAddress = Integer.parseInt(errorCode.charAt(4)+"");
 
                     switch (checkName){
                         case(1):
@@ -143,6 +144,8 @@ public class InfoController extends Main{
                     else phoneLabel.setText(admin.getPhoneNumber());
                     if(checkEmail==1)emailLabel.setText("invalid Email");
                     else emailLabel.setText(admin.getPhoneNumber());
+                    if(checkAddress==1)addressLabel.setText("Please enter your address");
+                    else addressLabel.setText("");
                 }
                 else{
                     initialize();
