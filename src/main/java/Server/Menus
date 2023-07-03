@@ -1,13 +1,13 @@
-McDonald,Cola,type,59,true,/images/soda1.png
-McDonald,sprite Burger,type,59,true,/images/soda2.png
-McDonald,fried chicken,HELP me,99.0,false,/images/chicken1.png
-McDonald,Cheese Burger,im gonna kms,69.0,true,/images/burger1.png
-McDonald,Mushroom Burger,type,49,true,/images/burger2.png
-McDonald,Smookey Burger,type,59,true,/images/burger3.png
-SubWay,Pepsi,type,19,true,/images/soda3.png
-SubWay,hamburger,type,79,false,/images/burger1.png
-SubWay,Special,type,89,true,/images/pizza1.png
-KFC,soda,type,19,true,/images/soda1.png
-KFC,Peperoni,type,79,false,/images/pizza1.png
-KFC,Margarita,type,69,false,/images/pizza2.png
-KFC,Special,type,89,false,/images/pizza3.png
+McDonald,Cola,type,59,true,/images/soda1.png,23
+McDonald,sprite Burger,type,59,true,/images/soda2.png,6
+McDonald,fried chicken,HELP me,99.0,false,/images/chicken1.png,8
+McDonald,Cheese Burger,im gonna kms,69.0,true,/images/burger1.png,5
+McDonald,Mushroom Burger,type,49,true,/images/burger2.png,87
+McDonald,Smookey Burger,type,59,true,/images/burger3.png,4
+SubWay,Pepsi,type,19,true,/images/soda3.png,4
+SubWay,hamburger,type,79,false,/images/burger1.png,6
+SubWay,Special,type,89,true,/images/pizza1.png,3
+KFC,soda,type,19,true,/images/soda1.png,4
+KFC,Peperoni,type,79,false,/images/pizza1.png,7
+KFC,Margarita,type,69,false,/images/pizza2.png,65
+KFC,Special,type,89,false,/images/pizza3.png,54

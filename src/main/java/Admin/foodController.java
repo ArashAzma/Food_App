@@ -10,15 +10,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import static Admin.restController.isBoolean;
+import static Admin.restController.isNumeric;
 
 public class foodController extends Main {
     private Food clicked;
@@ -42,6 +42,9 @@ public class foodController extends Main {
     private TableColumn<Food, ?> imgpathColumn;
 
     @FXML
+    private TableColumn<Food, ?> weightColumn;
+
+    @FXML
     private TextField foodnameField;
 
     @FXML
@@ -52,10 +55,13 @@ public class foodController extends Main {
 
     @FXML
     private TextField imgpathField;
+    @FXML
+    private TextField weightField;
 
     @FXML
     private TextField typeFeild;
-
+    @FXML
+    private Label error_lable;
     @FXML
     private TableView<Food> foods;
     private static Restaurant r;
@@ -69,26 +75,41 @@ public class foodController extends Main {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         isAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("isAvailable"));
         imgpathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
+        weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
+
         // give restaurant
         this.r = restController.giveRestaurant();
         ObservableList<Food> data = FXCollections.observableArrayList(r.getFoodsArray());
-        //data.add(new Food("fb","evf"));
         foods.getItems().addAll(data);
     }
-
     @FXML
     void add_food(ActionEvent event) throws IOException {
-        Food food = new Food(foodnameField.getText(), typeFeild.getText(),Double.valueOf(priceField.getText()),Boolean.parseBoolean(isAvailableField.getText()),imgpathField.getText());
-        foods.getItems().add(food);
-       try {
-            out.writeUTF("add food");
-            out.flush();
-            out.writeObject(r);
-            out.flush();
-            out.writeObject(food);
-            out.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        boolean add = true;
+        String name = foodnameField.getText();
+        String type = typeFeild.getText();
+        String price = priceField.getText();
+        String isAvailable = isAvailableField.getText();
+        String weight = weightField.getText();
+        String imgPath = imgpathField.getText();
+        // check if text fields are null
+        add = add && !name.equals("") && !type.equals("") && price.equals("") && ! isAvailable.equals("") && ! weight.equals("") && ! imgPath.equals("");
+        add = add && isNumeric(price) && isNumeric(weight); // check if price and weight are not number
+        add = add && isBoolean(isAvailable);                // check if isAvailable is not boolean
+        if ( add ) {
+            Food food = new Food(foodnameField.getText(), typeFeild.getText(), Double.valueOf(priceField.getText()), Boolean.parseBoolean(isAvailableField.getText()), imgpathField.getText(), Double.parseDouble(weightField.getText()));
+            foods.getItems().add(food);
+            try {
+                out.writeUTF("add food");
+                out.flush();
+                out.writeObject(r);
+                out.flush();
+                out.writeObject(food);
+                out.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            error_lable.setText("invalid input");
         }
     }
     @FXML

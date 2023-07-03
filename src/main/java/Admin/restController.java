@@ -7,16 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class restController extends Main {
 
@@ -75,15 +73,9 @@ public class restController extends Main {
     private Restaurant clicked;
     private static Restaurant restaurant;
     protected static ArrayList<Restaurant> list;
-    String name;
-    String address;
-    String time;
-    String imgPath;
-    int table;
-    int courier;
-    boolean take;
-    boolean available;
     private int index = -1;
+    @FXML
+    private Label error_label;
     @FXML
     public void initialize() throws IOException {
         restaurants.getItems().clear();
@@ -107,6 +99,7 @@ public class restController extends Main {
         }
         restaurants.getItems().addAll(list);
     }
+
     @FXML
     public void switchToFood(ActionEvent event) throws Exception {
         if (restaurants.getSelectionModel().getSelectedItem() != null) {
@@ -115,22 +108,16 @@ public class restController extends Main {
             root = FXMLLoader.load(getClass().getResource("/AdminFx/food.fxml"));
             Stage window = (Stage) editFoodButton.getScene().getWindow();
             window.setScene(new Scene(root));
-            }
         }
+    }
+
     @FXML
     void rowClicked(MouseEvent event) {
         this.clicked = restaurants.getSelectionModel().getSelectedItem();
         int index = restaurants.getSelectionModel().getFocusedIndex();
         this.index = index;
-//        textfeildName.setText(nameColumn.getCellData(index).toString());
-//        textfeildAddress.setText(surnameColumn.getCellData(index).toString());
-//        textfeildTime.setText(timeColumn.getCellData(index).toString());
-//        textFieldImgPath.setText(imgPathColumn.getCellData(index).toString());
-//        textfeildCourier_count.setText(courierColumn.getCellData(index).toString());
-//        textfeildTable_count.setText(tableColumn.getCellData(index).toString());
-//        textfeildTake_away.setText(takeColumn.getCellData(index).toString());
-//        textfieldIs_able.setText(is_ableColumn.getCellData(index).toString());
     }
+
     @FXML
     void update(ActionEvent event) throws IOException {
         if (restaurants.getSelectionModel().getSelectedItem() != null){
@@ -144,17 +131,38 @@ public class restController extends Main {
             stage.show();
         }
     }
-
+    public static boolean isNumeric(String str) {
+        return str.chars().allMatch( Character::isDigit );  //match a number with optional '-' and decimal.
+    }
+    public static boolean isBoolean(String str) {
+        return str.equals("true") || str.equals("false");
+    }
     @FXML
     void add(ActionEvent event) {
-        Restaurant restaurant = new Restaurant(textfeildName.getText(), textfeildAddress.getText(),textfeildTime.getText(),Boolean.parseBoolean(textfeildTake_away.getText()), Short.parseShort(textfeildTable_count.getText()), Short.parseShort(textfeildCourier_count.getText()),textFieldImgPath.getText(),Boolean.parseBoolean(textfieldIs_able.getText()));
+        String name = textfeildName.getText();
+        String address = textfeildAddress.getText();
+        String time = textfeildTime.getText();
+        String table = textfeildTable_count.getText();
+        String courier = textfeildCourier_count.getText();
+        String takAway = textfeildTake_away.getText();
+        String isAble = textfieldIs_able.getText();
+        String imgPath = textFieldImgPath.getText();
+        boolean add = true;
+        add = add && isNumeric(table) && isNumeric(courier);  // check if table and courier counts not number
+        add = add && isBoolean(isAble) && isBoolean(takAway); // check if isTakeAway and isAble counts not boolean
+        // check if text fields are null
+        add = add && !name.equals("") && !address.equals("") && !time.equals("") && !table.equals("") && !courier.equals("") && !takAway.equals("") && !isAble.equals("") && imgPath.equals("");
+
+        if ( add ) {
+            Restaurant restaurant = new Restaurant(name, address, time, Boolean.parseBoolean(takAway), Short.parseShort(table), Short.parseShort(courier), imgPath, Boolean.parseBoolean(isAble));
+        } else {
+            error_label.setText("invalid input!");
+        }
         list.add(restaurant);
         restaurants.getItems().add(restaurant);
         try {
-            //out.flush();
             out.writeUTF("add restaurant");
             out.flush();
-            System.out.print("jhg");
             out.writeObject(restaurant);
             out.flush();
 
@@ -162,10 +170,12 @@ public class restController extends Main {
             throw new RuntimeException(e);
         }
     }
+
     public static Restaurant giveRestaurant() throws Exception {
         updateRestaurant();
         return restaurant;
     }
+
     public static void updateRestaurant() throws Exception {
         out.flush();
         out.writeUTF("restaurants");
@@ -177,6 +187,7 @@ public class restController extends Main {
             }
         }
     }
+
     public void removeRest() throws IOException {
         this.clicked = restaurants.getSelectionModel().getSelectedItem();
         out.flush();

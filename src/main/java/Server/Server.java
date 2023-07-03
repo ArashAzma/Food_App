@@ -52,7 +52,8 @@ public class Server {
                     if(foodParts[0].equals(parts[0])){
                         double price = Double.parseDouble(foodParts[3]);
                         boolean isAvailable = foodParts[4].equals("true");
-                        rest.add_menu(new Food(foodParts[1], foodParts[2], price, isAvailable, foodParts[5]));
+                        double weight = Double.parseDouble(foodParts[6]);
+                        rest.add_menu(new Food(foodParts[1], foodParts[2], price, isAvailable, foodParts[5],weight));
                     }
                 }
             }
