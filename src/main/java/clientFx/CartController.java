@@ -111,6 +111,8 @@ public class CartController extends Main{
             root = loader.load();
             switchToScene(e, "purchaseView.fxml", root);
             errorMojodi.setOpacity(0);
+            items.clear();
+            listView.getItems().clear();
         }
         else{
             errorMojodi.setOpacity(1);

@@ -14,17 +14,12 @@ public class serverAdmin {
     public static void main(String[] args) throws IOException{
 
         ServerSocket serverSocket = new ServerSocket(PORT);
-        /*Socket socket = serverSocket.accept();
+        Socket socket = serverSocket.accept();
         System.out.println("SERVER STARTED [Waiting for Client]");
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        */while(true){
-            Socket socket = serverSocket.accept();
-            System.out.println("SERVER STARTED [Waiting for Client]");
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.flush();
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        while(true){
             try {
                 String str = in.readUTF();
                 System.out.println(str);
