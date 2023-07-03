@@ -73,7 +73,7 @@ public class RestaurantPageController extends Main{
             if(food.isAvailable().equals("no")) {
                 add.setDisable(true);
             }
-            for (int i = 0; i <= 4; i++) {
+            for (int i = 1; i <= 4; i++) {
                 add.getItems().add(i);
             }
             add.setOnAction((ActionEvent e) -> {

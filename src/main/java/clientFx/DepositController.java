@@ -70,40 +70,45 @@ public class DepositController extends Main{
         check+=checkCVV2(CVV2);
         check+=checkMonth(Month);
         check+=checkYear(Year);
-
-
-        bank.deposit(Double.parseDouble(Amount));
-        if(bank.getCost() == -1){
-            cost.setTextFill(Color.RED);
-            cost.setText("The amount is too low");
-        }
-        else if(Integer.parseInt(check)==0){
-            cost.setTextFill(Color.GREEN);
-            cost.setText("$ "+bank.getCost());
-            finalButton.setDisable(false);
-            amountError.setText("");
-            accError.setText("");
-            passError.setText("");
-            cvv2Error.setText("");
-            dateError.setText("");
+        String checkDeposit = checkDepo(Amount);
+        if(checkDeposit.equals("1")){
+            amountError.setText("Invalid Input!");
         }
         else{
-            int amError = Integer.parseInt(check.charAt(0)+"");
-            int acError = Integer.parseInt(check.charAt(1)+"");
-            int pasError = Integer.parseInt(check.charAt(2)+"");
-            int cvError = Integer.parseInt(check.charAt(3)+"");
-            int moError = Integer.parseInt(check.charAt(4)+"");
-            int yeError = Integer.parseInt(check.charAt(5)+"");
-            if(amError==1) amountError.setText("Invalid Amount");
-            else amountError.setText("");
-            if(acError==1) accError.setText("Invalid Account");
-            else accError.setText("");
-            if(pasError==1) passError.setText("Invalid Password");
-            else passError.setText("");
-            if(cvError==1) cvv2Error.setText("Invalid Cvv2");
-            else cvv2Error.setText("");
-            if(moError==1 || yeError==1) dateError.setText("Invalid Date");
-            else dateError.setText("");
+            amountError.setText("");
+            bank.deposit(Double.parseDouble(Amount));
+            if(bank.getCost() == -1){
+                cost.setTextFill(Color.RED);
+                cost.setText("The amount is too low");
+            }
+            else if(Integer.parseInt(check)==0){
+                cost.setTextFill(Color.GREEN);
+                cost.setText("$ "+bank.getCost());
+                finalButton.setDisable(false);
+                amountError.setText("");
+                accError.setText("");
+                passError.setText("");
+                cvv2Error.setText("");
+                dateError.setText("");
+            }
+            else{
+                int amError = Integer.parseInt(check.charAt(0)+"");
+                int acError = Integer.parseInt(check.charAt(1)+"");
+                int pasError = Integer.parseInt(check.charAt(2)+"");
+                int cvError = Integer.parseInt(check.charAt(3)+"");
+                int moError = Integer.parseInt(check.charAt(4)+"");
+                int yeError = Integer.parseInt(check.charAt(5)+"");
+                if(amError==1) amountError.setText("Invalid Amount");
+                else amountError.setText("");
+                if(acError==1) accError.setText("Invalid Account");
+                else accError.setText("");
+                if(pasError==1) passError.setText("Invalid Password");
+                else passError.setText("");
+                if(cvError==1) cvv2Error.setText("Invalid Cvv2");
+                else cvv2Error.setText("");
+                if(moError==1 || yeError==1) dateError.setText("Invalid Date");
+                else dateError.setText("");
+            }
         }
     }
     @FXML
@@ -133,7 +138,14 @@ public class DepositController extends Main{
         RestaurantPageController rpc = loader.getController();
         rpc.cartButton(e);
     }
-
+    private static String checkDepo(String str){
+        if(str.chars().allMatch( Character::isDigit )){
+            return"0";
+        }
+        else{
+            return "1";
+        }
+    }
     private static String checkAcc(String str){
         if(str.length() != 16) return "1";
         if(str.matches("\\d+")) return "0";

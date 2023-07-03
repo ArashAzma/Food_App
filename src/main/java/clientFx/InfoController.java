@@ -85,20 +85,38 @@ public class InfoController extends Main{
     public void changeInfo(ActionEvent e) throws IOException {
         System.out.println(admin);
         Admin tempAdmin = new Admin();
-        System.out.println("ZZ");
         System.out.println(nameTextField.getText());
         System.out.println(passTextField.getText());
-        System.out.println("ZZ");
-        if(!nameTextField.getText().equals(""))  tempAdmin.setName(nameTextField.getText());
-        else tempAdmin.setName(admin.getName());
-        if(!passTextField.getText().equals("")) tempAdmin.setPassword(passTextField.getText());
-        else tempAdmin.setPassword(admin.getPassword());
-        if(!phoneTextField.getText().equals("")) tempAdmin.setPhoneNumber(phoneTextField.getText());
-        else tempAdmin.setPhoneNumber(admin.getPhoneNumber());
-        if(!addressTextField.getText().equals("")) tempAdmin.setAddress(addressTextField.getText());
-        else tempAdmin.setAddress(admin.getAddress());
-        if(!emailTextField.getText().equals("")) tempAdmin.setEmail(emailTextField.getText());
-        else tempAdmin.setEmail(admin.getEmail());
+        if(!nameTextField.getText().equals("")) {
+            tempAdmin.setName(nameTextField.getText());
+        }
+        else {
+            tempAdmin.setName(admin.getName());
+        }
+        if(!passTextField.getText().equals("")) {
+            tempAdmin.setPassword(passTextField.getText());
+        }
+        else {
+            tempAdmin.setPassword(admin.getPassword());
+        }
+        if(!phoneTextField.getText().equals("")) {
+            tempAdmin.setPhoneNumber(phoneTextField.getText());
+        }
+        else {
+            tempAdmin.setPhoneNumber(admin.getPhoneNumber());
+        }
+        if(!addressTextField.getText().equals("")) {
+            tempAdmin.setAddress(addressTextField.getText());
+        }
+        else {
+            tempAdmin.setAddress(admin.getAddress());
+        }
+        if(!emailTextField.getText().equals("")) {
+            tempAdmin.setEmail(emailTextField.getText());
+        }
+        else {
+            tempAdmin.setEmail(admin.getEmail());
+        }
         System.out.println(tempAdmin);
         try{
             outputStream.flush();
@@ -108,11 +126,14 @@ public class InfoController extends Main{
                 outputStream.writeObject(tempAdmin);
                 outputStream.flush();
                 System.out.println("Sent Admin");
-
                 String errorCode = inputStream.readUTF();
                 System.out.println(errorCode);
                 if(!errorCode.equals("true") || tempAdmin.getAddress().equals("")){
                     int checkName = Integer.parseInt(errorCode.charAt(0)+"");
+                    System.out.println(checkName);
+                    if(checkName==1){
+                        checkName = 0;
+                    }
                     int checkPass = Integer.parseInt(errorCode.charAt(1)+"");
                     int checkNumber = Integer.parseInt(errorCode.charAt(2)+"");
                     int checkEmail = Integer.parseInt(errorCode.charAt(3)+"");
@@ -143,9 +164,9 @@ public class InfoController extends Main{
                     if(checkNumber==1)phoneLabel.setText("invalid number");
                     else phoneLabel.setText(admin.getPhoneNumber());
                     if(checkEmail==1)emailLabel.setText("invalid Email");
-                    else emailLabel.setText(admin.getPhoneNumber());
+                    else emailLabel.setText(admin.getEmail());
                     if(checkAddress==1)addressLabel.setText("Please enter your address");
-                    else addressLabel.setText("");
+                    else addressLabel.setText(admin.getAddress());
                 }
                 else{
                     initialize();

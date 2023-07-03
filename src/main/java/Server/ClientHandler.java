@@ -190,8 +190,6 @@ public class ClientHandler extends Server implements Runnable {
         }
     }
     private static String checkInput(Admin admin){
-        System.out.println(admin.getEmail());
-        System.out.println(checkEmail(admin.getEmail()));
         String errorCode="";
         errorCode +=checkName(admin.getName());
         errorCode += checkPass(admin.getPassword());
