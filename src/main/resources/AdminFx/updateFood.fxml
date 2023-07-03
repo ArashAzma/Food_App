@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.UpdateFoodController">
    <children>
-      <VBox layoutX="214.0" layoutY="66.0" prefHeight="368.0" prefWidth="272.0" spacing="15.0">
+      <VBox layoutX="214.0" layoutY="37.0" prefHeight="368.0" prefWidth="272.0" spacing="15.0">
          <children>
             <Label prefHeight="25.0" prefWidth="272.0" text="Enter new Name:" />
             <TextField fx:id="nameText" />
@@ -21,6 +21,8 @@
             <TextField fx:id="availableText" layoutX="10.0" layoutY="135.0" />
             <Label layoutX="10.0" layoutY="160.0" prefHeight="25.0" prefWidth="272.0" text="Enter new imagePath:" />
             <TextField fx:id="imgpathText" layoutX="10.0" layoutY="185.0" />
+            <Label layoutX="15.0" layoutY="313.0" prefHeight="25.0" prefWidth="272.0" text="Enter new Weigth:" />
+            <TextField fx:id="weightText" layoutX="15.0" layoutY="348.0" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -28,5 +30,6 @@
       </VBox>
       <Button layoutX="554.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateFood" prefHeight="32.0" prefWidth="98.0" text="Update" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="28.0" text="&lt;" />
+      <Label fx:id="error_lable" layoutX="553.0" layoutY="371.0" prefHeight="25.0" prefWidth="101.0" textFill="#d32e2e" />
    </children>
 </AnchorPane>

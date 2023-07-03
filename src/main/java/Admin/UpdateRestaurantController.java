@@ -8,10 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import static Admin.restController.isBoolean;
+import static Admin.restController.isNumeric;
 
 public class UpdateRestaurantController extends Main{
     private Restaurant clicked;
@@ -23,7 +27,8 @@ public class UpdateRestaurantController extends Main{
     int courier;
     boolean take;
     boolean available;
-
+    @FXML
+    private Label error_lable;
     @FXML
     private TextField textFieldImgPath;
     @FXML
@@ -48,6 +53,7 @@ public class UpdateRestaurantController extends Main{
     private TextField textfieldIs_able;
     @FXML
     void update(ActionEvent event) throws IOException{
+        boolean sw = true;
         try{
             if(textfeildName.getText().equals("")) {
                 this.name = clicked.getName();
@@ -77,11 +83,19 @@ public class UpdateRestaurantController extends Main{
             if(textfeildTable_count.getText().equals("")) {
                 this.table = clicked.getTableCount();
             }
+            else if(!isNumeric(textfeildTable_count.getText())){
+                error_lable.setText("Invalid Input! ");
+                sw = false;
+            }
             else {
                 this.table = Integer.parseInt(textfeildTable_count.getText());
             }
             if(textfeildCourier_count.getText() .equals("")) {
                 this.courier = clicked.getCourierCount();
+            }
+            else if(!isNumeric(textfeildCourier_count.getText())){
+                error_lable.setText("Invalid Input! ");
+                sw = false;
             }
             else {
                 this.courier = Integer.parseInt(textfeildCourier_count.getText());
@@ -89,11 +103,19 @@ public class UpdateRestaurantController extends Main{
             if(textfeildTake_away.getText().equals("")) {
                 this.take = clicked.isTake_away();
             }
+            else if(!isBoolean(textfeildTake_away.getText())){
+                error_lable.setText("Invalid Input! ");
+                sw = false;
+            }
             else {
                 this.take = Boolean.parseBoolean(textfeildTake_away.getText());
             }
             if(textfieldIs_able.getText().equals("")) {
                 this.available = clicked.getIs_able();
+            }
+            else if(!isBoolean(textfieldIs_able.getText())){
+                error_lable.setText("Invalid Input! ");
+                sw = false;
             }
             else {
                 this.available = Boolean.parseBoolean(textfieldIs_able.getText());
@@ -101,21 +123,23 @@ public class UpdateRestaurantController extends Main{
 
         }catch (Exception ignored){
         }
-        out.flush();
-        out.writeUTF("change restaurant");
-        out.flush();
-        out.writeUTF(clicked.getName());
-        out.flush();
+        if(sw){
+            out.flush();
+            out.writeUTF("change restaurant");
+            out.flush();
+            out.writeUTF(clicked.getName());
+            out.flush();
 
-        String line = name+","+address+","+time+","+take+","+courier+","+table+","+imgPath+","+available;
-        out.writeUTF(line);
-        out.flush();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/restaurant.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            String line = name+","+address+","+time+","+take+","+courier+","+table+","+imgPath+","+available;
+            out.writeUTF(line);
+            out.flush();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/restaurant.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
     public void setClicked(Restaurant clicked) {
         this.clicked = clicked;

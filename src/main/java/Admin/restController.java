@@ -138,7 +138,7 @@ public class restController extends Main {
         return str.chars().allMatch( Character::isDigit );  //match a number with optional '-' and decimal.
     }
     public static boolean isBoolean(String str) {
-        return str.equals("true") || str.equals("false");
+        return str.toLowerCase().equals("true") || str.toLowerCase().equals("false");
     }
     @FXML
     void add(ActionEvent event) {
@@ -169,6 +169,7 @@ public class restController extends Main {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            error_label.setText("");
         } else {
             error_label.setText("invalid input!");
         }

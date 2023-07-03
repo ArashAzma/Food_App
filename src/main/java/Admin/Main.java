@@ -34,4 +34,13 @@ public class Main extends Application {
         in = new ObjectInputStream(socket.getInputStream());
         launch();
     }
+    @Override
+    public void stop() throws IOException {
+        System.out.println("STOP");
+        out.writeUTF("Stop");
+        out.flush();
+        socket.close();
+        in.close();
+        in.close();
+    }
 }

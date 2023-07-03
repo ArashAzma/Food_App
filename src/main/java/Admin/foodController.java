@@ -108,6 +108,7 @@ public class foodController extends Main {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            error_lable.setText("");
         }else {
             error_lable.setText("invalid input");
         }

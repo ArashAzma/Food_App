@@ -8,15 +8,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static Admin.restController.isBoolean;
+import static Admin.restController.isNumeric;
+
 public class UpdateFoodController extends Main{
     private static Restaurant restaurant;
 
     private static Food clicked;
+    @FXML
+    private Label error_lable;
     @FXML
     private TextField nameText;
     String name;
@@ -33,7 +39,11 @@ public class UpdateFoodController extends Main{
     private TextField imgpathText;
     String imgPath;
     @FXML
+    private TextField weightText;
+    String weigth;
+    @FXML
     public void updateFood(ActionEvent e) throws IOException {
+        boolean sw = true;
         try{
             if(nameText.getText().equals("")) {
                 this.name = clicked.getName();
@@ -44,6 +54,10 @@ public class UpdateFoodController extends Main{
 
             if(priceText.getText().equals("")) {
                 this.price = clicked.getPrice();
+            }
+            else if (!isNumeric(priceText.getText())){
+                error_lable.setText("Invalid Input!");
+                sw = false;
             }
             else {
                 this.price = Double.parseDouble(priceText.getText());
@@ -57,6 +71,10 @@ public class UpdateFoodController extends Main{
             if(availableText.getText().equals("")) {
                 this.available = clicked.getIsAvailable();
             }
+            else if(!isBoolean(availableText.getText())){
+                error_lable.setText("Invalid Input!");
+                sw = false;
+            }
             else {
                 this.available = Boolean.parseBoolean(availableText.getText());
             }
@@ -66,28 +84,39 @@ public class UpdateFoodController extends Main{
             else {
                 this.imgPath = imgpathText.getText();
             }
+            if(weightText.getText().equals("")){
+                this.weigth = clicked.getWeight()+"";
+            }
+            else if(!isNumeric(weightText.getText())) {
+                error_lable.setText("Invalid Input!");
+                sw = false;
+            }
+            else {
+                this.weigth = weightText.getText();
+            }
 
         }catch (Exception ignored){
         }
+        if(sw){
+            String line = restaurant.getName()+","+name+","+type+","+price+","+available+","+imgPath+","+weigth;
 
-        String line = restaurant.getName()+","+name+","+type+","+price+","+available+","+imgPath;
+            out.flush();
+            out.writeUTF("change food");
+            out.flush();
+            out.writeUTF(restaurant.getName());
+            out.flush();
+            out.writeUTF(clicked.getName());
+            out.flush();
 
-        out.flush();
-        out.writeUTF("change food");
-        out.flush();
-        out.writeUTF(restaurant.getName());
-        out.flush();
-        out.writeUTF(clicked.getName());
-        out.flush();
-
-        out.writeUTF(line);
-        out.flush();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/food.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            out.writeUTF(line);
+            out.flush();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/food.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
     public void setClicked(Food clicked) {
         this.clicked = clicked;

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.foodController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.foodController">
    <children>
-      <TableView fx:id="foods" layoutX="76.0" layoutY="15.0" onMouseClicked="#rowClicked" prefHeight="373.0" prefWidth="441.0">
+      <TableView fx:id="foods" layoutX="76.0" layoutY="40.0" onMouseClicked="#rowClicked" prefHeight="373.0" prefWidth="441.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="70.0" text="name" />
           <TableColumn fx:id="typeColumn" prefWidth="63.0" text="type" />
@@ -16,7 +20,7 @@
             <TableColumn fx:id="weightColumn" prefWidth="90.0" text="weight" />
         </columns>
       </TableView>
-      <Button fx:id="add" layoutX="544.0" layoutY="421.0" mnemonicParsing="false" onAction="#add_food" prefHeight="31.0" prefWidth="87.0" text="add food" />
+      <Button fx:id="add" layoutX="555.0" layoutY="421.0" mnemonicParsing="false" onAction="#add_food" prefHeight="31.0" prefWidth="87.0" text="add food" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#restaurantScene" text="&lt;" />
       <Button layoutX="555.0" layoutY="201.0" mnemonicParsing="false" onAction="#updateFood" prefHeight="25.0" prefWidth="87.0" text="update food" />
       <Button layoutX="555.0" layoutY="250.0" mnemonicParsing="false" onAction="#remove" prefHeight="31.0" prefWidth="87.0" text="remove" />
@@ -24,8 +28,11 @@
       <TextField fx:id="typeFeild" layoutX="132.0" layoutY="421.0" prefHeight="31.0" prefWidth="58.0" promptText="type" />
       <TextField fx:id="priceField" layoutX="190.0" layoutY="421.0" prefHeight="31.0" prefWidth="58.0" promptText="price" />
       <TextField fx:id="isAvailableField" layoutX="248.0" layoutY="421.0" prefHeight="31.0" prefWidth="96.0" promptText="is Available" />
-      <TextField fx:id="imgpathField" layoutX="340.0" layoutY="421.0" prefHeight="31.0" prefWidth="87.0" promptText="img path" />
-      <TextField fx:id="weightField" layoutX="427.0" layoutY="421.0" prefHeight="31.0" prefWidth="87.0" promptText="weight" />
-      <Label fx:id="error_lable" layoutX="292.0" layoutY="465.0" prefHeight="21.0" prefWidth="96.0" textFill="#d32e2e" />
+      <TextField fx:id="imgpathField" layoutX="343.0" layoutY="421.0" prefHeight="31.0" prefWidth="87.0" promptText="img path" />
+      <TextField fx:id="weightField" layoutX="430.0" layoutY="421.0" prefHeight="31.0" prefWidth="87.0" promptText="weight" />
+      <Label fx:id="error_lable" layoutX="71.0" layoutY="465.0" prefHeight="25.0" prefWidth="122.0" textFill="#d32e2e">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>

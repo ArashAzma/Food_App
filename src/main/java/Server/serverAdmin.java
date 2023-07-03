@@ -7,25 +7,20 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class serverAdmin {
     public static final int PORT = 3033;
     private static ArrayList<Restaurant> restaurants;
     public static void main(String[] args) throws IOException{
 
-        ServerSocket s = new ServerSocket(PORT);
-        Socket socket = s.accept();
-
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        out.flush();
-
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        Socket socket = serverSocket.accept();
         System.out.println("SERVER STARTED [Waiting for Client]");
-
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.flush();
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
         while(true){
             try {
-
                 String str = in.readUTF();
                 System.out.println(str);
 
@@ -36,7 +31,6 @@ public class serverAdmin {
                     out.writeObject(restaurants);
                     out.flush();
                 }
-
                 else if (str.equals("add restaurant")) { // giving new restaurant object to add to arraylist
                     System.out.println("adding..");
                     Restaurant r = (Restaurant) in.readObject();
@@ -46,7 +40,6 @@ public class serverAdmin {
                     writer.close();
 
                 }
-
                 else if (str.equals("add food")) { // giving new food object to add to arraylist
                     System.out.println("adding food");
                     Restaurant restaurant = (Restaurant) in.readObject();
@@ -56,7 +49,6 @@ public class serverAdmin {
                     writer.write(restaurant.getName()+","+food.getName()+","+food.getType()+","+food.getPrice()+","+food.isAvailable()+","+food.getImgPath()+","+food.getWeight()+"\n");
                     writer.close();
                 }
-
                 else if(str.equals("login")) { // checking password and username for login
 
                     String username = in.readUTF();
@@ -114,7 +106,8 @@ public class serverAdmin {
                         System.out.println("Problem reading file.");
                     }
 
-                } else if (str.equals("remove restaurant")) {
+                }
+                else if (str.equals("remove restaurant")) {
 
                     String name = in.readUTF();
                     ArrayList<Restaurant> replace = new ArrayList<>();
@@ -163,7 +156,8 @@ public class serverAdmin {
 
                     writer2.close();
 
-                } else if (str.equals("remove food")) {
+                }
+                else if (str.equals("remove food")) {
 
                     String restName = in.readUTF();
                     String foodName = in.readUTF();
@@ -196,7 +190,8 @@ public class serverAdmin {
 
                     writer.close();
 
-                } else if(str.equals("change food")){
+                }
+                else if(str.equals("change food")){
                     String resName = in.readUTF();
                     String foodName = in.readUTF();
                     String newline = in.readUTF();
@@ -225,6 +220,10 @@ public class serverAdmin {
                     }
 
                 }
+                else{
+                    System.out.println("Closing the socket...");
+                    break;
+                }
             }catch (IOException ignored){
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
@@ -240,6 +239,7 @@ public class serverAdmin {
         String menline;
         while ((resline=restaurantFile.readLine()) != null) {
             String[] fields = resline.split(",");
+//            System.out.println(resline);
         Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
             restaurants.add(rest);
             BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));

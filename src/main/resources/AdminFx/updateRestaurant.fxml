@@ -34,5 +34,6 @@
       </VBox>
       <Button layoutX="553.0" layoutY="437.0" mnemonicParsing="false" onAction="#update" prefHeight="25.0" prefWidth="101.0" text="Update" />
       <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#restaurantScene" prefHeight="25.0" prefWidth="27.0" text="&lt;" />
+      <Label fx:id="error_lable" layoutX="553.0" layoutY="404.0" prefHeight="25.0" prefWidth="101.0" textFill="#d32e2e" />
    </children>
 </AnchorPane>
