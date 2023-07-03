@@ -41,6 +41,6 @@ public class Main extends Application {
         out.flush();
         socket.close();
         in.close();
-        in.close();
+        out.close();
     }
 }

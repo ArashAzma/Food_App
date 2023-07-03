@@ -222,7 +222,7 @@ public class serverAdmin {
                 }
                 else{
                     System.out.println("Closing the socket...");
-                    break;
+                  //  break;
                 }
             }catch (IOException ignored){
             } catch (ClassNotFoundException e) {
@@ -239,8 +239,7 @@ public class serverAdmin {
         String menline;
         while ((resline=restaurantFile.readLine()) != null) {
             String[] fields = resline.split(",");
-//            System.out.println(resline);
-        Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
+            Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
             restaurants.add(rest);
             BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
             while ((menline=menuFile.readLine()) != null){
@@ -252,5 +251,4 @@ public class serverAdmin {
         }
         return restaurants;
     }
-
 }
