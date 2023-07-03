@@ -61,7 +61,7 @@ public class foodController extends Main {
     @FXML
     private TextField typeFeild;
     @FXML
-    private Label error_lable;
+    private Label error_lable ;
     @FXML
     private TableView<Food> foods;
     private static Restaurant r;
@@ -76,7 +76,7 @@ public class foodController extends Main {
         isAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("isAvailable"));
         imgpathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
-
+        error_lable.setText("");
         // give restaurant
         this.r = restController.giveRestaurant();
         ObservableList<Food> data = FXCollections.observableArrayList(r.getFoodsArray());

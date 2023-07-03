@@ -87,6 +87,9 @@ public class restController extends Main {
         courierColumn.setCellValueFactory(new PropertyValueFactory<>("courierCount"));
         imgPathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
         is_ableColumn.setCellValueFactory(new PropertyValueFactory<>("is_able"));
+
+        error_label.setText("");
+
         try {
             // receive restaurants arraylist
             out.writeUTF("restaurants");
@@ -148,26 +151,26 @@ public class restController extends Main {
         String isAble = textfieldIs_able.getText();
         String imgPath = textFieldImgPath.getText();
         boolean add = true;
-        add = add && isNumeric(table) && isNumeric(courier);  // check if table and courier counts not number
+        add = isNumeric(table) && isNumeric(courier);  // check if table and courier counts not number
         add = add && isBoolean(isAble) && isBoolean(takAway); // check if isTakeAway and isAble counts not boolean
         // check if text fields are null
-        add = add && !name.equals("") && !address.equals("") && !time.equals("") && !table.equals("") && !courier.equals("") && !takAway.equals("") && !isAble.equals("") && imgPath.equals("");
+        add = add && !name.equals("") && !address.equals("") && !time.equals("") && !table.equals("") && !courier.equals("") && !takAway.equals("") && !isAble.equals("") && !imgPath.equals("");
 
         if ( add ) {
             Restaurant restaurant = new Restaurant(name, address, time, Boolean.parseBoolean(takAway), Short.parseShort(table), Short.parseShort(courier), imgPath, Boolean.parseBoolean(isAble));
+            list.add(restaurant);
+            restaurants.getItems().add(restaurant);
+            try {
+                out.writeUTF("add restaurant");
+                out.flush();
+                out.writeObject(restaurant);
+                out.flush();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             error_label.setText("invalid input!");
-        }
-        list.add(restaurant);
-        restaurants.getItems().add(restaurant);
-        try {
-            out.writeUTF("add restaurant");
-            out.flush();
-            out.writeObject(restaurant);
-            out.flush();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
