@@ -92,7 +92,7 @@ public class foodController extends Main {
         String weight = weightField.getText();
         String imgPath = imgpathField.getText();
         // check if text fields are null
-        add = add && !name.equals("") && !type.equals("") && price.equals("") && ! isAvailable.equals("") && ! weight.equals("") && ! imgPath.equals("");
+        add = add && !name.equals("") && !type.equals("") &&! price.equals("") && ! isAvailable.equals("") && ! weight.equals("") && ! imgPath.equals("");
         add = add && isNumeric(price) && isNumeric(weight); // check if price and weight are not number
         add = add && isBoolean(isAvailable);                // check if isAvailable is not boolean
         if ( add ) {
