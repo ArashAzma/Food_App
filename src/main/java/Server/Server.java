@@ -2,7 +2,7 @@ package Server;
 import common.Admin;
 import common.Food;
 import common.Restaurant;
-
+import java.sql.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -14,53 +14,53 @@ public class Server {
     static ArrayList<Restaurant> restaurants = new ArrayList<>();
     private static ArrayList<ClientHandler> clients = new ArrayList<>();
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    private static Connection connection;
+
+    static {
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "arash1382");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server started. Waiting for client...");
-        loadRestaurants();
+        loadDataBase();
         while(true){
             System.out.println("[SERVER] wainting for client");
             Socket socket = serverSocket.accept();
             System.out.println("[SERVER] Client connected.");
             Admin admin = new Admin();
-            ClientHandler clientThread = new ClientHandler(socket, admin);
+            ClientHandler clientThread = new ClientHandler(socket, admin, connection);
             clients.add(clientThread);
             pool.execute(clientThread);
         }
 
     }
-    private static void loadRestaurants(){
-        try {
-            BufferedReader menuFile = null;
-            BufferedReader restaurantFile = new BufferedReader(new FileReader("src/main/java/Server/Restaurants"));
-            String resline;
-            String menline;
-            while ((resline = restaurantFile.readLine()) != null) {
-                String[] parts = resline.split(",");
-                if(!parts[7].equals("true")){
-                    continue;
-                }
-                boolean isTakeAway = (parts[3].equals("true"));
-                boolean isAble = (parts[7].equals("true"));
-                int courierCount = Integer.parseInt(parts[4]);
-                int tabelCount = Integer.parseInt(parts[5]);
-                restaurants.add(new Restaurant(parts[0], parts[1], parts[2], isTakeAway, courierCount, tabelCount, parts[6],isAble));
-                Restaurant rest = restaurants.get(restaurants.size() - 1);
-                menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
-                while((menline = menuFile.readLine()) != null){
-                    String[] foodParts = menline.split(",");
-                    if(foodParts[0].equals(parts[0])){
-                        double price = Double.parseDouble(foodParts[3]);
-                        boolean isAvailable = foodParts[4].equals("true");
-                        double weight = Double.parseDouble(foodParts[6]);
-                        rest.add_menu(new Food(foodParts[1], foodParts[2], price, isAvailable, foodParts[5],weight));
+    private static void loadDataBase(){
+        try{
+            Statement statement = connection.createStatement();
+            Statement statement2 = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM restaurants");
+            while(rs.next()){
+                int index = rs.getInt(1);
+                restaurants.add(new Restaurant(rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5),
+                                               rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getBoolean(9)));
+                Restaurant rest = restaurants.get(index-1);
+                ResultSet ms = statement2.executeQuery("SELECT * FROM menu");
+                while(ms.next()){
+                    if(ms.getInt(2)==index){
+                        rest.add_menu(new Food(ms.getString(3), ms.getString(4), ms.getDouble(5),
+                                                ms.getBoolean(6), ms.getString(7), ms.getDouble(8)));
                     }
                 }
             }
-            menuFile.close();
-            restaurantFile.close();
-        }catch (IOException e){
-            e.printStackTrace();
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+
 }

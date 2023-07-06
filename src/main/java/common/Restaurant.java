@@ -98,7 +98,7 @@ public class Restaurant implements Serializable {
 
 
     public String toString(){
-        String str = name+" "+address+" "+time;
+        String str = "NAME:  "+name+" "+address+" "+time;
         for(Food i:menu){
             str+="\n\t"+i;
         }

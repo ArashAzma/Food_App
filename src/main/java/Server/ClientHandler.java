@@ -3,181 +3,157 @@ package Server;
 import common.Admin;
 import java.io.*;
 import java.net.Socket;
+import java.sql.*;
 
 public class ClientHandler extends Server implements Runnable {
     private  Admin admin;
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    public ClientHandler(Socket socket, Admin admin) throws IOException {
+    private Connection connection;
+    private static Statement statement;
+    public ClientHandler(Socket socket, Admin admin, Connection connection) throws IOException, SQLException {
         this.socket = socket;
         this.admin = admin;
         out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         in = new ObjectInputStream(socket.getInputStream());
+        this.connection = connection;
+        statement = connection.createStatement();
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-            out.flush();
-            String situation = in.readUTF();
-            System.out.println(situation);
-            if(situation.equals("login")){
-                String username = in.readUTF();
-                String password = in.readUTF();
-
-                System.out.println(username + " " + password);
-                boolean findUser = false;
-                try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))) {
-                    String line;
-                    while ((line = userFile.readLine()) != null && !findUser) {
-                        String[] parts = line.split(",");
-//                                System.out.println(Arrays.toString(parts));
-                        if (parts[0].equals(username) && parts[1].equals(password)) {
-                            admin.setName(parts[0]);
-                            admin.setPassword(parts[1]);
-                            admin.setPhoneNumber(parts[2]);
-                            admin.setEmail(parts[3]);
-                            admin.setAddress(parts[4]);
-                            admin.setMojodi(Double.parseDouble(parts[5]));
-                            findUser = true;
-                            break;
-                        }
-                    }
-
-                    if (findUser) {
-                        out.writeUTF("Found");
-                        out.flush();
-                    } else {
-                        out.writeUTF("!foundUser");
-                        out.flush();
-                    }
-                } catch (IOException e) {
-                    System.out.println("Error reading usernames file: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-            else if(situation.equals("list")){
-                out.writeObject(restaurants);
-                System.out.println("Sent ArrayList");
-            }
-            else if(situation.equals("signup")){
-                try{
-                    FileWriter file = new FileWriter("src/main/java/Server/usernames", true);
+                out.flush();
+                String situation = in.readUTF();
+                System.out.println(situation);
+                if(situation.equals("SignUp")){
                     out.flush();
                     Admin tempAdmin = (Admin) in.readObject();
                     System.out.println(tempAdmin);
-                    System.out.println("received new Admin");
                     String errorCode = checkInput(tempAdmin);
                     System.out.println(errorCode);
+                    out.flush();
                     if(errorCode.equals("00000")){
                         out.writeUTF("true");
                         out.flush();
-                        System.out.println(tempAdmin);
                         admin = tempAdmin;
-                        file.write(admin.getName()+",");
-                        file.write(admin.getPassword()+",");
-                        file.write(admin.getPhoneNumber()+",");
-                        file.write(admin.getEmail()+",");
-                        file.write(admin.getAddress()+",");
-                        file.write(admin.getMojodi()+"\n");
+                        try{
+                            String sql = "INSERT INTO usernames (name, password, phone, address, email, Balance) VALUES (?,?,?,?,?,?) ";
+                            PreparedStatement pstmt = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                            // set parameters for statement
+                            pstmt.setString(1, admin.getName());
+                            pstmt.setString(2, admin.getPassword());
+                            pstmt.setString(3, admin.getPhoneNumber());
+                            pstmt.setString(4, admin.getAddress());
+                            pstmt.setString(5, admin.getEmail());
+                            pstmt.setDouble(6, admin.getMojodi());
+                            pstmt.execute();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     else {
                         out.writeUTF(errorCode);
                         out.flush();
                     }
-                    file.close();
-                }catch (IOException | ClassNotFoundException e) {
-                    System.out.println("\nerror\n");
-                    e.printStackTrace();
                 }
-            }
-            else if(situation.equals("getAdmin")){
-                out.writeObject(admin);
-                out.flush();
-                System.out.println("Sent Admin");
-            }
-            else if(situation.equals("setAdmin")){
-                admin = (Admin) in.readObject();
-                System.out.println("received new Admin ");
-                in.close();
-            }
-            else if(situation.equals("changeMojodi")){
-                out.flush();
-                Admin tempAdmin = (Admin) in.readObject();
-                System.out.println(tempAdmin.getMojodi());
-                System.out.println("received new Mojodi");
-                String newLine = tempAdmin.getName()+","+tempAdmin.getPassword()+","+tempAdmin.getPhoneNumber()+","+tempAdmin.getEmail()+","+tempAdmin.getAddress()+","+tempAdmin.getMojodi();
-                try {
-                    BufferedReader file = new BufferedReader(new FileReader("src/main/java/Server/usernames"));
-                    StringBuffer inputBuffer = new StringBuffer();
-                    String line;
-
-                    while ((line = file.readLine()) != null) {
-                        String[] parts = line.split(",");
-                        if(parts[0].equals(admin.getName())){
-                            line = newLine;
-                        }
-                        inputBuffer.append(line);
-                        inputBuffer.append('\n');
-                    }
-                    file.close();
-                    FileOutputStream fileOut = new FileOutputStream("src/main/java/Server/usernames");
-                    fileOut.write(inputBuffer.toString().getBytes());
-                    fileOut.close();
-
-                } catch (Exception e) {
-                    System.out.println("Problem reading file.");
-                }
-                admin = tempAdmin;
-            }
-            else if (situation.equals("changeInfo")){
-                out.flush();
-                Admin tempAdmin = (Admin) in.readObject();
-                System.out.println(tempAdmin);
-                System.out.println("received new Admin changes");
-                String errorCode = checkInput(tempAdmin);
-                System.out.println(errorCode);
-                if(errorCode.equals("00000")){
-                    out.writeUTF("true");
-                    out.flush();
-                    System.out.println(tempAdmin);
-                    String newLine = tempAdmin.getName()+","+tempAdmin.getPassword()+","+tempAdmin.getPhoneNumber()+","+tempAdmin.getEmail()+","+tempAdmin.getAddress()+","+tempAdmin.getMojodi();
-                    try {
-                        BufferedReader file = new BufferedReader(new FileReader("src/main/java/Server/usernames"));
-                        StringBuffer inputBuffer = new StringBuffer();
-                        String line;
-
-                        while ((line = file.readLine()) != null) {
-                            String[] parts = line.split(",");
-                            if(parts[0].equals(admin.getName())){
-                                line = newLine;
+                else if (situation.equals("Login")){
+                    String username = in.readUTF();
+                    String password = in.readUTF();
+                    boolean findUser = false;
+                    try{
+                        Statement statement = connection.createStatement();
+                        ResultSet rs = statement.executeQuery("Select * From usernames");
+                        while(rs.next()){
+                            String name = rs.getString(2);
+                            String pass = rs.getString(3);
+                            if(username.equals(name) && password.equals(pass)){
+                                admin.setName(rs.getString(2));
+                                admin.setPassword(rs.getString(3));
+                                admin.setPhoneNumber(rs.getString(4));
+                                admin.setEmail(rs.getString(5));
+                                admin.setAddress(rs.getString(6));
+                                admin.setMojodi(rs.getDouble(7));
+                                findUser = true;
+                                break;
                             }
-                            inputBuffer.append(line);
-                            inputBuffer.append('\n');
                         }
-                        file.close();
+                        if (findUser) {
+                            out.writeUTF("Found");
+                            out.flush();
+                        } else {
+                            out.writeUTF("!foundUser");
+                            out.flush();
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                        FileOutputStream fileOut = new FileOutputStream("src/main/java/Server/usernames");
-                        fileOut.write(inputBuffer.toString().getBytes());
-                        fileOut.close();
-
-                    } catch (Exception e) {
-                        System.out.println("Problem reading file.");
+                }
+                else if(situation.equals("list")){
+                    out.writeObject(restaurants);
+                    System.out.println("Sent ArrayList");
+                }
+                else if(situation.equals("getAdmin")){
+                    out.writeObject(admin);
+                    out.flush();
+                    System.out.println("Sent Admin");
+                }
+                else if(situation.equals("setAdmin")){
+                    admin = (Admin) in.readObject();
+                    System.out.println("received new Admin ");
+                    in.close();
+                }
+                else if(situation.equals("ChangeMojodi")){
+                    Admin tempAdmin = (Admin) in.readObject();
+                    double balance = tempAdmin.getMojodi();
+                    try{
+                        PreparedStatement ps = (PreparedStatement) connection.prepareStatement("UPDATE usernames SET Balance = ? WHERE name = ?");
+                        ps.setDouble(1, balance);
+                        ps.setString(2, admin.getName());
+                        ps.execute();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
                     admin = tempAdmin;
                 }
-                else {
-                    out.writeUTF(errorCode);
+                else if(situation.equals("ChangeInfo")){
                     out.flush();
+                    Admin tempAdmin = (Admin) in.readObject();
+                    String errorCode = checkInput(tempAdmin);
+                    System.out.println(errorCode);
+                    out.flush();
+                    if(errorCode.equals("00000")){
+                        out.flush();
+                        out.writeUTF("true");
+                        out.flush();
+                        try{
+                            PreparedStatement ps = (PreparedStatement) connection.prepareStatement("UPDATE usernames SET name = ?, password=?, phone=?, address=?, email=?, Balance=? WHERE name = ?");
+                            ps.setString(1, tempAdmin.getName());
+                            ps.setString(2, tempAdmin.getPassword());
+                            ps.setString(3, tempAdmin.getPhoneNumber());
+                            ps.setString(4, tempAdmin.getAddress());
+                            ps.setString(5, tempAdmin.getEmail());
+                            ps.setDouble(6, tempAdmin.getMojodi());
+                            ps.setString(7, admin.getName());
+                            ps.execute();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        admin = tempAdmin;
+                    }
+                    else {
+                        out.writeUTF(errorCode);
+                        out.flush();
+                    }
                 }
-            }
-            else{
-                System.out.println("Closing the socket...");
-                break;
-            }
+                else{
+                    System.out.println("Closing the socket...");
+                    break;
+                }
             }
         }
         catch (IOException | ClassNotFoundException e) {
@@ -207,14 +183,15 @@ public class ClientHandler extends Server implements Runnable {
         // 1== already in use
         //2==short
         if(name.length()<4)return 2;
-        try (BufferedReader userFile = new BufferedReader(new FileReader("src/main/java/Server/usernames"))){
-            String line;
-            while((line = userFile.readLine()) != null){
-                String[] parts = line.split(",");
-                if(parts[0].equals(name))return 1;
+        try{
+            ResultSet rs = statement.executeQuery("SELECT name FROM usernames");
+            while(rs.next()){
+                System.out.println(rs);
+                if(rs.equals(name))
+                    return 1;
             }
-        }catch(IOException e){
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }

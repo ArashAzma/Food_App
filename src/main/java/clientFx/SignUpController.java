@@ -42,11 +42,13 @@ public class SignUpController extends Main{
         String address = addressBox.getText();
         try{
             outputStream.flush();
-            outputStream.writeUTF("signup");
+            outputStream.writeUTF("SignUp");
             outputStream.flush();
             try{
-
+                outputStream.flush();
                 Admin admin = new Admin(name, password, phone, address, email);
+                System.out.println(admin);
+                outputStream.flush();
                 outputStream.writeObject(admin);
                 outputStream.flush();
                 System.out.println("Sent Admin");
@@ -88,7 +90,6 @@ public class SignUpController extends Main{
                     if(checkAddress==1)addressLabel.setText("Please enter your address");
                     else addressLabel.setText("");
                 }
-
                 else{
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("restaurantsView.fxml"));
                     root = loader.load();

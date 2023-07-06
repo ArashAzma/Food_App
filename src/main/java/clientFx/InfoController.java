@@ -120,7 +120,7 @@ public class InfoController extends Main{
         System.out.println(tempAdmin);
         try{
             outputStream.flush();
-            outputStream.writeUTF("changeInfo");
+            outputStream.writeUTF("ChangeInfo");
             outputStream.flush();
             try{
                 outputStream.writeObject(tempAdmin);

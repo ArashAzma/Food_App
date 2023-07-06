@@ -117,7 +117,7 @@ public class DepositController extends Main{
         admin.setMojodi(Double.parseDouble(Amount)+sum);
         try{
             outputStream.flush();
-            outputStream.writeUTF("changeMojodi");
+            outputStream.writeUTF("ChangeMojodi");
             outputStream.flush();
             outputStream.writeObject(admin);
             outputStream.flush();

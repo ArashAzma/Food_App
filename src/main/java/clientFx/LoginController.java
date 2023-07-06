@@ -35,7 +35,7 @@ public class LoginController extends Main {
 
             String name = nameBox.getText();
             String password = passBox.getText();
-            outputStream.writeUTF("login");
+            outputStream.writeUTF("Login");
             outputStream.flush();
             outputStream.writeUTF(name);
             outputStream.flush();
