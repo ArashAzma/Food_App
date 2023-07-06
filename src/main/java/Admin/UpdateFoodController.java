@@ -98,17 +98,14 @@ public class UpdateFoodController extends Main{
         }catch (Exception ignored){
         }
         if(sw){
-            String line = restaurant.getName()+","+name+","+type+","+price+","+available+","+imgPath+","+weigth;
-
+            Food temp = new Food(name, type, price, available, imgPath, Double.parseDouble(weigth));
             out.flush();
-            out.writeUTF("change food");
-            out.flush();
-            out.writeUTF(restaurant.getName());
+            out.writeUTF("Change food");
             out.flush();
             out.writeUTF(clicked.getName());
             out.flush();
 
-            out.writeUTF(line);
+            out.writeObject(temp);
             out.flush();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/food.fxml"));
             Parent root = loader.load();

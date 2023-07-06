@@ -99,7 +99,7 @@ public class foodController extends Main {
             Food food = new Food(foodnameField.getText(), typeFeild.getText(), Double.valueOf(priceField.getText()), Boolean.parseBoolean(isAvailableField.getText()), imgpathField.getText(), Double.parseDouble(weightField.getText()));
             foods.getItems().add(food);
             try {
-                out.writeUTF("add food");
+                out.writeUTF("Add food");
                 out.flush();
                 out.writeObject(r);
                 out.flush();
@@ -145,9 +145,8 @@ public class foodController extends Main {
     public void remove() throws Exception {
         this.clicked = foods.getSelectionModel().getSelectedItem();
         out.flush();
-        out.writeUTF("remove food");
-        out.flush();
-        out.writeUTF(r.getName());
+        out.writeUTF("Remove food");
+
         out.flush();
         out.writeUTF(clicked.getName());
         out.flush();

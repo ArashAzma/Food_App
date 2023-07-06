@@ -6,11 +6,20 @@ import common.Restaurant;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class serverAdmin {
     public static final int PORT = 3033;
-    private static ArrayList<Restaurant> restaurants;
+//    private static ArrayList<Restaurant> restaurants = new ArrayList<>();
+    private static Connection connection;
+    static {
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "arash1382");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String[] args) throws IOException{
 
         ServerSocket serverSocket = new ServerSocket(PORT);
@@ -25,42 +34,66 @@ public class serverAdmin {
                 System.out.println(str);
 
                 if (str.equals("restaurants")) {  // sending restaurants arraylist for table view
-                    restaurants = loadRestaurants();
-                    System.out.println(restaurants.get(0).getTime());
-                    System.out.print("sent Restaurants");
+                    ArrayList<Restaurant> restaurants = loadRestaurants();
+                    System.out.println("sent Restaurants");
                     out.writeObject(restaurants);
                     out.flush();
                 }
-                else if (str.equals("add restaurant")) { // giving new restaurant object to add to arraylist
-                    System.out.println("adding..");
+                else if (str.equals("Add restaurant")){
                     Restaurant r = (Restaurant) in.readObject();
-                    restaurants.add(r);
-                    FileWriter writer = new FileWriter("src\\main\\java\\Server\\Restaurants",true);
-                    writer.write(r.getName()+","+r.getAddress()+","+r.getTime()+","+r.isTake_away()+","+r.getTableCount()+","+r.getCourierCount()+","+r.getImgPath()+","+r.getIs_able()+"\n");
-                    writer.close();
+//                    restaurants.add(r);
+                    try{
+                        PreparedStatement ps = (PreparedStatement) connection.prepareStatement("INSERT INTO restaurants (name, address, time, is_takeAway, tabelCount, " +
+                                                                                                    "courierCount, imgPath, is_able) VALUES (?,?,?,?,?,?,?,?)");
+                        ps.setString(1, r.getName());
+                        ps.setString(2, r.getAddress());
+                        ps.setString(3, r.getTime());
+                        ps.setBoolean(4, r.isTake_away());
+                        ps.setInt(5, r.getTableCount());
+                        ps.setInt(6, r.getCourierCount());
+                        ps.setString(7, r.getImgPath());
+                        ps.setBoolean(8, r.isIs_able());
+                        ps.execute();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
 
                 }
-                else if (str.equals("add food")) { // giving new food object to add to arraylist
-                    System.out.println("adding food");
+                else if (str.equals("Add food")) {
+                    // giving new food object to add to arraylist
                     Restaurant restaurant = (Restaurant) in.readObject();
                     Food food = (Food) in.readObject();
                     restaurant.getFoodsArray().add(food);
-                    FileWriter writer = new FileWriter("src\\main\\java\\Server\\Menus",true);
-                    writer.write(restaurant.getName()+","+food.getName()+","+food.getType()+","+food.getPrice()+","+food.isAvailable()+","+food.getImgPath()+","+food.getWeight()+"\n");
-                    writer.close();
+                    int index = -1;
+                    try{
+                        Statement statement = connection.createStatement();
+                        ResultSet rs =  statement.executeQuery("SELECT idrestaurants FROM restaurants WHERE  name = '"+restaurant.getName()+"'");
+                        if (rs.next()) { // Move the cursor to the first row
+                            index = rs.getInt("idrestaurants");
+                        }
+                        PreparedStatement ps = (PreparedStatement) connection.prepareStatement("INSERT INTO menu (idrestaurants, name, type, price, is_available, " +
+                                                                                                                            "imgPath, weight) VALUES (?,?,?,?,?,?,?)");
+                        ps.setInt(1, index);
+                        ps.setString(2, food.getName());
+                        ps.setString(3, food.getType());
+                        ps.setDouble(4, food.getPrice());
+                        ps.setBoolean(5, food.getIsAvailable());
+                        ps.setString(6, food.getImgPath());
+                        ps.setDouble(7, food.getWeight());
+                        ps.execute();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 else if(str.equals("login")) { // checking password and username for login
 
                     String username = in.readUTF();
                     String password = in.readUTF();
-
-                    System.out.println(username + " " + password);
                     boolean findUser = false;
-
                     try (BufferedReader userFile = new BufferedReader(new FileReader("src\\main\\java\\Server\\adminInfo"))) {
                         String line = userFile.readLine();
                         String[] parts = line.split(",");
-                        System.out.println(parts[0]+"   "+parts[1]);
                         if(username.equals(parts[0]) && password.equals(parts[1])){
                             findUser = true;
                         }
@@ -76,153 +109,84 @@ public class serverAdmin {
                         e.printStackTrace();
                     }
                 }
-                else if(str.equals("change restaurant")){
-
+                else if(str.equals("Change restaurant")){
                     String resName = in.readUTF();
-                    String newline = in.readUTF();
+                    Restaurant temp = (Restaurant) in.readObject();
+                    try{
+                        PreparedStatement ps = connection.prepareStatement("UPDATE restaurants SET name = ?, address=?, time=?, is_takeAway=?, tabelCount=?, courierCount=?, " +
+                                                                                "imgpath=?, is_able=? WHERE name = ?");
 
-                    try {
+                        ps.setString(1, temp.getName());
+                        ps.setString(2, temp.getAddress());
+                        ps.setString(3, temp.getTime());
+                        ps.setBoolean(4, temp.isTake_away());
+                        ps.setInt(5, temp.getTableCount());
+                        ps.setInt(6, temp.getCourierCount());
+                        ps.setString(7, temp.getImgPath());
+                        ps.setBoolean(8, temp.getIs_able());
+                        ps.setString(9, resName);
+                        ps.execute();
 
-                        BufferedReader file = new BufferedReader(new FileReader("src\\main\\java\\Server\\Restaurants"));
-                        StringBuffer inputBuffer = new StringBuffer();
-                        String line;
-
-                        while ((line = file.readLine()) != null) {
-                            String[] parts = line.split(",");
-                            if(parts[0].equals(resName)){
-                                line = newline;
-                            }
-                            inputBuffer.append(line);
-                            inputBuffer.append('\n');
-                        }
-
-                        file.close();
-
-                        FileOutputStream fileOut = new FileOutputStream("src\\main\\java\\Server\\Restaurants");
-                        fileOut.write(inputBuffer.toString().getBytes());
-                        fileOut.close();
-
-                    } catch (Exception e) {
-                        System.out.println("Problem reading file.");
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-
                 }
-                else if (str.equals("remove restaurant")) {
-
+                else if (str.equals("Remove restaurant")){
                     String name = in.readUTF();
-                    ArrayList<Restaurant> replace = new ArrayList<>();
+                    int index=-1;
+                    try{
+                        PreparedStatement ps = connection.prepareStatement("SELECT idrestaurants FROM restaurants WHERE  name = ?");
+                        ps.setString(1, name);
+                        ResultSet rs = ps.executeQuery();
+                        ps = (PreparedStatement) connection.prepareStatement("DELETE FROM restaurants WHERE name = ?");
+                        ps.setString(1, name);
+                        ps.execute();
 
-                    for(int i = 0; i < restaurants.size(); ++i){
-                        if(restaurants.get(i).getName().equals(name)){
-                            for(int j = 0; j < restaurants.size(); ++j){
-                                if(i != j){
-                                    replace.add(restaurants.get(j));
-                                }
-                            }
+                        if (rs.next()) {
+                            index = rs.getInt("idrestaurants");
+                            System.out.println(index);
                         }
-                    }
-
-                    restaurants.clear();
-                    restaurants = new ArrayList<>(replace);
-
-                    File rest = new File("src\\main\\java\\Server\\Restaurants");
-
-                    PrintWriter writerEmpty = new PrintWriter(rest);
-                    writerEmpty.print("");   // clear the restaurants file
-                    writerEmpty.close();
-
-                    FileWriter writer = new FileWriter("src\\main\\java\\Server\\Restaurants",true);
-
-                    // fill restaurants file with new data
-                    for (Restaurant i : restaurants){
-                        writer.write(i.getName()+","+i.getAddress()+","+i.getTime()+","+i.isTake_away()+","+i.getTableCount()+","+i.getCourierCount()+","+i.getImgPath()+","+i.getIs_able()+"\n");
-                    }
-
-                    writer.close();
-
-                    // removing the removed restaurants foods
-                    File rest2 = new File("src\\main\\java\\Server\\Menus");
-                    PrintWriter writerEmpty2 = new PrintWriter(rest2);
-                    writerEmpty2.print("");  // clear file
-                    writerEmpty2.close();
-                    FileWriter writer2 = new FileWriter("src\\main\\java\\Server\\Menus",true);
-
-                    // fill Menus file with new data
-                    for (Restaurant i : restaurants) {
-                        for (Food j : i.getFoodsArray()) {
-                            writer2.write(i.getName()+","+j.getName()+","+j.getType()+","+j.getPrice()+","+j.isAvailable()+","+j.getImgPath()+","+j.getWeight()+"\n");
+                        else {
+                            System.out.println("ResultSet is null. No rows were returned or an error occurred.");
                         }
+                        ps = (PreparedStatement) connection.prepareStatement("DELETE FROM menu WHERE idrestaurants = ?");
+                        ps.setInt(1, index);
+                        ps.execute();
+
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-
-                    writer2.close();
-
                 }
-                else if (str.equals("remove food")) {
-
-                    String restName = in.readUTF();
+                else if (str.equals("Remove food")){
                     String foodName = in.readUTF();
-                    ArrayList<Food> replace = new ArrayList<>();
-
-                    for(int i = 0; i < restaurants.size(); ++i){
-                        if(restaurants.get(i).getName().equals(restName)){
-                            for(int j = 0; j < restaurants.get(i).getFoodsArray().size(); ++j){
-                                if(!restaurants.get(i).getFoodsArray().get(j).getName().equals(foodName)){
-                                    replace.add(restaurants.get(i).getFoodsArray().get(j));
-                                }
-                            }
-                            restaurants.get(i).getFoodsArray().clear();
-                            restaurants.get(i).setFoodsArray(replace);
-                        }
+                    try{
+                        PreparedStatement ps = (PreparedStatement) connection.prepareStatement("DELETE FROM menu WHERE name = ?");
+                        ps.setString(1, foodName);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-
-                    File rest = new File("src\\main\\java\\Server\\Menus");
-                    PrintWriter writerEmpty = new PrintWriter(rest);
-                    writerEmpty.print("");  // clear file
-                    writerEmpty.close();
-                    FileWriter writer = new FileWriter("src\\main\\java\\Server\\Menus",true);
-
-                    // fill Menus file with new data
-                    for (Restaurant i : restaurants) {
-                        for (Food j : i.getFoodsArray()) {
-                            writer.write(i.getName()+","+j.getName()+","+j.getType()+","+j.getPrice()+","+j.isAvailable()+","+j.getImgPath()+","+j.getWeight()+"\n");
-                        }
-                    }
-
-                    writer.close();
-
                 }
-                else if(str.equals("change food")){
-                    String resName = in.readUTF();
+                else if(str.equals("Change food")){
                     String foodName = in.readUTF();
-                    String newline = in.readUTF();
-
-                    try {
-                        BufferedReader file = new BufferedReader(new FileReader("src\\main\\java\\Server\\Menus"));
-                        StringBuffer inputBuffer = new StringBuffer();
-                        String line;
-
-                        while ((line = file.readLine()) != null) {
-                            String[] parts = line.split(",");
-                            if(parts[0].equals(resName) && parts[1].equals(foodName)){
-                                line = newline;
-                            }
-                            inputBuffer.append(line);
-                            inputBuffer.append('\n');
-                        }
-                        file.close();
-
-                        FileOutputStream fileOut = new FileOutputStream("src\\main\\java\\Server\\Menus");
-                        fileOut.write(inputBuffer.toString().getBytes());
-                        fileOut.close();
-
-                    } catch (Exception e) {
-                        System.out.println("Problem reading file.");
+                    Food food = (Food) in.readObject();
+                    try{
+                        PreparedStatement ps = (PreparedStatement) connection.prepareStatement("UPDATE menu SET name = ?, type=?, price=?, is_available=?, " +
+                                                                                                     "imgpath=?, weight=? WHERE name = ?");
+                        ps.setString(1, food.getName());
+                        ps.setString(2, food.getType());
+                        ps.setDouble(3, food.getPrice());
+                        ps.setBoolean(4, food.getIsAvailable());
+                        ps.setString(5, food.getImgPath());
+                        ps.setDouble(6, food.getWeight());
+                        ps.setString(7, foodName);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-
                 }
                 else{
                     System.out.println("Closing the socket...");
-                  //  break;
                 }
             }catch (IOException ignored){
             } catch (ClassNotFoundException e) {
@@ -230,24 +194,29 @@ public class serverAdmin {
             }
         }
     }
-
     public static ArrayList<Restaurant> loadRestaurants() throws IOException {
-        BufferedReader restaurantFile = new BufferedReader(new FileReader("src/main/java/Server/Restaurants"));
         ArrayList<Restaurant> restaurants = new ArrayList<>();
-        //reading data from Restaurants.txt and add to restaurants
-        String resline;
-        String menline;
-        while ((resline=restaurantFile.readLine()) != null) {
-            String[] fields = resline.split(",");
-            Restaurant rest = new Restaurant(fields[0],fields[1],fields[2],Boolean.parseBoolean(fields[3]), Short.parseShort(fields[4]), Short.parseShort(fields[5]),fields[6],Boolean.parseBoolean(fields[7]));
-            restaurants.add(rest);
-            BufferedReader menuFile = new BufferedReader(new FileReader("src/main/java/Server/Menus"));
-            while ((menline=menuFile.readLine()) != null){
-                String[] fields2 = menline.split(",");
-                if(fields2[0].equals(fields[0])){
-                    rest.getFoodsArray().add(new Food(fields2[1],fields2[2],Double.parseDouble(fields2[3]),Boolean.parseBoolean(fields2[4]),fields2[5],Double.parseDouble(fields2[6])));
+        try{
+            Statement statement = connection.createStatement();
+            Statement statement2 = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM restaurants");
+            while(rs.next()){
+                int index = rs.getInt(1);
+                restaurants.add(new Restaurant(rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5),
+                        rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getBoolean(9)));
+                Restaurant rest = restaurants.get(index-1);
+//                System.out.println(rest);
+                ResultSet ms = statement2.executeQuery("SELECT * FROM menu");
+                while(ms.next()){
+                    if(ms.getInt(2)==index){
+                        rest.add_menu(new Food(ms.getString(3), ms.getString(4), ms.getDouble(5),
+                                ms.getBoolean(6), ms.getString(7), ms.getDouble(8)));
+                    }
                 }
             }
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return restaurants;
     }

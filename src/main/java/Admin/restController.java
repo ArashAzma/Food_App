@@ -87,15 +87,15 @@ public class restController extends Main {
         courierColumn.setCellValueFactory(new PropertyValueFactory<>("courierCount"));
         imgPathColumn.setCellValueFactory(new PropertyValueFactory<>("imgPath"));
         is_ableColumn.setCellValueFactory(new PropertyValueFactory<>("is_able"));
-
         error_label.setText("");
-
         try {
             // receive restaurants arraylist
             out.writeUTF("restaurants");
             out.flush();
             list = (ArrayList<Restaurant>) in.readObject();
-            System.out.println(list.get(0).getTime());
+            for(Restaurant r : list){
+                System.out.println(r);
+            }
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -134,14 +134,8 @@ public class restController extends Main {
             stage.show();
         }
     }
-    public static boolean isNumeric(String str) {
-        return str.chars().allMatch( Character::isDigit );  //match a number with optional '-' and decimal.
-    }
-    public static boolean isBoolean(String str) {
-        return str.toLowerCase().equals("true") || str.toLowerCase().equals("false");
-    }
     @FXML
-    void add(ActionEvent event) {
+    void add(ActionEvent event) throws IOException {
         String name = textfeildName.getText();
         String address = textfeildAddress.getText();
         String time = textfeildTime.getText();
@@ -158,10 +152,10 @@ public class restController extends Main {
 
         if ( add ) {
             Restaurant restaurant = new Restaurant(name, address, time, Boolean.parseBoolean(takAway), Short.parseShort(table), Short.parseShort(courier), imgPath, Boolean.parseBoolean(isAble));
-            list.add(restaurant);
-            restaurants.getItems().add(restaurant);
+//            list.add(restaurant);
+//            restaurants.getItems().add(restaurant);
             try {
-                out.writeUTF("add restaurant");
+                out.writeUTF("Add restaurant");
                 out.flush();
                 out.writeObject(restaurant);
                 out.flush();
@@ -173,8 +167,8 @@ public class restController extends Main {
         } else {
             error_label.setText("invalid input!");
         }
+        initialize();
     }
-
     public static Restaurant giveRestaurant() throws Exception {
         updateRestaurant();
         return restaurant;
@@ -195,11 +189,18 @@ public class restController extends Main {
     public void removeRest() throws IOException {
         this.clicked = restaurants.getSelectionModel().getSelectedItem();
         out.flush();
-        out.writeUTF("remove restaurant");
+        out.writeUTF("Remove restaurant");
         out.flush();
         out.writeUTF(clicked.getName());
         out.flush();
         restaurants.getItems().clear();
         initialize();
+    }
+
+    public static boolean isNumeric(String str) {
+        return str.chars().allMatch( Character::isDigit );  //match a number with optional '-' and decimal.
+    }
+    public static boolean isBoolean(String str) {
+        return str.toLowerCase().equals("true") || str.toLowerCase().equals("false");
     }
 }

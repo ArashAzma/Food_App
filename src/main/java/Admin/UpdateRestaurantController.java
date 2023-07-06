@@ -125,13 +125,13 @@ public class UpdateRestaurantController extends Main{
         }
         if(sw){
             out.flush();
-            out.writeUTF("change restaurant");
+            out.writeUTF("Change restaurant");
             out.flush();
             out.writeUTF(clicked.getName());
             out.flush();
-
-            String line = name+","+address+","+time+","+take+","+courier+","+table+","+imgPath+","+available;
-            out.writeUTF(line);
+            Restaurant temp = new Restaurant(name, address, time, take, table, courier, imgPath, available);
+//            String line = name+","+address+","+time+","+take+","+courier+","+table+","+imgPath+","+available;
+            out.writeObject(temp);
             out.flush();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminFx/restaurant.fxml"));
             Parent root = loader.load();
